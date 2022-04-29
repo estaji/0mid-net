@@ -1,0 +1,7 @@
+<h1>Jobs</h1>
+<ul>
+{% for job in object_list %}
+    <li>{{ job.title }}- {{job.start}} - {{job.end}} </li>
+{% empty %}
+{% endfor %}
+</ul>

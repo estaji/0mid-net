@@ -1,0 +1,7 @@
+<h1>Educations</h1>
+<ul>
+{% for education in object_list %}
+    <li>{{ education.title }}- {{education.start}} - {{education.end}} </li>
+{% empty %}
+{% endfor %}
+</ul>

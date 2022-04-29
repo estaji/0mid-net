@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from resume.views import JobListView, EducationListView, TechSkillListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # TEMP
+    path('job', JobListView.as_view(), name='List Jobs'),
+    path('edu', EducationListView.as_view(), name='List Educations'),
+    path('tech', TechSkillListView.as_view(), name='List Technical Skills'),
 ]
