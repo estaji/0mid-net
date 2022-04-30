@@ -2,6 +2,11 @@
 <ul>
 {% for job in object_list %}
     <li>{{ job.title }}- {{job.start}} - {{job.end}} </li>
+     <img 
+    src={{ job.logo }} 
+    alt="Logo" 
+    />
+    </br>
 {% empty %}
 {% endfor %}
 </ul>

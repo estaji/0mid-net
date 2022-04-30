@@ -100,3 +100,18 @@ class Language(models.Model):
 
     class Meta:
         ordering = ['order']
+
+
+class Jumbotron(models.Model):
+    """Get Jumbotron information of website"""
+    greeting = models.CharField(max_length=50, verbose_name='Welcome Message')
+    title = models.CharField(max_length=50, verbose_name='Title/Name')
+    description = models.TextField(verbose_name='Description')
+    email = models.EmailField(max_length=254, verbose_name='Email')
+    picture = models.ImageField(
+        upload_to='jumbotron_picture/',
+        verbose_name='Picture/Avatar',
+    )
+
+    def __str__(self):
+        return self.title

@@ -14,8 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
-from resume.views import JobListView, EducationListView, TechSkillListView
+from resume.views import (
+    JobListView, EducationListView, TechSkillListView, JumbotronListView
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +28,7 @@ urlpatterns = [
     path('job', JobListView.as_view(), name='List Jobs'),
     path('edu', EducationListView.as_view(), name='List Educations'),
     path('tech', TechSkillListView.as_view(), name='List Technical Skills'),
+    path('head', JumbotronListView.as_view(), name='Jumbotrons'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

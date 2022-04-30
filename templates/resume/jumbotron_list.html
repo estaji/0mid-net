@@ -1,0 +1,11 @@
+<h1>Jumbotron</h1>
+<ul>
+{% for jumbotron in object_list %}
+    <li>{{ jumbotron.title }}- {{jumbotron.greeting}} - {{jumbotron.email}} - {{jumbotron.description}} </li>
+    <img 
+    src={{ jumbotron.picture }} 
+    />
+    </br>
+{% empty %}
+{% endfor %}
+</ul>

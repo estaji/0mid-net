@@ -1,5 +1,5 @@
 from django.views.generic.list import ListView
-from resume.models import Job, Education, TechSkill
+from resume.models import Job, Education, TechSkill, Jumbotron
 
 
 class JobListView(ListView):
@@ -15,3 +15,7 @@ class EducationListView(ListView):
 class TechSkillListView(ListView):
     """TEMP"""
     model = TechSkill
+
+class JumbotronListView(ListView):
+    """TEMP"""
+    model = Jumbotron
