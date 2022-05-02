@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import Job, Education, TechSkill, SoftSkill, Language, Jumbotron
+from .models import (
+    Job,
+    Education,
+    TechSkill,
+    SoftSkill,
+    Language,
+    Jumbotron,
+    SocialAccount,
+    Configuration,
+)
 
 
 class JobAdmin(admin.ModelAdmin):
@@ -28,3 +37,5 @@ admin.site.register(TechSkill, TechSkillAdmin)
 admin.site.register(SoftSkill, SoftSkillAdmin)
 admin.site.register(Language, LanguageSkillAdmin)
 admin.site.register(Jumbotron)
+admin.site.register(SocialAccount)
+admin.site.register(Configuration)

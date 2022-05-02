@@ -115,3 +115,76 @@ class Jumbotron(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class SocialAccount(models.Model):
+    """Social Accounts Model"""
+    linkedin = models.URLField(
+        max_length=200,
+        default="#",
+        blank=True,
+        verbose_name='Linkedin Account',
+    )
+    github = models.URLField(
+        max_length=200,
+        default="#",
+        blank=True,
+        verbose_name='Github Account',
+    )
+    stackexchange = models.URLField(
+        max_length=254,
+        default="#",
+        blank=True,
+        verbose_name='Stackexchange Account',
+    )
+    instagram = models.URLField(
+        max_length=200,
+        default="#",
+        blank=True,
+        verbose_name='Instagram Account',
+    )
+    twitter = models.URLField(
+        max_length=200,
+        default="#",
+        blank=True,
+        verbose_name='Twitter Account',
+    )
+
+
+class Configuration(models.Model):
+    """Seo related tags and other configurations model"""
+    title = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Title tag',
+    )
+    description = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta description tag',
+    )
+    robots = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta robots tag',
+    )
+    author = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta author tag',
+    )
+    keywords = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta keywords tag',
+    )
+    favicon = models.ImageField(
+        upload_to='favicon/',
+        verbose_name='favicon',
+        blank=True,
+    )
+    copyr = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Copyright text',
+    )

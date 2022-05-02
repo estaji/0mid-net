@@ -16,6 +16,7 @@ class TechSkillListView(ListView):
     """TEMP"""
     model = TechSkill
 
+
 class JumbotronListView(ListView):
     """TEMP"""
     model = Jumbotron
