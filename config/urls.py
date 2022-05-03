@@ -17,18 +17,11 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from resume.views import (
-    JobListView, EducationListView, TechSkillListView, JumbotronListView
-)
+from resume.views import ResumeView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    # TEMP
-    path('job', JobListView.as_view(), name='List Jobs'),
-    path('edu', EducationListView.as_view(), name='List Educations'),
-    path('tech', TechSkillListView.as_view(), name='List Technical Skills'),
-    path('head', JumbotronListView.as_view(), name='Jumbotrons'),
+    path('admin/', admin.site.urls, name='admin-panel'),
+    path('', ResumeView.as_view(template_name='resume/resume.html')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,43 @@
+{% extends 'resume/base.html' %}
+{% load static %}
+
+{% block meta_tags %}
+    <meta name="description" content="{{ object_list.0.description }}">
+    <meta name="author" content="{{ object_list.0.author }}">
+    <meta name="keywords" content="{{ object_list.0.keywords }}">
+    <meta name="robots" content="{{ object_list.0.robots }}">
+{% endblock meta_tags %}
+
+{% block title %}
+    {{ object_list.0.title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="p-5 pt-1 mb-4 mt-1 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <p class="lead">{{ jumbotron.greeting }}</p>
+            <h1 class="display-5">{{ jumbotron.title }}</h1>
+            <div class="lead text-center">
+                <img src="{{ jumbotron.picture }}" class="img-fluid img-thumbnail rounded-circle" alt="..." width="200" height="200">
+            </div>
+            <div class="lead">
+                <p class="col-md-8 fs-4">{{ jumbotron.description|linebreaks }}</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-info" href="mailto:{{ jumbotron.email }}" role="button"><i class="bi bi-envelope" aria-hidden="true"> Message Me</i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="card-header">Experiences</h2>
+        {% for job in job %}
+            <div class="card-body">
+                <h4 class="card-title">{{ job.title }}</h4>
+            </div>
+            <div class="card-subtitle mb-2 text-muted">
+                
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
