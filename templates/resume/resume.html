@@ -34,10 +34,95 @@
         {% for job in job %}
             <div class="card-body">
                 <h4 class="card-title">{{ job.title }}</h4>
+                <div class="card-subtitle mb-2 mt-1 text-muted">
+                    <div style="float:right;">{{ job.short_start }} - {{ job.modified_end }}<br/><small style="float:right;">{{ job.location }}</small></div>
+                    <div data-bs-toggle="modal" data-bs-target="#Modal{{ forloop.counter }}" style="cursor:pointer; float:left;">
+                        <img src="{{ job.logo.url }}" class="card-img-left" alt="{{ job.company }} logo" width="65" height="65">
+                        <span class="card-link">&nbsp;{{ job.company }}</span>
+                    </div>
+                </div>
+                <br style="clear: both;">
+                <div>
+                    <p class="card-text">{{ job.summary|linebreaks }}</p>
+                </div>
             </div>
-            <div class="card-subtitle mb-2 text-muted">
-                
+            <!--Company Modal -->
+            <div class="modal fade" id="Modal{{ forloop.counter }}" tabindex="-1" aria-labelledby="companyModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="companyModalLabel">{{ job.company }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ job.company_details|linebreaks }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <a class="btn btn-outline-dark" rel="nofollow" href="{{ job.url }}" target="_blank">{{ job.company }} Website</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>
+    </br>
+    <div class="card">
+        <h2 class="card-header">Technical Skills</h2>
+        <div class="card-body">
+            <div class="accordion accordion-flush" id="accordionTechSkills">
+                {% for skill in tech_skill %}
+                    <div class="accordion-item">
+                        <div class="accordion-header" id="flush-heading{{ forloop.counter }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse{{ forloop.counter }}">
+                                <h5>{{ skill.title }}&nbsp;<span class="badge bg-secondary">{{ skill.certs }}</span></h5>
+                            </button>
+                        </div>
+                        <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionTechSkills">
+                            <div class="accordion-body">{{ skill.details|linebreaks }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </br>
+    <div class="card">
+        <h2 class="card-header">Educations</h2>
+        {% for item in education %}
+            <div class="card-body">
+                <h4 class="card-title">{{ item.level }}&nbsp;{{ item.title }}</h4>
+                <div class="card-subtitle mb-2 text-muted">
+                    <div style="float:right;">{{ item.short_start }} - {{ item.modified_end }}</div>
+                    <h6 class="mt-1" style="float:left;">{{ item.university }}</h6>
+                </div>
+                <br style="clear: both;">
+                <div>
+                    <p class="card-text">{{ item.description|linebreaks }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </br>
+    <div class="card">
+        <h2 class="card-header">Soft Skills</h2>
+        <div class="card-body">
+            {% for skill in soft_skill %}
+                <h5 class="card-title">{{ skill.title }}</h5>
+            {% endfor %}
+        </div>
+    </div>
+    </br>
+    <div class="card">
+        <h2 class="card-header">Languages</h2>
+        <div class="card-body">
+            {% for item in language %}
+                <h4 class="card-title">{{ item.title }}</h4>
+                <div class="card-subtitle mb-2 text-muted">
+                    <p>{{ item.level }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    </br>
 {% endblock content %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import F
+from .utils import month_year_start, month_year_end, year_start, year_end
 
 
 class Job(models.Model):
@@ -34,6 +35,12 @@ class Job(models.Model):
     class Meta:
         ordering = [F('end').desc(nulls_first=True)]
 
+    def short_start(self):
+        return month_year_start(self.start)
+
+    def modified_end(self):
+        return month_year_end(self.end)
+
 
 class Education(models.Model):
     """Academic educations model"""
@@ -42,7 +49,6 @@ class Education(models.Model):
         verbose_name='University Name',
     )
     level = models.CharField(
-        blank=True,
         max_length=20,
         verbose_name='Education Level',
     )
@@ -56,6 +62,13 @@ class Education(models.Model):
 
     class Meta:
         ordering = [F('end').desc(nulls_first=True)]
+
+    def short_start(self):
+        return year_start(self.start)
+
+    def modified_end(self):
+        new_end = year_end(self.end)
+        return new_end
 
 
 class TechSkill(models.Model):
@@ -78,8 +91,7 @@ class TechSkill(models.Model):
 
 class SoftSkill(models.Model):
     """Soft Skills model"""
-    title = models.CharField(max_length=50, verbose_name='Soft Skill')
-    details = models.TextField(blank=True, verbose_name='Description')
+    title = models.CharField(max_length=100, verbose_name='Soft Skill')
     order = models.IntegerField(unique=True, verbose_name='Order Number')
 
     def __str__(self):
