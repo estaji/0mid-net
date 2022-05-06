@@ -165,6 +165,11 @@ class SocialAccount(models.Model):
 
 class Configuration(models.Model):
     """Seo related tags and other configurations model"""
+    site_title = models.CharField(
+        max_length=60,
+        blank=True,
+        verbose_name='Website title',
+    )
     title = models.CharField(
         max_length=160,
         blank=True,

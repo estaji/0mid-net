@@ -1,4 +1,5 @@
 from django.views.generic.list import ListView
+from core.models import Menu, SubMenu
 from resume.models import (
     Configuration,
     SocialAccount,
@@ -24,4 +25,8 @@ class ResumeView(ListView):
         context['tech_skill'] = TechSkill.objects.all()
         context['soft_skill'] = SoftSkill.objects.all()
         context['language'] = Language.objects.all()
+        context['menu_parent'] = Menu.objects.filter(icon_type='DD')
+        context['menu_single'] = Menu.objects.filter(icon_type='N')
+        context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
+        context['submenu'] = SubMenu.objects.all()
         return context

@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 from core import models
+from .models import Menu, SubMenu
 
 
 class UserAdmin(BaseUserAdmin):
@@ -26,4 +27,14 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class SubMenuAdmin(admin.ModelAdmin):
+    list_display = ('title', 'parent', 'order', 'url',)
+
+
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'icon_type',)
+
+
 admin.site.register(models.User, UserAdmin)
+admin.site.register(Menu, MenuAdmin)
+admin.site.register(SubMenu, SubMenuAdmin)
