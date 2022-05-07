@@ -27,7 +27,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">{{ object_list.0.site_title }}</a>
+        <a class="navbar-brand" href="{% url 'resume' %}">{{ object_list.0.site_title }}</a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsSite" aria-controls="navbarsSite" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -44,9 +44,9 @@
                 <a class="nav-link dropdown-toggle" target="_blank" href="{{ item.url }}" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false">{{ item.title }}</a>
                   <ul class="dropdown-menu" aria-labelledby="dropdown05">
                     {% for submenuitem in submenu %}
-                    {% if item == submenuitem.parent %}
-                      <li><a class="dropdown-item" target="_blank" href="{{ submenuitem.url }}">{{ submenuitem.title }}</a></li>
-                    {% endif %}
+                      {% if item == submenuitem.parent %}
+                        <li><a class="dropdown-item" target="_blank" href="{{ submenuitem.url }}">{{ submenuitem.title }}</a></li>
+                      {% endif %}
                     {% endfor %}
                   </ul>
               </li>
@@ -69,12 +69,22 @@
     <footer class="text-muted">
         <div class="container text-center aria-hidden="true"">
           <a href="mailto:{{ jumbotron.email }}" target="_blank"><i class="bi bi-envelope theme social-icons"></i></a>
-          <a href="{{ social_account.linkedin }}" target="_blank"><i class="bi bi-linkedin theme social-icons"></i></a>
-          <a href="{{ social_account.github }}" target="_blank"><i class="bi bi-github theme social-icons"></i></a>
-          <a href="{{ social_account.stackexchange }}" target="_blank"><i class="bi bi-stack-overflow theme social-icons"></i></a>
-          <a href="{{ social_account.instagram }}" target="_blank"><i class="bi bi-instagram theme social-icons"></i></a>
-          <a href="{{ social_account.twitter }}" target="_blank"><i class="bi bi-twitter theme social-icons"></i></a>
-          <p>{{ object_list.0.copyr }} 2019-{% now "Y" %}</p>
+          {% if social_account.linkedin != '' %}
+            <a href="{{ social_account.linkedin }}" target="_blank"><i class="bi bi-linkedin theme social-icons"></i></a>
+          {% endif %}
+          {% if social_account.github != '' %}
+            <a href="{{ social_account.github }}" target="_blank"><i class="bi bi-github theme social-icons"></i></a>
+          {% endif %}
+          {% if social_account.stackexchange != '' %}
+            <a href="{{ social_account.stackexchange }}" target="_blank"><i class="bi bi-stack-overflow theme social-icons"></i></a>
+          {% endif %}
+          {% if social_account.instagram != '' %}
+            <a href="{{ social_account.instagram }}" target="_blank"><i class="bi bi-instagram theme social-icons"></i></a>
+          {% endif %}
+          {% if social_account.twitter != '' %}
+            <a href="{{ social_account.twitter }}" target="_blank"><i class="bi bi-twitter theme social-icons"></i></a>
+          {% endif %}
+          <p class="theme">{{ object_list.0.copyr }} {% now "Y" %}</p>
         </div>
     </footer>
 

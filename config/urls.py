@@ -21,7 +21,11 @@ from resume.views import ResumeView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin-panel'),
-    path('', ResumeView.as_view(template_name='resume/resume.html')),
+    path(
+        '',
+        ResumeView.as_view(template_name='resume/resume.html'),
+        name='resume',
+    ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
