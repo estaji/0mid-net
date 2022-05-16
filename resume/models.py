@@ -8,6 +8,7 @@ class Job(models.Model):
     title = models.CharField(max_length=50, verbose_name='Job Title')
     company = models.CharField(max_length=50, verbose_name='Company Name')
     logo = models.ImageField(
+        blank=True,
         upload_to='company_logos/',
         verbose_name='Company Logo',
     )

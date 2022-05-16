@@ -37,7 +37,9 @@
                 <div class="card-subtitle mb-2 mt-1 text-muted">
                     <div style="float:right;">{{ job.short_start }} - {{ job.modified_end }}<br/><small style="float:right;">{{ job.location }}</small></div>
                     <div data-bs-toggle="modal" data-bs-target="#Modal{{ forloop.counter }}" style="cursor:pointer; float:left;">
-                        <img src="{{ job.logo.url }}" class="card-img-left" alt="{{ job.company }} logo" width="65" height="65">
+                        {% if job.logo %}
+                            <img src="{{ job.logo.url }}" class="card-img-left" alt="{{ job.company }} logo" width="65" height="65">
+                        {% endif %}
                         <span class="card-link">&nbsp;{{ job.company }}</span>
                     </div>
                 </div>

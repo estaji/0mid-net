@@ -8,6 +8,7 @@ from resume.models import (
     Language,
     Jumbotron,
     Configuration,
+    SocialAccount,
 )
 
 
@@ -202,7 +203,25 @@ class JumbotronModelTests(TestCase):
 
 class SocialAccountModelTests(TestCase):
 
-    pass
+    @classmethod
+    def setUpTestData(cls):
+        SocialAccount.objects.create(
+            linkedin='https://www.linkedin.com/in/acc',
+            github='https://github.com/acc',
+            stackexchange='https://stackexchange.com/users/acc',
+            instagram='',
+            twitter='https://twitter.com/acc',
+        )
+
+        def test_add_socialaccount(self):
+            """Test add a social account object"""
+            item = SocialAccount.objects.get(id=1)
+
+            self.assertURLEqual(item.linkedin, 'https://www.linkedin.com/in/acc')
+            self.assertURLEqual(item.github, 'https://github.com/acc')
+            self.assertURLEqual(item.stackexchange, 'https://stackexchange.com/users/acc')
+            self.assertURLEqual(item.instagram, '')
+            self.assertURLEqual(item.twitter, 'https://twitter.com/acc')
 
 
 class ConfigurationModelTests(TestCase):
