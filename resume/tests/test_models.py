@@ -217,9 +217,15 @@ class SocialAccountModelTests(TestCase):
             """Test add a social account object"""
             item = SocialAccount.objects.get(id=1)
 
-            self.assertURLEqual(item.linkedin, 'https://www.linkedin.com/in/acc')
+            self.assertURLEqual(
+                item.linkedin,
+                'https://www.linkedin.com/in/acc',
+            )
             self.assertURLEqual(item.github, 'https://github.com/acc')
-            self.assertURLEqual(item.stackexchange, 'https://stackexchange.com/users/acc')
+            self.assertURLEqual(
+                item.stackexchange,
+                'https://stackexchange.com/users/acc',
+            )
             self.assertURLEqual(item.instagram, '')
             self.assertURLEqual(item.twitter, 'https://twitter.com/acc')
 
