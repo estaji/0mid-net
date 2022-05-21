@@ -6,6 +6,17 @@
     <meta name="author" content="{{ object_list.0.author }}">
     <meta name="keywords" content="{{ object_list.0.keywords }}">
     <meta name="robots" content="{{ object_list.0.robots }}">
+    <meta property="og:title" content="{{ object_list.0.og_title }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ object_list.0.description }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ object_list.0.og_title }}"/>
+    <meta name="twitter:description" content="{{ object_list.0.description }}"/>
+    <meta name="twitter:site" content="@{{ object_list.0.twitter_user }}"/>
+    <meta name="twitter:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}"/>
+    <meta name="twitter:creator" content="@{{ object_list.0.twitter_user }}"/>
 {% endblock meta_tags %}
 
 {% block title %}

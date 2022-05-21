@@ -206,3 +206,13 @@ class Configuration(models.Model):
         blank=True,
         verbose_name='Copyright text',
     )
+    og_title = models.CharField(
+        max_length=60,
+        blank=True,
+        verbose_name='Open graph and Twitter card title',
+    )
+    twitter_user = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name='Twitter username for Twitter site tag',
+    )
