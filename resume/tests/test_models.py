@@ -244,6 +244,7 @@ class ConfigurationModelTests(TestCase):
             copyr='All rights reserved',
             og_title='My OpenGraph title',
             twitter_user='username',
+            google_analytics='UA-155242907-7',
         )
 
     def test_add_configuration(self):
@@ -259,3 +260,4 @@ class ConfigurationModelTests(TestCase):
         self.assertEqual(item.copyr, 'All rights reserved')
         self.assertEqual(item.og_title, 'My OpenGraph title')
         self.assertEqual(item.twitter_user, 'username')
+        self.assertEqual(item.google_analytics, 'UA-155242907-7')

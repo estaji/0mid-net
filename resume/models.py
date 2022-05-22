@@ -216,3 +216,8 @@ class Configuration(models.Model):
         blank=True,
         verbose_name='Twitter username for Twitter site tag',
     )
+    google_analytics = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name='Google analytics ID',
+    )
