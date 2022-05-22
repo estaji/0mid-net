@@ -8,15 +8,56 @@
     <meta name="robots" content="{{ object_list.0.robots }}">
     <meta property="og:title" content="{{ object_list.0.og_title }}" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
-    <meta property="og:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}" />
+    {% if jumbotron.picture %}
+        <meta property="og:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}" />
+    {% endif %}
     <meta property="og:type" content="website" />
     <meta property="og:description" content="{{ object_list.0.description }}" />
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="{{ object_list.0.og_title }}"/>
     <meta name="twitter:description" content="{{ object_list.0.description }}"/>
     <meta name="twitter:site" content="@{{ object_list.0.twitter_user }}"/>
-    <meta name="twitter:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}"/>
+    {% if jumbotron.picture %}
+        <meta name="twitter:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}"/>
+    {% endif %}
     <meta name="twitter:creator" content="@{{ object_list.0.twitter_user }}"/>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Person",
+            "name": "{{ object_list.0.author }}",
+            {% if jumbotron.picture %}
+                "image": "http://{{ request.get_host }}{{ jumbotron.picture.url }}",
+            {% endif %}
+            "jobTitle": "{{ job.0.title }}", 
+            "url": "{{ request.build_absolute_uri }}",
+            "email": "{{ jumbotron.email }}",
+            "sameAs": [
+                {% if social_account.linkedin != '' %}
+                    {% if social_account.github != '' or social_account.twitter != '' %}
+                        "{{ social_account.linkedin }}",
+                    {% else %}
+                        "{{ social_account.linkedin }}"
+                    {% endif %}
+                {% endif %}
+                {% if social_account.github != '' %}
+                    {% if social_account.twitter != '' %}
+                        "{{ social_account.github }}",
+                    {% else %}
+                        "{{ social_account.github }}"
+                    {% endif %}
+                {% endif %}
+                {% if social_account.twitter != '' %}
+                    "{{ social_account.twitter }}"
+                {% endif %}
+            ],
+            "worksFor": {
+                "@type": "Organization",
+                "name": "{{ job.0.company }}"
+            },
+            "alumniOf": "{{ education.0.university }}",
+        }
+    </script>
 {% endblock meta_tags %}
 
 {% block title %}

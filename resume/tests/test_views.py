@@ -25,6 +25,8 @@ class ResumeListViewTest(TestCase):
             author='Mr Test',
             keywords='personal blog, tag',
             copyr='All rights reserved',
+            og_title='My OpenGraph title',
+            twitter_user='username',
         )
         Job.objects.create(
             title='Software Engineer',
