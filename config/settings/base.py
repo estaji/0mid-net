@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 
     'core.apps.CoreConfig',
     'resume.apps.ResumeConfig',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
