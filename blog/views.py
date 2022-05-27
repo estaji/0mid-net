@@ -1,9 +1,12 @@
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
+from .models import Article
 
 
-class HomeView(TemplateView):
-    template_name = "blog/home.html"
+class BlogView(ListView):
+    """View for blog main page"""
+    queryset = Article.objects.published()
 
 
 class ArticleView(TemplateView):
-    template_name = "blog/article.html"
+    """View for an article"""
+    pass
