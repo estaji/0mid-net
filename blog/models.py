@@ -90,3 +90,25 @@ class Article(models.Model):
         return published
 
     objects = ArticleManager()
+
+
+class Configuration(models.Model):
+    """Blog configurations model"""
+    copyr = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Copyright message in footer',
+    )
+    email = models.EmailField(max_length=254, verbose_name='Email')
+    linkedin = models.URLField(
+        max_length=200,
+        default="#",
+        blank=True,
+        verbose_name='Linkedin Account',
+    )
+    github = models.URLField(
+        max_length=200,
+        default="#",
+        blank=True,
+        verbose_name='Github Account',
+    )
