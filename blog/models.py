@@ -56,6 +56,11 @@ class Article(models.Model):
         related_name="articles",
         verbose_name="Tag",
     )
+    subheading = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Subheading",
+    )
     content = models.TextField(verbose_name="Content")
     published = models.DateField(
         default=timezone.now,

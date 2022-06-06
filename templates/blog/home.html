@@ -24,12 +24,15 @@
                 {% for item in object_list %}
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
+                        <a href="{% url 'blog:article' item.slug %}">
                             <h2 class="post-title">{{ item.title }}</h2>
                             <h3 class="post-subtitle">{{ item.content|striptags|truncatewords:20 }}</h3>
                         </a>
                         <p class="post-meta">
                             By {{ item.author.name }}, {{ item.published_modified }}
+                            {% for tag in item.tag.all %}
+                                <a href="{% url 'blog:tag' tag.slug %}">&nbsp#{{tag.title}}</a>
+                            {% endfor %}
                         </p>
                     </div>
                     <!-- Divider-->
