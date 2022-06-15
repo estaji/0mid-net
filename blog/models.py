@@ -111,9 +111,3 @@ class Configuration(models.Model):
         blank=True,
         verbose_name='Linkedin Account',
     )
-    github = models.URLField(
-        max_length=200,
-        default="#",
-        blank=True,
-        verbose_name='Github Account',
-    )
