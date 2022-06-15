@@ -111,3 +111,18 @@ class Configuration(models.Model):
         blank=True,
         verbose_name='Linkedin Account',
     )
+    name = models.CharField(
+        max_length=50,
+        verbose_name='Title in menu bar',
+        default='Blog Name',
+    )
+    title = models.CharField(
+        max_length=70,
+        verbose_name="Title in main page",
+        default='Blog Title',
+    )
+    subtitle = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Sub-title in main page',
+    )
