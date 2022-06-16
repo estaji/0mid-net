@@ -43,3 +43,13 @@ class TagView(ListView):
         context = super().get_context_data(**kwargs)
         context['tag'] = tag
         return context
+
+
+class TagsListView(ListView):
+    """View for all tags list"""
+    model = Tag
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['settings'] = Configuration.objects.first()
+        return context
