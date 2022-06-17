@@ -9,7 +9,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
                         <h1>{{ settings.title }}</h1>
-                        <span class="subheading">{{ settings.subtitle }}</span>
+                        <span class="subheading">All tags and categories</span>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     <!-- Item preview-->
                     <div class="post-preview">
                         <a href="{% url 'blog:tag' item.slug %}">
-                            <h2 class="post-title">{{ item.title }}</h2>
+                            <h2 class="post-title">#{{ item.title }}</h2>
                         </a>
                     </div>
                     <!-- Divider-->
