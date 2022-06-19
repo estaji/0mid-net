@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from core.models import User
 from blog.utils import published_date
+from ckeditor.fields import RichTextField
 
 
 class ArticleManager(models.Manager):
@@ -62,7 +63,7 @@ class Article(models.Model):
         blank=True,
         verbose_name="Subheading",
     )
-    content = models.TextField(verbose_name="Content")
+    content = RichTextField(verbose_name="Content")
     published = models.DateField(
         default=timezone.now,
         verbose_name="Published on",
