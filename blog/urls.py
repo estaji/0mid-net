@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import BlogView, ArticleView, TagView, TagsListView
+from .views import BlogView, ArticleView, TagView, TagsListView, ArticlePreview
 
 
 app_name = "blog"
@@ -32,5 +32,10 @@ urlpatterns = [
         'tag/<slug:slug>/page/<int:page>',
         TagView.as_view(template_name="blog/tag.html"),
         name='tag',
+    ),
+    path(
+        'preview/<slug:slug>',
+        ArticlePreview.as_view(template_name="blog/article.html"),
+        name='preview',
     ),
 ]
