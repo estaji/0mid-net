@@ -9,13 +9,17 @@
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
+                {% if object.language == 'en' %}
                     <div class="post-heading">
+                {% else %}
+                    <div class="post-heading" dir="rtl">
+                {% endif %}
                         <h1>{{ object.title }}</h1>
                         <h2 class="subheading">{{ object.subheading }}</h2>
-                        <span class="meta">
+                        <span class="meta" dir="ltr">
                             By {{ object.author.name }}, {{ object.published_modified }}
                         </span>
-                        <span class="meta">
+                        <span class="meta" dir="ltr">
                             </br>
                             {% for tag in object.tag.all %}
                                 <a href="{% url 'blog:tag' tag.slug %}">&nbsp#{{tag.title}}</a>
