@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Article, Tag, Configuration
+from resume.models import Configuration as Site
 
 
 class BlogView(ListView):
@@ -12,6 +13,7 @@ class BlogView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['settings'] = Configuration.objects.first()
+        context['site'] = Site.objects.first()
         return context
 
 
@@ -27,6 +29,7 @@ class ArticleView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['settings'] = Configuration.objects.first()
+        context['site'] = Site.objects.first()
         return context
 
 
@@ -44,6 +47,7 @@ class TagView(ListView):
         context = super().get_context_data(**kwargs)
         context['tag'] = tag
         context['settings'] = Configuration.objects.first()
+        context['site'] = Site.objects.first()
         return context
 
 
@@ -54,6 +58,7 @@ class TagsListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['settings'] = Configuration.objects.first()
+        context['site'] = Site.objects.first()
         return context
 
 
@@ -67,4 +72,5 @@ class ArticlePreview(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['settings'] = Configuration.objects.first()
+        context['site'] = Site.objects.first()
         return context

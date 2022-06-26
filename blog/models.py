@@ -20,6 +20,11 @@ class Tag(models.Model):
         verbose_name='Slug/URL',
     )
     position = models.IntegerField(unique=True, verbose_name='Position')
+    meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta description tag',
+    )
 
     class Meta:
         verbose_name = 'Tag'
@@ -83,6 +88,11 @@ class Article(models.Model):
         choices=LANGUAGE_CHOICES,
         verbose_name="Language",
     )
+    meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta description tag',
+    )
 
     class Meta:
         verbose_name = "Article"
@@ -127,4 +137,14 @@ class Configuration(models.Model):
         max_length=100,
         blank=True,
         verbose_name='Sub-title in main page',
+    )
+    meta_author = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Meta author tag',
+    )
+    meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta description tag',
     )
