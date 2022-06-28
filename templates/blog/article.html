@@ -8,15 +8,34 @@
     <meta name="robots" content="{{ object.robots }}">
     <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
-    <!-- meta property="og:image" -->
     <meta property="og:type" content="article" />
     <meta property="og:description" content="{{ object.meta_description }}" />
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="{{ object.title }}"/>
     <meta name="twitter:description" content="{{ object.meta_description }}"/>
     <meta name="twitter:site" content="@{{ site.twitter_user }}"/>
-    <!-- meta name="twitter:image" -->
     <meta name="twitter:creator" content="@{{ site.twitter_user }}"/>
+    <!-- still no meta twitter:image, og:image, schema:image -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Article",
+            "headline": "{{ object.title }}",
+            "alternativeHeadline": "{{ object.subheading }}",
+            "author" : {
+                "@type" : "Person",
+                "name" : "{{ object.author.name }}"
+            },
+            "genre": "{{object.tag.first}}",
+            "keywords": "{{ object.keywords }}",
+            "url": "{{ request.build_absolute_uri }}",
+            "datePublished": "{{ object.published_ymd }}",
+            "dateCreated": "{{ object.create_ymd }}",
+            "dateModified": "{{ object.update_ymd }}",
+            "description": "{{ object.meta_description }}",
+            "articleBody": "{{ object.content|striptags|truncatewords:30 }}"
+        }
+    </script>
 {% endblock meta_tags %}
 
 {% block title %} | {{ object.title }}{% endblock title %}

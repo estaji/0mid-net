@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from core.models import User
-from blog.utils import published_date
+from blog.utils import published_date, date_ymd
 from ckeditor.fields import RichTextField
 
 
@@ -113,8 +113,21 @@ class Article(models.Model):
         return self.title
 
     def published_modified(self):
+        """return published date as Today,or x days before or year-month-day"""
         published = published_date(self.published)
         return published
+
+    def published_ymd(self):
+        """return published date as year-month-day"""
+        return date_ymd(self.published)
+
+    def create_ymd(self):
+        """return create date as year-month-day"""
+        return date_ymd(self.created)
+
+    def update_ymd(self):
+        """return update/modified date as year-month-day"""
+        return date_ymd(self.updated)
 
     objects = ArticleManager()
 
