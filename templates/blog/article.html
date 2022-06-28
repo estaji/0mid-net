@@ -9,6 +9,10 @@
     <meta property="og:title" content="{{ object.title }}" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
     <meta property="og:type" content="article" />
+    <meta property='article:author' content="{{ object.author.name }}" />
+    <meta property='article:published_time' content="{{ object.published_ymd }}" />
+    <meta property='article:modified_time' content="{{ object.update_ymd }}" />
+    <meta property='article:tag' content="{{ object.keywords }}" />
     <meta property="og:description" content="{{ object.meta_description }}" />
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="{{ object.title }}"/>

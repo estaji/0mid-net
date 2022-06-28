@@ -4,6 +4,43 @@
 {% block meta_tags %}
     <meta name="description" content="{{ settings.meta_description }}" />
     <meta name="author" content="{{ settings.meta_author }}" />
+    <meta name="keywords" content="{{ settings.keywords }}">
+    <meta name="robots" content="{{ settings.robots }}">
+    <meta property="og:title" content="{{ settings.title }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ settings.meta_description }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ settings.title }}"/>
+    <meta name="twitter:description" content="{{ settings.meta_description }}"/>
+    <meta name="twitter:site" content="@{{ site.twitter_user }}"/>
+    <meta name="twitter:creator" content="@{{ site.twitter_user }}"/>
+    <!-- still no meta twitter:image, og:image, schema:image -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "WebPage",
+            "name": "{{ object.title }}",
+            "description": "{{ settings.meta_description }}",
+            "author": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "copyrightHolder": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "copyrightYear": "{% now "Y-m-d" %}",
+            "creator": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "publisher": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "headline": "{{ settings.title }}",
+            "name": "{{ settings.title }}",
+            "mainEntityOfPage": "{{ request.build_absolute_uri }}",
+            "url": "{{ request.build_absolute_uri }}"
+        }
+    </script>
 {% endblock meta_tags %}
 
 {% block header %}
