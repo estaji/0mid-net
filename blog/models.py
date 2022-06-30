@@ -44,6 +44,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.title
 
+    def posts_count(self):
+        return Article.objects.filter(tag=self, status='p').count()
+
 
 class Article(models.Model):
     """Model for blog's post"""
@@ -138,6 +141,10 @@ class Article(models.Model):
     def update_ymd(self):
         """return update/modified date as year-month-day"""
         return date_ymd(self.updated)
+
+    def article_tags(self):
+        """Get all tags for an article"""
+        return ",\n".join([p.title for p in self.tag.all()])
 
     objects = ArticleManager()
 

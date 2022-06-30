@@ -52,7 +52,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>{{ settings.title }}</h1>
+                        <h1>{{ settings.title }} Tags</h1>
                         <span class="subheading">All tags and categories</span>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                     <!-- Item preview-->
                     <div class="post-preview">
                         <a href="{% url 'blog:tag' item.slug %}">
-                            <h2 class="post-title">#{{ item.title }}</h2>
+                            <h2 class="post-title">#{{ item.title }} ({{ item.posts_count }})</h2>
                         </a>
                     </div>
                     <!-- Divider-->
