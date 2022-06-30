@@ -2,8 +2,45 @@
 {% load static %}
 
 {% block meta_tags %}
-    <meta name="description" content="All categories and tags in {{ settings.title }}" />
+    <meta name="description" content="All categories and tags on {{ settings.title }}" />
     <meta name="author" content="{{ settings.meta_author }}" />
+    <meta name="keywords" content="{% for item in object_list %}{{ item.title }}, {% endfor %}">
+    <meta name="robots" content="{{ settings.robots }}">
+    <meta property="og:title" content="{{ settings.title }} Tags" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="All categories and tags on {{ settings.title }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ settings.title }} Tags"/>
+    <meta name="twitter:description" content="All categories and tags on {{ settings.title }}"/>
+    <meta name="twitter:site" content="@{{ site.twitter_user }}"/>
+    <meta name="twitter:creator" content="@{{ site.twitter_user }}"/>
+    <!-- still no meta twitter:image, og:image, schema:image -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "WebPage",
+            "name": "{{ settings.title }} Tags",
+            "description": "All categories and tags on {{ settings.title }}",
+            "author": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "copyrightHolder": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "copyrightYear": "{% now "Y-m-d" %}",
+            "creator": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "publisher": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "headline": "{{ settings.title }} Tags",
+            "name": "{{ settings.title }} Tags",
+            "mainEntityOfPage": "{{ request.build_absolute_uri }}",
+            "url": "{{ request.build_absolute_uri }}"
+        }
+    </script>
 {% endblock meta_tags %}
 
 {% block title %} | Tags{% endblock title %}

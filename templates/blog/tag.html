@@ -4,6 +4,43 @@
 {% block meta_tags %}
     <meta name="description" content="{{ tag.meta_description }}" />
     <meta name="author" content="{{ settings.meta_author }}" />
+    <meta name="keywords" content="{{ tag.keywords }}">
+    <meta name="robots" content="{{ tag.robots }}">
+    <meta property="og:title" content="{{ tag.title }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ tag.meta_description }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ tag.title }}"/>
+    <meta name="twitter:description" content="{{ tag.meta_description }}"/>
+    <meta name="twitter:site" content="@{{ site.twitter_user }}"/>
+    <meta name="twitter:creator" content="@{{ site.twitter_user }}"/>
+    <!-- still no meta twitter:image, og:image, schema:image -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "WebPage",
+            "name": "{{ tag.title }}",
+            "description": "{{ tag.meta_description }}",
+            "author": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "copyrightHolder": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "copyrightYear": "{% now "Y-m-d" %}",
+            "creator": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "publisher": {
+                "@id": "{{ settings.meta_author }}"
+            },
+            "headline": "{{ tag.title }}",
+            "name": "{{ tag.title }}",
+            "mainEntityOfPage": "{{ request.build_absolute_uri }}",
+            "url": "{{ request.build_absolute_uri }}"
+        }
+    </script>
 {% endblock meta_tags %}
 
 {% block title %} | #{{ tag.title }}{% endblock title %}
@@ -16,7 +53,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
                         <h1>#{{ tag.title }}</h1>
-                        <span class="subheading">All articles about {{ tag.title }}</span>
+                        <span class="subheading">Articles about {{ tag.title }}</span>
                     </div>
                 </div>
             </div>
