@@ -45,6 +45,7 @@ class Tag(models.Model):
         return self.title
 
     def posts_count(self):
+        """Count number of posts for a tag"""
         return Article.objects.filter(tag=self, status='p').count()
 
 
