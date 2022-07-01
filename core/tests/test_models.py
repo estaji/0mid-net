@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from core.models import Menu
 
 
 class UserModelTests(TestCase):
@@ -38,21 +37,3 @@ class UserModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
-
-
-class MenuModelTests(TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        Menu.objects.create(
-            title='Blog',
-            url='https://blog.test.org',
-            order='2',
-            icon_type='N',
-        )
-
-    def test_add_menu_item(self):
-        """Test add an item to menu"""
-        item = Menu.objects.get(id=1)
-
-        self.assertEqual(item.url, 'https://blog.test.org')

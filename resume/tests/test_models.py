@@ -9,6 +9,7 @@ from resume.models import (
     Jumbotron,
     Configuration,
     SocialAccount,
+    Menu
 )
 
 
@@ -261,3 +262,21 @@ class ConfigurationModelTests(TestCase):
         self.assertEqual(item.og_title, 'My OpenGraph title')
         self.assertEqual(item.twitter_user, 'username')
         self.assertEqual(item.google_analytics, 'UA-155242907-7')
+
+
+class MenuModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Menu.objects.create(
+            title='Blog',
+            url='https://blog.test.org',
+            order='2',
+            icon_type='N',
+        )
+
+    def test_add_menu_item(self):
+        """Test add an item to menu"""
+        item = Menu.objects.get(id=1)
+
+        self.assertEqual(item.url, 'https://blog.test.org')
