@@ -1,7 +1,8 @@
 from django.views.generic.list import ListView
-from core.models import Menu, SubMenu
 from resume.models import (
     Configuration,
+    Menu,
+    SubMenu,
     SocialAccount,
     Jumbotron,
     Job,
