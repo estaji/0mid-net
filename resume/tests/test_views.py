@@ -76,16 +76,19 @@ class ResumeListViewTest(TestCase):
         )
 
     def test_view_url_exists_at_desired_location(self):
+        """Test view url exists at desired location """
         response = self.client.get('')
 
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
+        """Test view url accessible by app:urlname"""
         response = self.client.get(reverse('resume'))
 
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
+        """test view uses correct template"""
         response = self.client.get(reverse('resume'))
 
         self.assertEqual(response.status_code, 200)

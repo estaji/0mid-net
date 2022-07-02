@@ -3,11 +3,12 @@ from datetime import date
 from core.models import User
 from blog.models import (
     Tag,
-    Article
+    Article,
+    Configuration
 )
 
 
-class TagModelTests(TestCase):
+class TagAndArticleModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -89,3 +90,72 @@ class TagModelTests(TestCase):
         number_of_posts = Tag.posts_count(item)
 
         self.assertEqual(number_of_posts, 1)
+
+    def test_add_article(self):
+        """Test add an article"""
+        self.article1 = Article.objects.create(
+            author=User.objects.get(id=1),
+            title='test title',
+            slug='test-slug',
+            subheading='this is a text',
+            content='this is a test content',
+            published=date.today(),
+            created=date.today(),
+            updated=date.today(),
+            status='p',
+            language='en',
+            meta_description='vim is a test meta',
+            keywords='testkw1, kw2',
+            robots='follow',
+        )
+        self.article1.tag.add(Tag.objects.get(id=1))
+
+        item = Article.objects.get(id=1)
+
+        self.assertEqual(item.author, User.objects.get(id=1))
+        self.assertEqual(item.title, 'test title')
+        self.assertEqual(item.slug, 'test-slug')
+        self.assertEqual(item.subheading, 'this is a text')
+        self.assertEqual(item.content, 'this is a test content')
+        self.assertEqual(item.published, date.today())
+        self.assertEqual(item.created, date.today())
+        self.assertEqual(item.updated, date.today())
+        self.assertEqual(item.status, 'p')
+        self.assertEqual(item.language, 'en')
+        self.assertEqual(item.meta_description, 'vim is a test meta')
+        self.assertEqual(item.keywords, 'testkw1, kw2')
+        self.assertEqual(item.robots, 'follow')
+        self.assertTrue(item.tag.exists())
+
+
+class ConfigurationModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Configuration.objects.create(
+            copyr='all rights for me',
+            email='testemail@hotmail.com',
+            linkedin='https://linkedin.com/in/test-user/',
+            name='My blog',
+            title='My blog title',
+            subtitle='this is my blog',
+            meta_author='written by test user',
+            meta_description='this is all about my road',
+            keywords='keyword1, keyword2',
+            robots='index',
+        )
+
+    def test_add_configuration(self):
+        """Test add a configuration"""
+        item = Configuration.objects.get(id=1)
+
+        self.assertEqual(item.copyr, 'all rights for me')
+        self.assertEqual(item.email, 'testemail@hotmail.com')
+        self.assertEqual(item.linkedin, 'https://linkedin.com/in/test-user/')
+        self.assertEqual(item.name, 'My blog')
+        self.assertEqual(item.title, 'My blog title')
+        self.assertEqual(item.subtitle, 'this is my blog')
+        self.assertEqual(item.meta_author, 'written by test user')
+        self.assertEqual(item.meta_description, 'this is all about my road')
+        self.assertEqual(item.keywords, 'keyword1, keyword2')
+        self.assertEqual(item.robots, 'index')
