@@ -14,6 +14,7 @@ from pathlib import Path
 
 import json
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
 
 with open('secrets.json') as f:
     secrets = json.load(f)
@@ -152,6 +153,8 @@ STATICFILES_DIRS = [BASE_DIR / 'static', ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
+
+LOGIN_URL = reverse_lazy('blog:home')
 
 # CKEDITOR
 CKEDITOR_CONFIGS = {

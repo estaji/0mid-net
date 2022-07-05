@@ -252,43 +252,119 @@ class AllTagsListViewTest(TestCase):
         )
 
 
-#class ArticlePreviewDetailViewTest(TestCase):
+class ArticlePreviewDetailViewTest(TestCase):
 
-#    @classmethod
-#    def setUpTestData(cls):
-#        Tag.objects.create(
-#            title='Django',
-#            slug='django-tag',
-#            position=1,
-#            meta_description='test meta description string',
-#            keywords='tagkw1, tagkw2'
-#        )
-#        User.objects.create(
-#            email='linustorvalds@gmail.com',
-#            name='Linus Torvalds',
-#            password='P@ssw0rd',
-#            is_active=True,
-#            is_staff=True
-#        )
+    @classmethod
+    def setUpTestData(cls):
+        Tag.objects.create(
+            title='Django',
+            slug='django-tag',
+            position=1,
+            meta_description='test meta description string',
+            keywords='tagkw1, tagkw2'
+        )
+        User.objects.create(
+            email='linustorvalds@gmail.com',
+            name='Linus Torvalds',
+            password='P@ssw0rd',
+            is_active=True,
+            is_staff=True
+        )
 
-#    def test_view_url_exists_at_desired_location(self):
-#        """Test view url exists at desired location for
-#        /blog/preview/<slug:slug>"""
-#        self.article1 = Article.objects.create(
-#            author=User.objects.get(email='testuser@gmail.com'),
-#            title='Class based views',
-#            slug='django-cb-views',
-#            subheading='Article about CBVs',
-#            content='this is a test for CBVs',
-#            published=date.today(),
-#            created=date.today(),
-#            updated=date.today(),
-#            status='d',
-#            language='en'
-#        )
-#        self.article1.tag.add(Tag.objects.get(title='Django'))
+    def test_requiredlogin_view_redirect302_to_desired_location(self):
+        """Test preview view returns 302 redirect for logged out users"""
+        self.article1 = Article.objects.create(
+            author=User.objects.get(email='linustorvalds@gmail.com'),
+            title='Class based views',
+            slug='django-cb-views',
+            subheading='Article about CBVs',
+            content='this is a test for CBVs',
+            published=date.today(),
+            created=date.today(),
+            updated=date.today(),
+            status='d',
+            language='en'
+        )
+        self.article1.tag.add(Tag.objects.get(title='Django'))
 
-#       self.client.login(username='linustorvalds@gmail.com', password='P@ssw0rd')
-#        response = self.client.get('/blog/preview/django-cb-views')
+        response = self.client.get('/blog/preview/django-cb-views')
 
-#       self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
+
+    def test_requiredlogin_view_return_200_to_logged_in_user(self):
+        """Test preview view returns 200 to a logged in user
+        Also Test view url exists at desired location
+        for /blog/preview/<slug:slug>"""
+        self.article1 = Article.objects.create(
+            author=User.objects.get(email='linustorvalds@gmail.com'),
+            title='Class based views',
+            slug='django-cb-views',
+            subheading='Article about CBVs',
+            content='this is a test for CBVs',
+            published=date.today(),
+            created=date.today(),
+            updated=date.today(),
+            status='d',
+            language='en'
+        )
+        self.article1.tag.add(Tag.objects.get(title='Django'))
+
+        self.client.force_login(
+            User.objects.get(email='linustorvalds@gmail.com')
+        )
+        response = self.client.get('/blog/preview/django-cb-views')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        """Test view url accessible by blog:preview"""
+        self.article1 = Article.objects.create(
+            author=User.objects.get(email='linustorvalds@gmail.com'),
+            title='Class based views',
+            slug='django-cb-views',
+            subheading='Article about CBVs',
+            content='this is a test for CBVs',
+            published=date.today(),
+            created=date.today(),
+            updated=date.today(),
+            status='d',
+            language='en'
+        )
+        self.article1.tag.add(Tag.objects.get(title='Django'))
+
+        self.client.force_login(
+            User.objects.get(email='linustorvalds@gmail.com')
+        )
+        response = self.client.get(reverse(
+            'blog:preview',
+            kwargs={'slug': 'django-cb-views'}
+        ))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        """test view uses correct template for blog:preview"""
+        self.article1 = Article.objects.create(
+            author=User.objects.get(email='linustorvalds@gmail.com'),
+            title='Class based views',
+            slug='django-cb-views',
+            subheading='Article about CBVs',
+            content='this is a test for CBVs',
+            published=date.today(),
+            created=date.today(),
+            updated=date.today(),
+            status='d',
+            language='en'
+        )
+        self.article1.tag.add(Tag.objects.get(title='Django'))
+
+        self.client.force_login(
+            User.objects.get(email='linustorvalds@gmail.com')
+        )
+        response = self.client.get(reverse(
+            'blog:preview',
+            kwargs={'slug': 'django-cb-views'}
+        ))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/article.html')
