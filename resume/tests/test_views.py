@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from datetime import date
+import tempfile
 from resume.models import (
     Job,
     Education,
@@ -24,6 +25,7 @@ class ResumeListViewTest(TestCase):
             robots='follow',
             author='Mr Test',
             keywords='personal blog, tag',
+            favicon=tempfile.NamedTemporaryFile(suffix=".png").name,
             copyr='All rights reserved',
             og_title='My OpenGraph title',
             twitter_user='username',
@@ -66,6 +68,7 @@ class ResumeListViewTest(TestCase):
             title='My full name',
             description='This is my personal website',
             email='me@test.com',
+            picture=tempfile.NamedTemporaryFile(suffix=".jpg").name,
         )
         SocialAccount.objects.create(
             linkedin='https://www.linkedin.com/in/acc',
