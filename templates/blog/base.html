@@ -27,7 +27,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'blog/css/styles.css' %}" rel="stylesheet" />
 
-        <link rel="icon" type="image/png" href="{% url 'resume' %}{{ site.favicon.url }}"/>
+        <link rel="icon" type="image/png" href="{{ HTTP_HOST }}{{ site.favicon.url }}"/>
 
         <title>{{ settings.name }}{% block title %}{% endblock title %}</title>
     </head>
