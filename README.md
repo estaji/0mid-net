@@ -1,11 +1,7 @@
-# Personal Django Website
+# Omid Website
 
-This is a Django based personal website which include resume and weblog.
+This is Omid's Django based personal website which include resume, blog and some tools.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Copyright
 
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+Copyright (C) 2022 Omid Estaji - All Rights Reserved

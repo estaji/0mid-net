@@ -55,9 +55,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
 
+    'rest_framework',
+    'rest_framework.authtoken',
+
     'core.apps.CoreConfig',
     'resume.apps.ResumeConfig',
     'blog.apps.BlogConfig',
+    'scan.apps.ScanConfig',
 
     'ckeditor',
 ]
@@ -125,6 +129,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

@@ -36,6 +36,7 @@ urlpatterns = [
         name='resume',
     ),
     path('blog/', include('blog.urls')),
+    path('scan/', include('scan.urls')),
     path(
         'sitemap.xml',
         sitemap,
