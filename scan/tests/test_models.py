@@ -1,0 +1,113 @@
+from django.test import TestCase
+from datetime import datetime
+from scan.models import Node, Job
+
+
+class NodeModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Node.objects.create(
+            node_type='p',
+            location='IR-Parseh',
+            url='www.srv.mysite.com',
+            is_active=True,
+        )
+        Node.objects.create(
+            node_type='c',
+            location='USA-LA',
+            url='www.srv2.mysite.com',
+            is_active=True,
+        )
+
+    def test_add_parent_node(self):
+        """Test add parent node"""
+        item = Node.objects.filter(node_type='p').first()
+
+        self.assertEqual(item.node_type, 'p')
+        self.assertEqual(item.location, 'IR-Parseh')
+        self.assertEqual(item.url, 'www.srv.mysite.com')
+        self.assertEqual(item.is_active, True)
+
+    def test_add_child_node(self):
+        """Test add child node"""
+        item = Node.objects.filter(node_type='c').first()
+
+        self.assertEqual(item.node_type, 'c')
+        self.assertEqual(item.location, 'USA-LA')
+        self.assertEqual(item.url, 'www.srv2.mysite.com')
+        self.assertEqual(item.is_active, True)
+
+
+class JobModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Node.objects.create(
+            node_type='p',
+            location='IR-Parseh',
+            url='www.srv.mysite.com',
+            is_active=True,
+        )
+        Job.objects.create(
+            start_time=datetime.now(),
+            command='pi',
+            node=Node.objects.get(id=1),
+            uuid='07379a5f-7dfe-4efa-a8c5-038dbffd7da0',
+            url='www.e-damavandihe.ac.ir',
+        )
+        Job.objects.create(
+            start_time=datetime.now(),
+            command='pi',
+            node=Node.objects.get(id=1),
+            status='s',
+            uuid='07388a5f-1dfe-aefa-b8c5-660dbffd7da0',
+            url='www.bing.com',
+        )
+        Job.objects.create(
+            start_time=datetime.now(),
+            command='p',
+            node=Node.objects.get(id=1),
+            status='s',
+            uuid='07388a5f-1dfe-aefa-b8c5-660dbffd7da0',
+            url='www.bing.com',
+            result='Ping OK'
+        )
+
+    def test_add_job(self):
+        """Test add a scan job"""
+        item = Job.objects.get(id=1)
+
+        self.assertEqual(item.command, 'pi')
+        self.assertEqual(item.node, Node.objects.get(id=1))
+        self.assertEqual(
+            str(item.uuid), '07379a5f-7dfe-4efa-a8c5-038dbffd7da0'
+        )
+        self.assertEqual(item.url, 'www.e-damavandihe.ac.ir')
+
+    def test_uuid_result_jobs_func(self):
+        """Test get a uuid and return jobs of the uuid"""
+        items = Job.uuid_result_jobs('07388a5f-1dfe-aefa-b8c5-660dbffd7da0')
+
+        self.assertNotEqual(items[0].result, '')
+        self.assertEqual(items[0].status, 's')
+        self.assertEqual(
+            str(items[0].uuid), '07388a5f-1dfe-aefa-b8c5-660dbffd7da0'
+        )
+
+    def test_uuid_children_count_func(self):
+        """Test get a uuid and return number of child/children jobs"""
+        the_uuid = '07388a5f-1dfe-aefa-b8c5-660dbffd7da0'
+        item = Job.uuid_children_count(the_uuid)
+        alljobs = Job.objects.filter(uuid=the_uuid).count()
+        children = alljobs - 1
+
+        self.assertEqual(item, children)
+
+    def test_url_of_uuid(self):
+        """Test get a uuid and return url of it"""
+        the_uuid = '07388a5f-1dfe-aefa-b8c5-660dbffd7da0'
+        item = Job.url_of_uuid(the_uuid)
+        item2 = Job.objects.filter(uuid=the_uuid).latest('add_time')
+
+        self.assertEqual(item, item2.url)

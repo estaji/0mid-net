@@ -5,7 +5,7 @@ from .views import HomeView, ResultView, FreshResultView, PingView
 app_name = "scan"
 
 urlpatterns = [
-    path("", HomeView.as_view(), name="scan"),
+    path("", HomeView.as_view(), name="scan-home"),
     path("result/<uuid:uuid>", ResultView.as_view(), name="result"),
     path(
         "result/<uuid:uuid>/freshresult",
