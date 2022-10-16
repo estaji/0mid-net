@@ -2,7 +2,11 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils import timezone
 from datetime import timedelta
+import logging
 from scan.models import Job
+
+
+logger = logging.getLogger(__name__)
 
 
 def rm_jobs(threshold):
@@ -17,7 +21,7 @@ def rm_jobs(threshold):
 def main():
     threshold_days = 10
     rm_jobs(threshold_days)
-    print("Old jobs removed.")
+    logger.info("rm_old_jobs finished")
 
 
 class Command(BaseCommand):

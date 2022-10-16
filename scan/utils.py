@@ -1,4 +1,8 @@
 import subprocess
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def rm_http_https(url):
@@ -34,4 +38,5 @@ def pinging(url):
         result = 'Ping OK'
     else:
         result = 'Ping Failed'
+    logger.info("pinging finished {{{}}}".format(url))
     return result

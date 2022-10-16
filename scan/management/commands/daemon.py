@@ -6,9 +6,13 @@ import requests
 from datetime import timedelta
 # import urllib.request
 # import json
+import logging
 from threading import Lock, Thread
 from scan.models import Node, Job
 from scan.utils import pinging
+
+
+logger = logging.getLogger(__name__)
 
 
 def check_old_jobs():
@@ -36,6 +40,8 @@ def check_old_jobs():
             with transaction.atomic():
                 i.status = 'n'
                 i.save()
+
+    logger.info("old jobs checked successfuly")
 
 
 def none_jobs_count():
@@ -100,8 +106,8 @@ def do_job(job):
 
 
 def main():
+    logger.info("daemon started")
     check_old_jobs()
-    print("Old jobs checked successfuly.")
     while True:
         mutex = Lock()
         for _ in range(none_jobs_count()):
@@ -110,8 +116,6 @@ def main():
             mutex.release()
             t_ = Thread(target=do_job, args=(job,))
             t_.start()
-
-    print("No more none jobs found.")
 
 
 class Command(BaseCommand):

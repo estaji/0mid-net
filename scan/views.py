@@ -7,9 +7,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
 from uuid import uuid4
+import logging
 from .models import Job, Node
 from .form import ScanForm
 from .utils import pinging
+
+
+logger = logging.getLogger(__name__)
 
 
 class HomeView(TemplateView):
@@ -30,8 +34,12 @@ class HomeView(TemplateView):
                 newjob.uuid = uuid4()
                 newjob.url = url
                 newjob.save()
+                logger.info(
+                    "form is valid and newjob saved {{{}}}".format(url)
+                )
             return redirect('scan:result', uuid=newjob.uuid)
 
+        logger.warn("form is NOT valid {{{}}}".format(request.POST.get('url')))
         return render(request, self.template_name, {'form': form})
 
 
@@ -76,6 +84,7 @@ class FreshResultView(TemplateView):
                 progress = 0
             context['progress'] = progress
             if progress == 100:
+                logger.info("a 100% job finished and 286 returned to client")
                 return self.render_to_response(context, status=286)
             else:
                 return self.render_to_response(context, status=200)
@@ -92,9 +101,11 @@ class PingView(APIView):
 
         if query_string:
             result = pinging(query_string)
+            logger.info("pinging finished {{{}}}".format(query_string))
             content = {'result': '{}'.format(result)}
             return Response(content)
 
         else:
+            logger.error("pinging api needs a url")
             content = {'result': 'Need a url'}
             return Response(content)
