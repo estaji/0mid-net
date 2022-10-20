@@ -28,9 +28,11 @@ class HomeView(TemplateView):
         if form.is_valid():
             with transaction.atomic():
                 url = form.cleaned_data['url']
+                action = form.cleaned_data['action']
+                logger.debug("form action is {}".format(action))
                 newjob = Job()
                 newjob.start_time = datetime.now()
-                newjob.command = 'pi'
+                newjob.command = action
                 newjob.node = Node.objects.get(node_type='p')
                 newjob.uuid = uuid4()
                 newjob.url = url

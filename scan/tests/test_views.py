@@ -39,7 +39,10 @@ class HomeViewTest(TestCase):
 
     def test_valid_url_post_request(self):
         """Test a valid post request will redirects for home scan page"""
-        response = self.client.post('/scan/', {'url': 'www.google.com'})
+        response = self.client.post(
+            '/scan/',
+            {'url': 'www.google.com', 'action': 'ping'}
+        )
 
         self.assertEqual(response.status_code, 302)
 
