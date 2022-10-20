@@ -1,4 +1,4 @@
-{% extends 'resume/base.html' %}
+{% extends 'scan/base.html' %}
 {% load static %}
 
 {% block meta_tags %}
@@ -6,7 +6,7 @@
 {% endblock meta_tags %}
 
 {% block title %}
-
+    Online Scanner
 {% endblock title %}
 
 {% block content %}
@@ -23,8 +23,9 @@
                         <span class="input-group-text" id="basic-addon3">https://example.com/</span>
                         <input type="text" class="form-control" name="url" id="url" aria-describedby="basic-addon3">
                     </div>
+                    <p class="text-muted"><small>default http://</small></p>
                 </div>
-                <button type="submit" name="send_url" class="btn btn-primary my-2">Check Now</button>
+                <button type="submit" name="send_url" class="btn btn-primary my-2">Check Ping Now</button>
             </form>
 
         </div>
