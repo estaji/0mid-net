@@ -54,6 +54,16 @@ class HomeViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Enter a valid URL')
 
+    def test_invalid_action_post_request(self):
+        """Test an invalid action post request will show a error"""
+        response = self.client.post(
+            '/scan/',
+            {'url': 'www.google.com', 'action': 'invalidX'}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Invalid action')
+
     def test_empty_post_request(self):
         """Test an empty post request will show a error"""
         empty = ''
