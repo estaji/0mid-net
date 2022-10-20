@@ -1,0 +1,20 @@
+# Edit PATHS in this file and -start.sh and -stop.sh files
+# Put this file in /etc/systemd/system
+# Then sudo systemctl daemon-reload
+[Unit]
+Description=scan-daemon service
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/bin/bash /PATH_project/systemd/scan-start.sh
+ExecStop=/bin/bash /PATH_project/systemd/scan-stop.sh
+RestartSec=5
+TimeoutSec=60
+RuntimeMaxSec=infinity
+PIDFile=/tmp/scan-daemon.pid
+
+[Install]
+WantedBy=multi-user.target

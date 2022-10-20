@@ -6,6 +6,7 @@ import requests
 from datetime import timedelta
 # import urllib.request
 # import json
+import time
 import logging
 from threading import Lock, Thread
 from scan.models import Node, Job
@@ -48,6 +49,7 @@ def none_jobs_count():
     """Check is there any none job to do or not?"""
     try:
         count = Job.objects.filter(status='n').count()
+        # logger.debug("there are {} none_jobs_count".format(count))
         return count
     except AttributeError:
         return False
@@ -109,13 +111,16 @@ def main():
     logger.info("daemon started")
     check_old_jobs()
     while True:
-        mutex = Lock()
-        for _ in range(none_jobs_count()):
-            mutex.acquire()
-            job = get_job()
-            mutex.release()
-            t_ = Thread(target=do_job, args=(job,))
-            t_.start()
+        time.sleep(0.05)
+        if none_jobs_count() != 0:
+            mutex = Lock()
+            for _ in range(none_jobs_count()):
+                mutex.acquire()
+                job = get_job()
+                mutex.release()
+                t_ = Thread(target=do_job, args=(job,))
+                t_.start()
+        time.sleep(0.05)
 
 
 class Command(BaseCommand):
