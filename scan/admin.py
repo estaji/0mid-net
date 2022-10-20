@@ -28,7 +28,6 @@ class JobsAdmin(admin.ModelAdmin):
         'command',
         'node',
         'status',
-        'tried',
         'uuid',
         'url',
         'result',

@@ -74,7 +74,6 @@ class Job(models.Model):
         default='n',
         verbose_name="Status"
     )
-    tried = models.IntegerField(default=0, verbose_name="Try")
     uuid = models.UUIDField(verbose_name="UUID")
     url = models.URLField(
         max_length=300,
