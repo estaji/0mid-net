@@ -5,12 +5,12 @@ from blog.models import Article, Tag
 
 class StaticSitemap(Sitemap):
     """Create sitemap for static pages"""
-    changefreq = 'monthly'
+    changefreq = 'weekly'
     priority = 1.0
     protocol = 'https'
 
     def items(self):
-        return ['resume', 'blog:home', 'blog:tagslist']
+        return ['resume', 'blog:home', 'blog:tagslist', 'scan:scan-home']
 
     def location(self, item):
         return reverse(item)
