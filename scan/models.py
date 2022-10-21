@@ -104,3 +104,22 @@ class Job(models.Model):
         job = Job.objects.filter(uuid=uuid).latest('add_time')
 
         return job.url
+
+
+class ScanConfig(models.Model):
+    """Seo related tags and other configurations model"""
+    title = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Title tag',
+    )
+    description = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta description tag',
+    )
+    keywords = models.CharField(
+        max_length=160,
+        blank=True,
+        verbose_name='Meta keywords tag',
+    )

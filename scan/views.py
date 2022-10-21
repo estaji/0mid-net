@@ -9,7 +9,7 @@ from datetime import datetime
 from uuid import uuid4
 import logging
 from resume.models import Menu, SubMenu, Configuration
-from .models import Job, Node
+from .models import Job, Node, ScanConfig
 from .form import ScanForm
 from .utils import pinging
 
@@ -49,6 +49,7 @@ class HomeView(TemplateView):
         context['menu_single'] = Menu.objects.filter(icon_type='N')
         context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
         context['submenu'] = SubMenu.objects.all()
+        context['configs'] = ScanConfig.objects.all()
         context['form'] = form
         return render(request, self.template_name, context)
 
@@ -59,6 +60,7 @@ class HomeView(TemplateView):
         context['menu_single'] = Menu.objects.filter(icon_type='N')
         context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
         context['submenu'] = SubMenu.objects.all()
+        context['configs'] = ScanConfig.objects.all()
 
         return context
 
@@ -76,6 +78,7 @@ class ResultView(TemplateView):
             context['menu_single'] = Menu.objects.filter(icon_type='N')
             context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
             context['submenu'] = SubMenu.objects.all()
+            context['configs'] = ScanConfig.objects.all()
 
             uuid = self.kwargs['uuid']
             context['uuid'] = uuid

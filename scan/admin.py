@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Job, Node
+from .models import Job, Node, ScanConfig
 
 
 @admin.action(description='Set status to none')
@@ -47,3 +47,4 @@ class JobsAdmin(admin.ModelAdmin):
 
 admin.site.register(Node, NodeAdmin)
 admin.site.register(Job, JobsAdmin)
+admin.site.register(ScanConfig)
