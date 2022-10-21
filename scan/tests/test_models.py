@@ -1,6 +1,6 @@
 from django.test import TestCase
 from datetime import datetime
-from scan.models import Node, Job
+from scan.models import Node, Job, ScanConfig
 
 
 class NodeModelTests(TestCase):
@@ -111,3 +111,22 @@ class JobModelTests(TestCase):
         item2 = Job.objects.filter(uuid=the_uuid).latest('add_time')
 
         self.assertEqual(item, item2.url)
+
+
+class ScanConfigModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        ScanConfig.objects.create(
+            title='Website Title',
+            description='This a service for scanning',
+            keywords='scan, scanner, online service',
+        )
+
+    def test_add_scan_config(self):
+        """Test add parent node"""
+        item = ScanConfig.objects.get(id=1)
+
+        self.assertEqual(item.title, 'Website Title')
+        self.assertEqual(item.description, 'This a service for scanning')
+        self.assertEqual(item.keywords, 'scan, scanner, online service')
