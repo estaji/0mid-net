@@ -4,7 +4,7 @@ from core.models import User
 from blog.models import (
     Tag,
     Article,
-    Configuration
+    BlogConfig
 )
 
 
@@ -128,11 +128,11 @@ class TagAndArticleModelTests(TestCase):
         self.assertTrue(item.tag.exists())
 
 
-class ConfigurationModelTests(TestCase):
+class BlogConfigModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        Configuration.objects.create(
+        BlogConfig.objects.create(
             copyr='all rights for me',
             email='testemail@hotmail.com',
             linkedin='https://linkedin.com/in/test-user/',
@@ -143,11 +143,12 @@ class ConfigurationModelTests(TestCase):
             meta_description='this is all about my road',
             keywords='keyword1, keyword2',
             robots='index',
+            twitter_user='myusername',
         )
 
     def test_add_configuration(self):
         """Test add a configuration"""
-        item = Configuration.objects.get(id=1)
+        item = BlogConfig.objects.get(id=1)
 
         self.assertEqual(item.copyr, 'all rights for me')
         self.assertEqual(item.email, 'testemail@hotmail.com')
@@ -159,3 +160,4 @@ class ConfigurationModelTests(TestCase):
         self.assertEqual(item.meta_description, 'this is all about my road')
         self.assertEqual(item.keywords, 'keyword1, keyword2')
         self.assertEqual(item.robots, 'index')
+        self.assertEqual(item.twitter_user, 'myusername')

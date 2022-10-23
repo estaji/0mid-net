@@ -9,7 +9,7 @@ from resume.models import (
     SoftSkill,
     Language,
     Jumbotron,
-    Configuration,
+    ResumeConfig,
     SocialAccount,
 )
 
@@ -18,15 +18,14 @@ class ResumeListViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        Configuration.objects.create(
+        ResumeConfig.objects.create(
             site_title='My site',
             title='My full name',
             description='This is my personal website',
             robots='follow',
             author='Mr Test',
             keywords='personal blog, tag',
-            favicon=tempfile.NamedTemporaryFile(suffix=".png").name,
-            copyr='All rights reserved',
+            # favicon=tempfile.NamedTemporaryFile(suffix=".png").name,
             og_title='My OpenGraph title',
             twitter_user='username',
         )

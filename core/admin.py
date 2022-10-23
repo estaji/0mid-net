@@ -26,4 +26,15 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class SubMenuAdmin(admin.ModelAdmin):
+    list_display = ('title', 'parent', 'order', 'url',)
+
+
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'icon_type',)
+
+
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Menu, MenuAdmin)
+admin.site.register(models.SubMenu, SubMenuAdmin)
+admin.site.register(models.CoreConfig)

@@ -7,9 +7,7 @@ from .models import (
     Language,
     Jumbotron,
     SocialAccount,
-    Configuration,
-    Menu,
-    SubMenu
+    ResumeConfig,
 )
 
 
@@ -33,14 +31,6 @@ class LanguageSkillAdmin(admin.ModelAdmin):
     list_display = ('title', 'order')
 
 
-class SubMenuAdmin(admin.ModelAdmin):
-    list_display = ('title', 'parent', 'order', 'url',)
-
-
-class MenuAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order', 'icon_type',)
-
-
 admin.site.register(Job, JobAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(TechSkill, TechSkillAdmin)
@@ -48,6 +38,4 @@ admin.site.register(SoftSkill, SoftSkillAdmin)
 admin.site.register(Language, LanguageSkillAdmin)
 admin.site.register(Jumbotron)
 admin.site.register(SocialAccount)
-admin.site.register(Configuration)
-admin.site.register(Menu, MenuAdmin)
-admin.site.register(SubMenu, SubMenuAdmin)
+admin.site.register(ResumeConfig)

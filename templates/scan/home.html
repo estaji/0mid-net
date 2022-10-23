@@ -3,9 +3,9 @@
 
 {% block meta_tags %}
     <meta name="description" content="{{ configs.0.description }}">
-    <meta name="author" content="{{ object_list.0.author }}">
+    <meta name="author" content="{{ configs.0.author }}">
     <meta name="keywords" content="{{ configs.0.keywords }}">
-    <meta name="robots" content="{{ object_list.0.robots }}">
+    <meta name="robots" content="{{ configs.0.robots }}">
     <meta property="og:title" content="{{ configs.0.title }}" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
     <meta property="og:type" content="website" />
@@ -13,8 +13,8 @@
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="{{ configs.0.title }}"/>
     <meta name="twitter:description" content="{{ configs.0.description }}"/>
-    <meta name="twitter:site" content="@{{ object_list.0.twitter_user }}"/>
-    <meta name="twitter:creator" content="@{{ object_list.0.twitter_user }}"/>
+    <meta name="twitter:site" content="@{{ configs.0.twitter_user }}"/>
+    <meta name="twitter:creator" content="@{{ configs.0.twitter_user }}"/>
     <script type="application/ld+json">
         {
             "@context": "http://schema.org",
@@ -23,14 +23,14 @@
             "description": "{{ configs.0.description }}",
             "publisher": {
                 "@type": "ProfilePage",
-                "name": "{{ object_list.0.author }}'s Website"
+                "name": "{{ configs.0.author }}'s Website"
             }
         }
     </script>
 {% endblock meta_tags %}
 
 {% block title %}
-    {{ object_list.0.title }} | {{ configs.0.title }}
+    {{ configs.0.title }}
 {% endblock title %}
 
 {% block content %}

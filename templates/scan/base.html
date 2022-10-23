@@ -4,13 +4,13 @@
 
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{object_list.0.google_analytics}}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{core_conf.0.google_analytics}}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', '{{object_list.0.google_analytics}}');
+      gtag('config', '{{core_conf.0.google_analytics}}');
     </script>
 
     <!-- meta tags -->
@@ -25,7 +25,7 @@
     
     
 
-    <link rel="icon" type="image/png" href="{{ object_list.0.favicon.url }}"/>
+    <link rel="icon" type="image/png" href="{{ core_conf.0.favicon.url }}"/>
 
     <title>
         {% block title %}{% endblock title %}
@@ -77,7 +77,7 @@
 
     <footer class="text-muted">
         <div class="container text-center aria-hidden="true"">
-          <p class="theme">{{ object_list.0.copyr }} {% now "Y" %}</p>
+          <p class="theme">{{ core_conf.0.copyr }} {% now "Y" %}</p>
         </div>
     </footer>
 

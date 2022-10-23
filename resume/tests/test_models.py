@@ -7,9 +7,8 @@ from resume.models import (
     SoftSkill,
     Language,
     Jumbotron,
-    Configuration,
+    ResumeConfig,
     SocialAccount,
-    Menu
 )
 
 
@@ -231,26 +230,24 @@ class SocialAccountModelTests(TestCase):
             self.assertURLEqual(item.twitter, 'https://twitter.com/acc')
 
 
-class ConfigurationModelTests(TestCase):
+class ResumeConfigModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        Configuration.objects.create(
+        ResumeConfig.objects.create(
             site_title='My site',
             title='My full name',
             description='This is my personal website',
             robots='follow',
             author='Mr Test',
             keywords='personal blog, tag',
-            copyr='All rights reserved',
             og_title='My OpenGraph title',
             twitter_user='username',
-            google_analytics='UA-155242907-7',
         )
 
     def test_add_configuration(self):
         """Test add a configuration"""
-        item = Configuration.objects.get(id=1)
+        item = ResumeConfig.objects.get(id=1)
 
         self.assertEqual(item.site_title, 'My site')
         self.assertEqual(item.title, 'My full name')
@@ -258,25 +255,5 @@ class ConfigurationModelTests(TestCase):
         self.assertEqual(item.robots, 'follow')
         self.assertEqual(item.author, 'Mr Test')
         self.assertEqual(item.keywords, 'personal blog, tag')
-        self.assertEqual(item.copyr, 'All rights reserved')
         self.assertEqual(item.og_title, 'My OpenGraph title')
         self.assertEqual(item.twitter_user, 'username')
-        self.assertEqual(item.google_analytics, 'UA-155242907-7')
-
-
-class MenuModelTests(TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        Menu.objects.create(
-            title='Blog',
-            url='https://blog.test.org',
-            order='2',
-            icon_type='N',
-        )
-
-    def test_add_menu_item(self):
-        """Test add an item to menu"""
-        item = Menu.objects.get(id=1)
-
-        self.assertEqual(item.url, 'https://blog.test.org')

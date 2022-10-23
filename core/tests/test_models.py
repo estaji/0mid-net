@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from core.models import Menu, CoreConfig
 
 
 class UserModelTests(TestCase):
@@ -37,3 +38,38 @@ class UserModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+
+class MenuModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Menu.objects.create(
+            title='Blog',
+            url='https://blog.test.org',
+            order='2',
+            icon_type='N',
+        )
+
+    def test_add_menu_item(self):
+        """Test add an item to menu"""
+        item = Menu.objects.get(id=1)
+
+        self.assertEqual(item.url, 'https://blog.test.org')
+
+
+class CoreConfigModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        CoreConfig.objects.create(
+            google_analytics='UA-155242907-7',
+            copyr='All rights reserved',
+        )
+
+    def test_add_configuration(self):
+        """Test add a configuration"""
+        item = CoreConfig.objects.get(id=1)
+
+        self.assertEqual(item.google_analytics, 'UA-155242907-7')
+        self.assertEqual(item.copyr, 'All rights reserved')

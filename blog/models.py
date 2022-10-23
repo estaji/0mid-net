@@ -150,7 +150,7 @@ class Article(models.Model):
     objects = ArticleManager()
 
 
-class Configuration(models.Model):
+class BlogConfig(models.Model):
     """Blog configurations model"""
     copyr = models.CharField(
         max_length=100,
@@ -198,4 +198,9 @@ class Configuration(models.Model):
         max_length=60,
         blank=True,
         verbose_name='Meta robots tag',
+    )
+    twitter_user = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name='Twitter username for Twitter site tag',
     )

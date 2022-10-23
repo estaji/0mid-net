@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
 from uuid import uuid4
 import logging
-from resume.models import Menu, SubMenu, Configuration
+from core.models import Menu, SubMenu, CoreConfig
 from .models import Job, Node, ScanConfig
 from .form import ScanForm
 from .utils import pinging
@@ -44,7 +44,7 @@ class HomeView(TemplateView):
 
         logger.warn("form is NOT valid {{{}}}".format(request.POST.get('url')))
         context = super().get_context_data(**kwargs)
-        context['object_list'] = Configuration.objects.all()
+        context['core_conf'] = CoreConfig.objects.all()
         context['menu_parent'] = Menu.objects.filter(icon_type='DD')
         context['menu_single'] = Menu.objects.filter(icon_type='N')
         context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
@@ -55,7 +55,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = Configuration.objects.all()
+        context['core_conf'] = CoreConfig.objects.all()
         context['menu_parent'] = Menu.objects.filter(icon_type='DD')
         context['menu_single'] = Menu.objects.filter(icon_type='N')
         context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
@@ -73,7 +73,7 @@ class ResultView(TemplateView):
     def get_context_data(self, **kwargs):
         try:
             context = super().get_context_data(**kwargs)
-            context['object_list'] = Configuration.objects.all()
+            context['core_conf'] = CoreConfig.objects.all()
             context['menu_parent'] = Menu.objects.filter(icon_type='DD')
             context['menu_single'] = Menu.objects.filter(icon_type='N')
             context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
