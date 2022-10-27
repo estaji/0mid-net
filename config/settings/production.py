@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['domain.com', 'www.domain.com']
+ALLOWED_HOSTS = ['0mid.net', 'www.0mid.net']
 
 LOGGING = {
     "version": 1,
