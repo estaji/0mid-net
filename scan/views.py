@@ -61,6 +61,7 @@ class HomeView(TemplateView):
         context['menu_disabled'] = Menu.objects.filter(icon_type='DI')
         context['submenu'] = SubMenu.objects.all()
         context['configs'] = ScanConfig.objects.all()
+        context['active_nodes'] = Node.objects.filter(is_active=True)
 
         return context
 
