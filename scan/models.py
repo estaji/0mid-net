@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from scan.utils import rm_http_https
 
 
 class Node(models.Model):
@@ -102,8 +103,9 @@ class Job(models.Model):
     def url_of_uuid(uuid):
         """Get a uuid and return url of it"""
         job = Job.objects.filter(uuid=uuid).latest('add_time')
+        job = rm_http_https(job.url)
 
-        return job.url
+        return job
 
 
 class ScanConfig(models.Model):
