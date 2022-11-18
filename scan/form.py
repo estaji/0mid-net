@@ -12,8 +12,8 @@ class ScanForm(forms.Form):
         if action == 'ping':
             action = 'pi'
             return action
-        # elif action == 'http':
-        #    action = 'hi'
-        #    return action
+        elif action == 'http':
+            action = 'hi'
+            return action
         else:
             self._errors['form'] = self.error_class(['Invalid action.'])

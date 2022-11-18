@@ -73,6 +73,14 @@ class JobModelTests(TestCase):
             url='www.bing.com',
             result='Ping OK'
         )
+        Job.objects.create(
+            start_time=datetime.now(),
+            command='hi',
+            node=Node.objects.get(id=1),
+            status='n',
+            uuid='9bd39a02-3ab5-4fce-8155-f3f1c97c9543',
+            url='stackoverflow.com',
+        )
 
     def test_add_job(self):
         """Test add a scan job"""
@@ -84,6 +92,17 @@ class JobModelTests(TestCase):
             str(item.uuid), '07379a5f-7dfe-4efa-a8c5-038dbffd7da0'
         )
         self.assertEqual(item.url, 'www.e-damavandihe.ac.ir')
+
+    def test_add_http_job(self):
+        """Test add a http scan job"""
+        item = Job.objects.get(id=4)
+
+        self.assertEqual(item.command, 'hi')
+        self.assertEqual(item.status, 'n')
+        self.assertEqual(
+            str(item.uuid), '9bd39a02-3ab5-4fce-8155-f3f1c97c9543'
+        )
+        self.assertEqual(item.url, 'stackoverflow.com')
 
     def test_uuid_result_jobs_func(self):
         """Test get a uuid and return jobs of the uuid"""

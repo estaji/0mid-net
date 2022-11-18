@@ -1,4 +1,5 @@
 import subprocess
+import requests
 import logging
 
 
@@ -34,10 +35,40 @@ def pinging(url):
     url = rm_http_https(url)
     url = rm_after_slash(url)
     logger.info("pinging started {{{}}}".format(url))
-    output = subprocess.run(["ping", "-c 4", url])
+    output = subprocess.run(["ping", "-c 5", url])
     if output.returncode == 0:
         result = 'Ping OK'
     else:
         result = 'Ping Failed'
     logger.info("pinging finished {{{}}}".format(url))
     return result
+
+
+def http_check(url):
+    """Send http request and return status code of a given url"""
+    logger.info("http_check started {{{}}}".format(url))
+    threshold = 7
+    try:
+        r = requests.head(url, timeout=threshold)
+        code = r.status_code
+        if 300 < code < 400:
+            location = r.headers.get('Location', url)
+            if len(location) > 50:
+                location = location[:50] + "..."
+            result = "{} - OK but redirected to {}".format(str(code), location)
+        elif code == 200:
+            result = "{} - OK".format(str(code))
+        elif code == 404:
+            result = "{} - OK but not found".format(str(code))
+        elif code == 403:
+            result = "{} - OK but forbidden".format(str(code))
+        else:
+            result = code
+        logger.info("http_check finished {{{}}}".format(url))
+        # logger.debug("status_code is {}".format(code))
+        # logger.debug("result is {}".format(result))
+        return result
+    except (requests.ConnectionError, requests.exceptions.ReadTimeout):
+        result = "Failed to connect or time out > {} seconds".format(threshold)
+        logger.info("http_check finished {{{}}}".format(url))
+        return result

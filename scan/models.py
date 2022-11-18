@@ -45,6 +45,8 @@ class Job(models.Model):
     COMMAND_CHOICES = [
         ('pi', 'ping instantly'),
         ('p', 'ping'),
+        ('hi', 'http instantly'),
+        ('h', 'http'),
     ]
     STATUS_CHOICES = [
         ('n', 'none'),

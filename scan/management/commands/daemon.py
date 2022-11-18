@@ -10,7 +10,7 @@ import time
 import logging
 from threading import Lock, Thread
 from scan.models import Node, Job
-from scan.utils import pinging
+from scan.utils import pinging, http_check
 
 
 logger = logging.getLogger(__name__)
@@ -101,6 +101,39 @@ def do_job(job):
                 # theurl = "{}/api/ping?url={}".format(i.url, job.url)
                 # response = urllib.request.urlopen(theurl).read()
                 # data = json.loads(response.decode('utf-8'))
+                with transaction.atomic():
+                    job.result = data['result']
+                    job.status = 's'
+                    job.save()
+
+    elif job.command == 'hi':
+        nodes = Node.objects.filter(is_active=True)
+        for i in nodes:
+            with transaction.atomic():
+                newjob = Job()
+                newjob.start_time = timezone.now()
+                newjob.command = 'h'
+                newjob.node = i
+                newjob.uuid = job.uuid
+                newjob.url = job.url
+                newjob.save()
+        with transaction.atomic():
+            job.status = 's'
+            job.save()
+    elif job.command == 'h':
+        if job.node.node_type == 'p':
+            result = http_check(job.url)
+            with transaction.atomic():
+                job.result = result
+                job.status = 's'
+                job.save()
+        else:
+            nodes = Node.objects.filter(is_active=True, node_type='c')
+            for i in nodes:
+                url = '{}/scan/api/http?url={}'.format(i.url, job.url)
+                headers = {'Authorization': 'Token {}'.format(i.token)}
+                response = requests.get(url, headers=headers)
+                data = response.json()
                 with transaction.atomic():
                     job.result = data['result']
                     job.status = 's'
