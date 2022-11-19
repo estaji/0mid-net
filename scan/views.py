@@ -11,7 +11,7 @@ import logging
 from core.models import Menu, SubMenu, CoreConfig
 from .models import Job, Node, ScanConfig
 from .form import ScanForm
-from .utils import pinging
+from .utils import pinging, http_check
 
 
 logger = logging.getLogger(__name__)
@@ -131,11 +131,34 @@ class PingView(APIView):
 
         if query_string:
             result = pinging(query_string)
-            logger.info("pinging finished {{{}}}".format(query_string))
+            logger.info(
+                "pinging api view finished {{{}}}".format(query_string)
+            )
             content = {'result': '{}'.format(result)}
             return Response(content)
 
         else:
             logger.error("pinging api needs a url")
+            content = {'result': 'Need a url'}
+            return Response(content)
+
+
+class HttpView(APIView):
+    """Get request from parent, do Http check and return result"""
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        query_string = request.GET.get("url", None)
+
+        if query_string:
+            result = http_check(query_string)
+            content = {'result': '{}'.format(result)}
+            logger.info(
+                "http_checked api view finished {{{}}}".format(query_string)
+            )
+            return Response(content)
+
+        else:
+            logger.error("http_check api needs a url")
             content = {'result': 'Need a url'}
             return Response(content)

@@ -62,6 +62,10 @@ def http_check(url):
             result = "{} - OK but not found".format(str(code))
         elif code == 403:
             result = "{} - OK but forbidden".format(str(code))
+        elif code == 500:
+            result = "{} - Internal Server Error".format(str(code))
+        elif code == 503:
+            result = "{} - Service Unavailable Error".format(str(code))
         else:
             result = code
         logger.info("http_check finished {{{}}}".format(url))

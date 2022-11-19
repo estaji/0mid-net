@@ -290,3 +290,42 @@ class PingViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Need a url')
+
+
+class HttpViewTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        myuser = User.objects.create(
+            email='testuser@gmail.com',
+            name='Cloud User',
+            is_active=True,
+            is_staff=False
+        )
+        Token.objects.create(user=myuser)
+
+    def test_apiview_works_with_authentication(self):
+        """Test apiview for http check works well with token authentication"""
+        client = APIClient()
+        user = User.objects.get(email='testuser@gmail.com')
+        client.credentials(HTTP_AUTHORIZATION='Token ' + str(user.auth_token))
+        response = client.get('/scan/api/http/?url=http://google.com')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_apiview_needs_authentication(self):
+        """Test apiview returns 401 error without authentication"""
+        client = APIClient()
+        response = client.get('/scan/api/http/?url=https://google.com')
+
+        self.assertEqual(response.status_code, 401)
+
+    def test_apiview_needs_url_parameter(self):
+        """Test apiview needs url parameter to work"""
+        client = APIClient()
+        user = User.objects.get(email='testuser@gmail.com')
+        client.credentials(HTTP_AUTHORIZATION='Token ' + str(user.auth_token))
+        response = client.get('/scan/api/http/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Need a url')

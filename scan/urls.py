@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomeView, ResultView, FreshResultView, PingView
+from .views import HomeView, ResultView, FreshResultView, PingView, HttpView
 
 
 app_name = "scan"
@@ -13,4 +13,5 @@ urlpatterns = [
         name="scan-fresh-result"
     ),
     path("api/ping/", PingView.as_view(), name="api-ping"),
+    path("api/http/", HttpView.as_view(), name="api-http"),
 ]
