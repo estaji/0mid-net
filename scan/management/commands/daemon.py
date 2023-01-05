@@ -10,7 +10,7 @@ import time
 import logging
 from threading import Lock, Thread
 from scan.models import Node, Job
-from scan.utils import pinging, http_check
+from scan.utils import pinging, http_check, ssl_check
 
 
 logger = logging.getLogger(__name__)
@@ -138,6 +138,12 @@ def do_job(job):
                     job.result = data['result']
                     job.status = 's'
                     job.save()
+    elif job.command == 'si':
+        result = ssl_check(job.url)
+        with transaction.atomic():
+            job.result = result
+            job.status = 's'
+            job.save()
 
 
 def main():

@@ -15,5 +15,8 @@ class ScanForm(forms.Form):
         elif action == 'http':
             action = 'hi'
             return action
+        elif action == 'ssl':
+            action = 'si'
+            return action
         else:
             self._errors['form'] = self.error_class(['Invalid action.'])

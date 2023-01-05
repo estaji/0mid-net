@@ -57,6 +57,17 @@ class HomeViewTest(TestCase):
 
         self.assertEqual(response.status_code, 302)
 
+    def test_valid_ssl_action_post_request(self):
+        """Test a valid ssl action post request,"""
+        """will redirects for home scan page"""
+
+        response = self.client.post(
+            '/scan/',
+            {'url': 'www.google.com', 'action': 'ssl'}
+        )
+
+        self.assertEqual(response.status_code, 302)
+
     def test_invalid_url_post_request(self):
         """Test an invalid post request will show a error"""
         bad_url = 'wwwgoogle'

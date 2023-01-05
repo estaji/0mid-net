@@ -81,6 +81,14 @@ class JobModelTests(TestCase):
             uuid='9bd39a02-3ab5-4fce-8155-f3f1c97c9543',
             url='stackoverflow.com',
         )
+        Job.objects.create(
+            start_time=datetime.now(),
+            command='si',
+            node=Node.objects.get(id=1),
+            status='n',
+            uuid='9bd22a02-3ab2-4fce-8155-f3f1c97c9543',
+            url='sslshopper.com',
+        )
 
     def test_add_job(self):
         """Test add a scan job"""
@@ -103,6 +111,17 @@ class JobModelTests(TestCase):
             str(item.uuid), '9bd39a02-3ab5-4fce-8155-f3f1c97c9543'
         )
         self.assertEqual(item.url, 'stackoverflow.com')
+
+    def test_add_ssl_job(self):
+        """Test add a ssl scan job"""
+        item = Job.objects.get(id=5)
+
+        self.assertEqual(item.command, 'si')
+        self.assertEqual(item.status, 'n')
+        self.assertEqual(
+            str(item.uuid), '9bd22a02-3ab2-4fce-8155-f3f1c97c9543'
+        )
+        self.assertEqual(item.url, 'sslshopper.com')
 
     def test_uuid_result_jobs_func(self):
         """Test get a uuid and return jobs of the uuid"""

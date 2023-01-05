@@ -76,3 +76,42 @@ def http_check(url):
         result = "Failed to connect or time out > {} seconds".format(threshold)
         logger.info("http_check finished {{{}}}".format(url))
         return result
+
+
+def ssl_check(url):
+    """Send request and return SSl certificate status of a given url"""
+    logger.info("ssl_check started {{{}}}".format(url))
+    url = rm_http_https(url)
+    url = "https://" + url
+
+    try:
+        requests.get(url, verify=True, allow_redirects=False)
+        result = 'OK, no ssl certificate issue detected'
+        return result
+    except Exception as error:
+        error_message = str(error)
+        if error_message.find('expired') != -1:
+            result = 'ERROR, the ssl certificate has expired or revoked'
+            # logger.debug("ssl error_message is {}".format(error_message))
+            logger.info("ssl_check finished {{{}}}".format(url))
+            return result
+        elif error_message.find("doesn't match") != -1:
+            result = "ERROR, the ssl certificate common name has mismatched"
+            # logger.debug("ssl error_message is {}".format(error_message))
+            logger.info("ssl_check finished {{{}}}".format(url))
+            return result
+        elif error_message.find("chain") != -1:
+            result = "ERROR, the ssl chain is NOT valid"
+            # logger.debug("ssl error_message is {}".format(error_message))
+            logger.info("ssl_check finished {{{}}}".format(url))
+            return result
+        elif error_message.find("self-signed") != -1:
+            result = "ERROR, the ssl certificate is self signed"
+            # logger.debug("ssl error_message is {}".format(error_message))
+            logger.info("ssl_check finished {{{}}}".format(url))
+            return result
+        else:
+            result = "ERROR, the ssl certificate is INVALID"
+            # logger.debug("ssl error_message is {}".format(error_message))
+            logger.info("ssl_check finished {{{}}}".format(url))
+            return result

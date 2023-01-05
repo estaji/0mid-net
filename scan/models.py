@@ -47,6 +47,7 @@ class Job(models.Model):
         ('p', 'ping'),
         ('hi', 'http instantly'),
         ('h', 'http'),
+        ('si', 'ssl instantly'),
     ]
     STATUS_CHOICES = [
         ('n', 'none'),
