@@ -70,6 +70,7 @@ class ResumeListViewTest(TestCase):
         Jumbotron.objects.create(
             greeting='Welcome to my site',
             title='My full name',
+            occupation='SysOps Engineer',
             description='This is my personal website',
             email='me@test.com',
             picture=tempfile.NamedTemporaryFile(suffix=".jpg").name,
@@ -106,3 +107,9 @@ class ResumeListViewTest(TestCase):
         response = self.client.get(reverse('resume'))
 
         self.assertContains(response, 'Linux servers and CloudLinux')
+
+    def test_view_jumbotron_items(self):
+        """Test view, jumbotron contains defined items"""
+        response = self.client.get(reverse('resume'))
+
+        self.assertContains(response, 'SysOps Engineer')

@@ -67,8 +67,11 @@
 {% block content %}
     <div class="p-5 pt-1 mb-4 mt-1 bg-light rounded-3">
         <div class="container-fluid py-5">
-            <p class="lead">{{ jumbotron.greeting }}</p>
+            {% if jumbotron.greeting %}
+                <p class="fs-7">{{ jumbotron.greeting }}</p>
+            {% endif %}
             <h1 class="display-5">{{ jumbotron.title }}</h1>
+            <p class="fs-4">{{ jumbotron.occupation }}</p>
             <div class="lead text-center">
                 <img src="{{ jumbotron.picture.url }}" class="img-fluid img-thumbnail rounded-circle" alt="{{ jumbotron.title }} Picture" width="200" height="200">
             </div>

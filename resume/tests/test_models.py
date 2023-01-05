@@ -203,6 +203,7 @@ class JumbotronModelTests(TestCase):
         Jumbotron.objects.create(
             greeting='Welcome to my site',
             title='My full name',
+            occupation='An Engineer',
             description='This is my personal website',
             email='me@test.com',
         )
@@ -213,6 +214,7 @@ class JumbotronModelTests(TestCase):
 
         self.assertEqual(item.greeting, 'Welcome to my site')
         self.assertEqual(item.title, 'My full name')
+        self.assertEqual(item.occupation, 'An Engineer')
         self.assertEqual(item.description, 'This is my personal website')
         self.assertEqual(item.email, 'me@test.com')
 

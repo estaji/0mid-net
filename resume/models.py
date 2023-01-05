@@ -123,8 +123,17 @@ class Language(models.Model):
 
 class Jumbotron(models.Model):
     """Get Jumbotron information of website"""
-    greeting = models.CharField(max_length=50, verbose_name='Welcome Message')
+    greeting = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name='Welcome Message'
+    )
     title = models.CharField(max_length=50, verbose_name='Title/Name')
+    occupation = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Job Titles'
+    )
     description = models.TextField(verbose_name='Description')
     email = models.EmailField(max_length=254, verbose_name='Email')
     picture = models.ImageField(
