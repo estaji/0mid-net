@@ -21,7 +21,7 @@
         {
             "@context": "https://schema.org/",
             "@type": "WebPage",
-            "name": "{{ object.title }}",
+            "name": "{{ settings.title }}",
             "description": "{{ settings.meta_description }}",
             "author": {
                 "@id": "{{ settings.meta_author }}"
@@ -37,7 +37,6 @@
                 "@id": "{{ settings.meta_author }}"
             },
             "headline": "{{ settings.title }}",
-            "name": "{{ settings.title }}",
             "mainEntityOfPage": "{{ request.build_absolute_uri }}",
             "url": "{{ request.build_absolute_uri }}"
         }
