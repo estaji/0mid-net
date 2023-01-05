@@ -139,6 +139,17 @@ def do_job(job):
                     job.status = 's'
                     job.save()
     elif job.command == 'si':
+        with transaction.atomic():
+            newjob = Job()
+            newjob.start_time = timezone.now()
+            newjob.command = 's'
+            newjob.node = Node.objects.filter(node_type='p').first()
+            newjob.uuid = job.uuid
+            newjob.url = job.url
+            newjob.save()
+            job.status = 's'
+            job.save()
+    elif job.command == 's':
         result = ssl_check(job.url)
         with transaction.atomic():
             job.result = result

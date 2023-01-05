@@ -111,7 +111,8 @@ def ssl_check(url):
             logger.info("ssl_check finished {{{}}}".format(url))
             return result
         else:
-            result = "ERROR, the ssl certificate is INVALID"
+            result = """ERROR, the ssl certificate is INVALID
+             (or the url is unreachable)"""
             # logger.debug("ssl error_message is {}".format(error_message))
             logger.info("ssl_check finished {{{}}}".format(url))
             return result

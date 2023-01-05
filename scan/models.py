@@ -48,6 +48,7 @@ class Job(models.Model):
         ('hi', 'http instantly'),
         ('h', 'http'),
         ('si', 'ssl instantly'),
+        ('s', 'ssl'),
     ]
     STATUS_CHOICES = [
         ('n', 'none'),
