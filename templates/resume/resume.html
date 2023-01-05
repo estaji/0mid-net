@@ -81,6 +81,9 @@
             <div class="d-flex justify-content-center">
                 <a class="btn btn-outline-info" href="mailto:{{ jumbotron.email }}" role="button"><i class="bi bi-envelope" aria-hidden="true"> Message Me</i></a>
             </div>
+            {% if social_account.linkedin != '' %}
+                <a class="float-end" href="{{ social_account.linkedin }}" target="_blank"><i class="bi bi-linkedin theme social-icons"></i></a>
+            {% endif %}
         </div>
     </div>
 
