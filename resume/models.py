@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import F
 from .utils import month_year_start, month_year_end, year_start, year_end
+from ckeditor.fields import RichTextField
 
 
 class Job(models.Model):
@@ -73,7 +74,7 @@ class Education(models.Model):
 
 
 class TechSkill(models.Model):
-    """Technical Skills model"""
+    """Technical Skills model for accordion style"""
     title = models.CharField(max_length=200, verbose_name='Technical Skill')
     certs = models.CharField(
         blank=True,
@@ -88,6 +89,11 @@ class TechSkill(models.Model):
 
     class Meta:
         ordering = ['order']
+
+
+class TechSkillText(models.Model):
+    """Technical Skills model for text style"""
+    content = RichTextField(verbose_name="Content")
 
 
 class SoftSkill(models.Model):
@@ -166,6 +172,11 @@ class SocialAccount(models.Model):
 
 class ResumeConfig(models.Model):
     """Seo related tags and other configurations model for resume app"""
+    SKILL_STYLE = [
+        ('a', 'accordion style'),
+        ('t', 'text style'),
+    ]
+
     site_title = models.CharField(
         max_length=60,
         blank=True,
@@ -205,4 +216,10 @@ class ResumeConfig(models.Model):
         max_length=50,
         blank=True,
         verbose_name='Twitter username for Twitter site tag',
+    )
+    skills_style = models.CharField(
+        max_length=1,
+        choices=SKILL_STYLE,
+        default="a",
+        verbose_name="Skills section style"
     )

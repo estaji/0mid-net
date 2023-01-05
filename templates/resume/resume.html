@@ -81,6 +81,36 @@
         </div>
     </div>
 
+    {% if object_list.0.skills_style == "a" %}
+        <div class="card">
+            <h2 class="card-header">Technical Skills</h2>
+            <div class="card-body">
+                <div class="accordion accordion-flush" id="accordionTechSkills">
+                    {% for skill in tech_skill_accordion %}
+                        <div class="accordion-item">
+                            <div class="accordion-header" id="flush-heading{{ forloop.counter }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse{{ forloop.counter }}">
+                                    <h5>{{ skill.title }}&nbsp;<span class="badge bg-secondary">{{ skill.certs }}</span></h5>
+                                </button>
+                            </div>
+                            <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionTechSkills">
+                                <div class="accordion-body">{{ skill.details|linebreaks }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if object_list.0.skills_style == "t" %}
+        <div class="card">
+            <h2 class="card-header">Technical Skills</h2>
+            <div class="card-body">
+                {{ tech_skill_text.content|safe }}
+            </div>
+        </div>
+    {% endif %}
+    </br>
     <div class="card">
         <h2 class="card-header">Experiences</h2>
         {% for job in job %}
@@ -119,26 +149,6 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
-    </br>
-    <div class="card">
-        <h2 class="card-header">Technical Skills</h2>
-        <div class="card-body">
-            <div class="accordion accordion-flush" id="accordionTechSkills">
-                {% for skill in tech_skill %}
-                    <div class="accordion-item">
-                        <div class="accordion-header" id="flush-heading{{ forloop.counter }}">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse{{ forloop.counter }}">
-                                <h5>{{ skill.title }}&nbsp;<span class="badge bg-secondary">{{ skill.certs }}</span></h5>
-                            </button>
-                        </div>
-                        <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionTechSkills">
-                            <div class="accordion-body">{{ skill.details|linebreaks }}</div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
     </div>
     </br>
     <div class="card">

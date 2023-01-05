@@ -3,6 +3,7 @@ from .models import (
     Job,
     Education,
     TechSkill,
+    TechSkillText,
     SoftSkill,
     Language,
     Jumbotron,
@@ -34,6 +35,7 @@ class LanguageSkillAdmin(admin.ModelAdmin):
 admin.site.register(Job, JobAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(TechSkill, TechSkillAdmin)
+admin.site.register(TechSkillText)
 admin.site.register(SoftSkill, SoftSkillAdmin)
 admin.site.register(Language, LanguageSkillAdmin)
 admin.site.register(Jumbotron)

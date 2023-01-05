@@ -7,6 +7,7 @@ from resume.models import (
     Job,
     Education,
     TechSkill,
+    TechSkillText,
     SoftSkill,
     Language,
 )
@@ -22,7 +23,8 @@ class ResumeView(ListView):
         context['jumbotron'] = Jumbotron.objects.first()
         context['job'] = Job.objects.all()
         context['education'] = Education.objects.all()
-        context['tech_skill'] = TechSkill.objects.all()
+        context['tech_skill_accordion'] = TechSkill.objects.all()
+        context['tech_skill_text'] = TechSkillText.objects.first()
         context['soft_skill'] = SoftSkill.objects.all()
         context['language'] = Language.objects.all()
         context['core_conf'] = CoreConfig.objects.all()

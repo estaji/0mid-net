@@ -4,6 +4,7 @@ from resume.models import (
     Job,
     Education,
     TechSkill,
+    TechSkillText,
     SoftSkill,
     Language,
     Jumbotron,
@@ -132,7 +133,7 @@ class TechSkillModelTests(TestCase):
         )
 
     def test_add_techskill(self):
-        """Test add a technical skill"""
+        """Test add a technical skill in accordion style"""
         item = TechSkill.objects.get(id=1)
 
         self.assertEqual(item.title, 'Network Administration')
@@ -142,6 +143,21 @@ class TechSkillModelTests(TestCase):
             'the highest networking certifications in the industry.'
         )
         self.assertEqual(item.order, 1)
+
+
+class TechSkillTextModelTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        TechSkillText.objects.create(
+            content='A Simple Content',
+        )
+
+    def test_add_techskilltext(self):
+        """Test add a technical skill in text style"""
+        item = TechSkillText.objects.get(id=1)
+
+        self.assertEqual(item.content, 'A Simple Content')
 
 
 class SoftSkillModelTests(TestCase):
@@ -243,6 +259,7 @@ class ResumeConfigModelTests(TestCase):
             keywords='personal blog, tag',
             og_title='My OpenGraph title',
             twitter_user='username',
+            skills_style="t"
         )
 
     def test_add_configuration(self):
@@ -257,3 +274,4 @@ class ResumeConfigModelTests(TestCase):
         self.assertEqual(item.keywords, 'personal blog, tag')
         self.assertEqual(item.og_title, 'My OpenGraph title')
         self.assertEqual(item.twitter_user, 'username')
+        self.assertEqual(item.skills_style, 't')

@@ -6,6 +6,7 @@ from resume.models import (
     Job,
     Education,
     TechSkill,
+    TechSkillText,
     SoftSkill,
     Language,
     Jumbotron,
@@ -28,6 +29,7 @@ class ResumeListViewTest(TestCase):
             # favicon=tempfile.NamedTemporaryFile(suffix=".png").name,
             og_title='My OpenGraph title',
             twitter_user='username',
+            skills_style='t'
         )
         Job.objects.create(
             title='Software Engineer',
@@ -52,6 +54,9 @@ class ResumeListViewTest(TestCase):
             certs='CCIE',
             details='the highest networking certifications in the industry.',
             order=1,
+        )
+        TechSkillText.objects.create(
+            content="Linux servers and CloudLinux"
         )
         SoftSkill.objects.create(
             title='Leadership',
@@ -95,3 +100,9 @@ class ResumeListViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'resume/resume.html')
+
+    def test_view_skill_section(self):
+        """Test view and webpage contains the text in tech skill text style"""
+        response = self.client.get(reverse('resume'))
+
+        self.assertContains(response, 'Linux servers and CloudLinux')
