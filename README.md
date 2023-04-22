@@ -1,6 +1,8 @@
-# Omid Website
+# 0mid.net Website
 
-This is Omid's Django based personal website which include resume, blog and some tools.
+This is My Django based personal website which include resume, blog and some online tools.
+
+My personal website is here: <www.0mid.net>
 
 ## Copyright
 
