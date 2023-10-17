@@ -9,8 +9,8 @@ After=network.target network-online.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/bin/bash /PATH_project/systemd/scan-start.sh
-ExecStop=/bin/bash /PATH_project/systemd/scan-stop.sh
+ExecStart=/bin/bash ${SITE_PROJECT_PATH}/systemd/scan-start.sh
+ExecStop=/bin/bash ${SITE_PROJECT_PATH}/systemd/scan-stop.sh
 RestartSec=5
 TimeoutSec=60
 RuntimeMaxSec=infinity
