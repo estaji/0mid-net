@@ -13,7 +13,7 @@ def year_start(date):
 def month_year_end(date):
     """Get end date and return Month+Year or Present instead of None"""
     if date is None:
-        return 'Present'
+        return "Present"
     else:
         short_date = date.strftime("%B %Y")
         return short_date
@@ -22,7 +22,7 @@ def month_year_end(date):
 def year_end(date):
     """Get end date and return Year or Present instead of None"""
     if date is None:
-        return 'Present'
+        return "Present"
     else:
         short_date = date.strftime("%Y")
         return short_date

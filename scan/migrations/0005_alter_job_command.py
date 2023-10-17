@@ -4,15 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('scan', '0004_scanconfig_author_scanconfig_robots_and_more'),
+        ("scan", "0004_scanconfig_author_scanconfig_robots_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='job',
-            name='command',
-            field=models.CharField(choices=[('pi', 'ping instantly'), ('p', 'ping'), ('hi', 'http instantly'), ('h', 'http')], max_length=2, verbose_name='Command type'),
+            model_name="job",
+            name="command",
+            field=models.CharField(
+                choices=[
+                    ("pi", "ping instantly"),
+                    ("p", "ping"),
+                    ("hi", "http instantly"),
+                    ("h", "http"),
+                ],
+                max_length=2,
+                verbose_name="Command type",
+            ),
         ),
     ]

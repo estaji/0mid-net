@@ -4,15 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('scan', '0005_alter_job_command'),
+        ("scan", "0005_alter_job_command"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='job',
-            name='command',
-            field=models.CharField(choices=[('pi', 'ping instantly'), ('p', 'ping'), ('hi', 'http instantly'), ('h', 'http'), ('si', 'ssl instantly')], max_length=2, verbose_name='Command type'),
+            model_name="job",
+            name="command",
+            field=models.CharField(
+                choices=[
+                    ("pi", "ping instantly"),
+                    ("p", "ping"),
+                    ("hi", "http instantly"),
+                    ("h", "http"),
+                    ("si", "ssl instantly"),
+                ],
+                max_length=2,
+                verbose_name="Command type",
+            ),
         ),
     ]

@@ -1,69 +1,73 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils import timezone
+
+from blog.utils import date_ymd, published_date
 from core.models import User
-from blog.utils import published_date, date_ymd
-from ckeditor.fields import RichTextField
 
 
 class ArticleManager(models.Manager):
     """Return published articles"""
+
     def published(self):
-        return self.filter(status='p')
+        return self.filter(status="p")
 
 
 class Tag(models.Model):
-    ''''Model for Tags'''
-    title = models.CharField(max_length=200, verbose_name='Title')
+    """'Model for Tags"""
+
+    title = models.CharField(max_length=200, verbose_name="Title")
     slug = models.SlugField(
         max_length=150,
         unique=True,
-        verbose_name='Slug/URL',
+        verbose_name="Slug/URL",
     )
-    position = models.IntegerField(unique=True, verbose_name='Position')
+    position = models.IntegerField(unique=True, verbose_name="Position")
     meta_description = models.CharField(
         max_length=160,
         blank=True,
-        verbose_name='Meta description tag',
+        verbose_name="Meta description tag",
     )
     keywords = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name='Meta keywords tag',
+        verbose_name="Meta keywords tag",
     )
     robots = models.CharField(
         max_length=60,
         blank=True,
-        verbose_name='Meta robots tag',
+        verbose_name="Meta robots tag",
     )
 
     class Meta:
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tags'
-        ordering = ['position']
+        verbose_name = "Tag"
+        verbose_name_plural = "Tags"
+        ordering = ["position"]
 
     def __str__(self):
         return self.title
 
     def posts_count(self):
         """Count number of posts for a tag"""
-        return Article.objects.filter(tag=self, status='p').count()
+        return Article.objects.filter(tag=self, status="p").count()
 
 
 class Article(models.Model):
     """Model for blog's post"""
+
     STATUS_CHOICES = [
-        ('d', 'Draft'),
-        ('p', 'Published'),
+        ("d", "Draft"),
+        ("p", "Published"),
     ]
     LANGUAGE_CHOICES = [
-        ('en', 'English'),
-        ('fa', 'Persian'),
+        ("en", "English"),
+        ("fa", "Persian"),
     ]
     author = models.ForeignKey(
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='articles',
+        related_name="articles",
         verbose_name="Author",
     )
     title = models.CharField(max_length=250, verbose_name="Title")
@@ -105,23 +109,23 @@ class Article(models.Model):
     meta_description = models.CharField(
         max_length=160,
         blank=True,
-        verbose_name='Meta description tag',
+        verbose_name="Meta description tag",
     )
     keywords = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name='Meta keywords tag',
+        verbose_name="Meta keywords tag",
     )
     robots = models.CharField(
         max_length=60,
         blank=True,
-        verbose_name='Meta robots tag',
+        verbose_name="Meta robots tag",
     )
 
     class Meta:
         verbose_name = "Article"
         verbose_name_plural = "Articles"
-        ordering = ['-published']
+        ordering = ["-published"]
 
     def __str__(self):
         return self.title
@@ -152,55 +156,56 @@ class Article(models.Model):
 
 class BlogConfig(models.Model):
     """Blog configurations model"""
+
     copyr = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name='Copyright message in footer',
+        verbose_name="Copyright message in footer",
     )
-    email = models.EmailField(max_length=254, verbose_name='Email')
+    email = models.EmailField(max_length=254, verbose_name="Email")
     linkedin = models.URLField(
         max_length=200,
         default="#",
         blank=True,
-        verbose_name='Linkedin Account',
+        verbose_name="Linkedin Account",
     )
     name = models.CharField(
         max_length=50,
-        verbose_name='Title in menu bar',
-        default='Blog Name',
+        verbose_name="Title in menu bar",
+        default="Blog Name",
     )
     title = models.CharField(
         max_length=70,
         verbose_name="Title in main page",
-        default='Blog Title',
+        default="Blog Title",
     )
     subtitle = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name='Sub-title in main page',
+        verbose_name="Sub-title in main page",
     )
     meta_author = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name='Meta author tag',
+        verbose_name="Meta author tag",
     )
     meta_description = models.CharField(
         max_length=160,
         blank=True,
-        verbose_name='Meta description tag',
+        verbose_name="Meta description tag",
     )
     keywords = models.CharField(
         max_length=160,
         blank=True,
-        verbose_name='Meta keywords tag',
+        verbose_name="Meta keywords tag",
     )
     robots = models.CharField(
         max_length=60,
         blank=True,
-        verbose_name='Meta robots tag',
+        verbose_name="Meta robots tag",
     )
     twitter_user = models.CharField(
         max_length=50,
         blank=True,
-        verbose_name='Twitter username for Twitter site tag',
+        verbose_name="Twitter username for Twitter site tag",
     )

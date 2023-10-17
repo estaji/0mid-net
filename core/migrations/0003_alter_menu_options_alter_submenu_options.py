@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0002_menu_icon_type'),
+        ("core", "0002_menu_icon_type"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='menu',
-            options={'ordering': ['order']},
+            name="menu",
+            options={"ordering": ["order"]},
         ),
         migrations.AlterModelOptions(
-            name='submenu',
-            options={'ordering': ['order']},
+            name="submenu",
+            options={"ordering": ["order"]},
         ),
     ]

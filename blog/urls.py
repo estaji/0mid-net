@@ -1,41 +1,40 @@
 from django.urls import path
-from .views import BlogView, ArticleView, TagView, TagsListView, ArticlePreview
 
+from .views import ArticlePreview, ArticleView, BlogView, TagsListView, TagView
 
 app_name = "blog"
 urlpatterns = [
     path(
-        '',
+        "",
         BlogView.as_view(template_name="blog/home.html"),
-        name='home',
+        name="home",
     ),
     path(
-        'page/<int:page>',
-        BlogView.as_view(template_name="blog/home.html"),
-        name="home"),
+        "page/<int:page>", BlogView.as_view(template_name="blog/home.html"), name="home"
+    ),
     path(
-        'tags',
+        "tags",
         TagsListView.as_view(template_name="blog/tagslist.html"),
-        name='tagslist',
+        name="tagslist",
     ),
     path(
-        '<slug:slug>',
+        "<slug:slug>",
         ArticleView.as_view(template_name="blog/article.html"),
-        name='article',
+        name="article",
     ),
     path(
-        'tag/<slug:slug>',
+        "tag/<slug:slug>",
         TagView.as_view(template_name="blog/tag.html"),
-        name='tag',
+        name="tag",
     ),
     path(
-        'tag/<slug:slug>/page/<int:page>',
+        "tag/<slug:slug>/page/<int:page>",
         TagView.as_view(template_name="blog/tag.html"),
-        name='tag',
+        name="tag",
     ),
     path(
-        'preview/<slug:slug>',
+        "preview/<slug:slug>",
         ArticlePreview.as_view(template_name="blog/article.html"),
-        name='preview',
+        name="preview",
     ),
 ]

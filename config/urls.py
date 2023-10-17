@@ -13,35 +13,35 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
+from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
-from resume.views import ResumeView
-from core.sitemaps import StaticSitemap, ArticleSitemap, TagSitemap
+from django.urls import include, path
 
+from core.sitemaps import ArticleSitemap, StaticSitemap, TagSitemap
+from resume.views import ResumeView
 
 sitemaps = {
-    'static': StaticSitemap(),
-    'tag': TagSitemap(),
-    'article': ArticleSitemap(),
+    "static": StaticSitemap(),
+    "tag": TagSitemap(),
+    "article": ArticleSitemap(),
 }
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name='admin-panel'),
+    path("admin/", admin.site.urls, name="admin-panel"),
     path(
-        '',
-        ResumeView.as_view(template_name='resume/resume.html'),
-        name='resume',
+        "",
+        ResumeView.as_view(template_name="resume/resume.html"),
+        name="resume",
     ),
-    path('blog/', include('blog.urls')),
-    path('scan/', include('scan.urls')),
+    path("blog/", include("blog.urls")),
+    path("scan/", include("scan.urls")),
     path(
-        'sitemap.xml',
+        "sitemap.xml",
         sitemap,
-        {'sitemaps': sitemaps},
-        name='django.contrib.sitemaps.views.sitemap'
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
     ),
 ]
 

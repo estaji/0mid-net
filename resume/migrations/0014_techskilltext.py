@@ -5,17 +5,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0013_resumeconfig_skills_style'),
+        ("resume", "0013_resumeconfig_skills_style"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TechSkillText',
+            name="TechSkillText",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', ckeditor.fields.RichTextField(verbose_name='Content')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", ckeditor.fields.RichTextField(verbose_name="Content")),
             ],
         ),
     ]

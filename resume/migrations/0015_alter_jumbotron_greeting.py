@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0014_techskilltext'),
+        ("resume", "0014_techskilltext"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jumbotron',
-            name='greeting',
-            field=models.CharField(blank=True, max_length=50, verbose_name='Welcome Message'),
+            model_name="jumbotron",
+            name="greeting",
+            field=models.CharField(
+                blank=True, max_length=50, verbose_name="Welcome Message"
+            ),
         ),
     ]

@@ -4,20 +4,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0003_configuration_og_title'),
+        ("resume", "0003_configuration_og_title"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='configuration',
-            name='twitter_user',
-            field=models.CharField(blank=True, max_length=50, verbose_name='Twitter username for Twitter site tag'),
+            model_name="configuration",
+            name="twitter_user",
+            field=models.CharField(
+                blank=True,
+                max_length=50,
+                verbose_name="Twitter username for Twitter site tag",
+            ),
         ),
         migrations.AlterField(
-            model_name='configuration',
-            name='og_title',
-            field=models.CharField(blank=True, max_length=60, verbose_name='Open graph and Twitter card title'),
+            model_name="configuration",
+            name="og_title",
+            field=models.CharField(
+                blank=True,
+                max_length=60,
+                verbose_name="Open graph and Twitter card title",
+            ),
         ),
     ]

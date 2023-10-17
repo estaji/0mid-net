@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('scan', '0001_initial'),
+        ("scan", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='job',
-            name='tried',
+            model_name="job",
+            name="tried",
         ),
     ]

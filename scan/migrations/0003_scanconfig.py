@@ -4,19 +4,41 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('scan', '0002_remove_job_tried'),
+        ("scan", "0002_remove_job_tried"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ScanConfig',
+            name="ScanConfig",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(blank=True, max_length=160, verbose_name='Title tag')),
-                ('description', models.CharField(blank=True, max_length=160, verbose_name='Meta description tag')),
-                ('keywords', models.CharField(blank=True, max_length=160, verbose_name='Meta keywords tag')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Title tag"
+                    ),
+                ),
+                (
+                    "description",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Meta description tag"
+                    ),
+                ),
+                (
+                    "keywords",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Meta keywords tag"
+                    ),
+                ),
             ],
         ),
     ]

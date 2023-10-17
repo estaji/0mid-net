@@ -1,17 +1,19 @@
+import logging
+
+# import urllib.request
+# import json
+import time
+from datetime import timedelta
+from threading import Lock, Thread
+
+import requests
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
-import requests
-from datetime import timedelta
-# import urllib.request
-# import json
-import time
-import logging
-from threading import Lock, Thread
-from scan.models import Node, Job
-from scan.utils import pinging, http_check, ssl_check
 
+from scan.models import Job, Node
+from scan.utils import http_check, pinging, ssl_check
 
 logger = logging.getLogger(__name__)
 
@@ -22,24 +24,23 @@ def check_old_jobs():
     """Set very old jobs to failed"""
     time_threshold = timezone.now() - timedelta(days=1)
     old_jobs = Job.objects.filter(
-        Q(status='n') | Q(status='r'),
-        start_time__lte=time_threshold
+        Q(status="n") | Q(status="r"), start_time__lte=time_threshold
     )
     for i in old_jobs:
         with transaction.atomic():
-            i.status = 'f'
+            i.status = "f"
             i.save()
 
     """Check current running jobs and set them to success or none"""
-    runnings = Job.objects.filter(status='r')
+    runnings = Job.objects.filter(status="r")
     for i in runnings:
-        if i.result != '':
+        if i.result != "":
             with transaction.atomic():
-                i.status = 's'
+                i.status = "s"
                 i.save()
         else:
             with transaction.atomic():
-                i.status = 'n'
+                i.status = "n"
                 i.save()
 
     logger.info("old jobs checked successfuly")
@@ -48,7 +49,7 @@ def check_old_jobs():
 def none_jobs_count():
     """Check is there any none job to do or not?"""
     try:
-        count = Job.objects.filter(status='n').count()
+        count = Job.objects.filter(status="n").count()
         # logger.debug("there are {} none_jobs_count".format(count))
         return count
     except AttributeError:
@@ -58,9 +59,9 @@ def none_jobs_count():
 def get_job():
     """Get oldest none job and set it to running and return it"""
     try:
-        job = Job.objects.filter(status='n').order_by('add_time').first()
+        job = Job.objects.filter(status="n").order_by("add_time").first()
         with transaction.atomic():
-            job.status = 'r'
+            job.status = "r"
             job.save()
         return job
     except AttributeError:
@@ -70,90 +71,90 @@ def get_job():
 
 def do_job(job):
     """Get a job and set it to running and do it"""
-    if job.command == 'pi':
+    if job.command == "pi":
         nodes = Node.objects.filter(is_active=True)
         for i in nodes:
             with transaction.atomic():
                 newjob = Job()
                 newjob.start_time = timezone.now()
-                newjob.command = 'p'
+                newjob.command = "p"
                 newjob.node = i
                 newjob.uuid = job.uuid
                 newjob.url = job.url
                 newjob.save()
         with transaction.atomic():
-            job.status = 's'
+            job.status = "s"
             job.save()
-    elif job.command == 'p':
-        if job.node.node_type == 'p':
+    elif job.command == "p":
+        if job.node.node_type == "p":
             result = pinging(job.url)
             with transaction.atomic():
                 job.result = result
-                job.status = 's'
+                job.status = "s"
                 job.save()
         else:
-            nodes = Node.objects.filter(is_active=True, node_type='c')
+            nodes = Node.objects.filter(is_active=True, node_type="c")
             for i in nodes:
-                url = '{}/scan/api/ping?url={}'.format(i.url, job.url)
-                headers = {'Authorization': 'Token {}'.format(i.token)}
+                url = "{}/scan/api/ping?url={}".format(i.url, job.url)
+                headers = {"Authorization": "Token {}".format(i.token)}
                 response = requests.get(url, headers=headers)
                 data = response.json()
                 # theurl = "{}/api/ping?url={}".format(i.url, job.url)
                 # response = urllib.request.urlopen(theurl).read()
                 # data = json.loads(response.decode('utf-8'))
                 with transaction.atomic():
-                    job.result = data['result']
-                    job.status = 's'
+                    job.result = data["result"]
+                    job.status = "s"
                     job.save()
 
-    elif job.command == 'hi':
+    elif job.command == "hi":
         nodes = Node.objects.filter(is_active=True)
         for i in nodes:
             with transaction.atomic():
                 newjob = Job()
                 newjob.start_time = timezone.now()
-                newjob.command = 'h'
+                newjob.command = "h"
                 newjob.node = i
                 newjob.uuid = job.uuid
                 newjob.url = job.url
                 newjob.save()
         with transaction.atomic():
-            job.status = 's'
+            job.status = "s"
             job.save()
-    elif job.command == 'h':
-        if job.node.node_type == 'p':
+    elif job.command == "h":
+        if job.node.node_type == "p":
             result = http_check(job.url)
             with transaction.atomic():
                 job.result = result
-                job.status = 's'
+                job.status = "s"
                 job.save()
         else:
-            nodes = Node.objects.filter(is_active=True, node_type='c')
+            nodes = Node.objects.filter(is_active=True, node_type="c")
             for i in nodes:
-                url = '{}/scan/api/http?url={}'.format(i.url, job.url)
-                headers = {'Authorization': 'Token {}'.format(i.token)}
+                url = "{}/scan/api/http?url={}".format(i.url, job.url)
+                headers = {"Authorization": "Token {}".format(i.token)}
                 response = requests.get(url, headers=headers)
                 data = response.json()
                 with transaction.atomic():
-                    job.result = data['result']
-                    job.status = 's'
+                    job.result = data["result"]
+                    job.status = "s"
                     job.save()
-    elif job.command == 'si':
+    elif job.command == "si":
         with transaction.atomic():
             newjob = Job()
             newjob.start_time = timezone.now()
-            newjob.command = 's'
-            newjob.node = Node.objects.filter(node_type='p').first()
+            newjob.command = "s"
+            newjob.node = Node.objects.filter(node_type="p").first()
             newjob.uuid = job.uuid
             newjob.url = job.url
             newjob.save()
-            job.status = 's'
+            job.status = "s"
             job.save()
-    elif job.command == 's':
+    elif job.command == "s":
         result = ssl_check(job.url)
         with transaction.atomic():
             job.result = result
-            job.status = 's'
+            job.status = "s"
             job.save()
 
 
@@ -174,7 +175,7 @@ def main():
 
 
 class Command(BaseCommand):
-    help = 'Daemon for doing jobs'
+    help = "Daemon for doing jobs"
 
     def handle(self, *args, **kwargs):
         main()

@@ -1,35 +1,47 @@
 from django.contrib import admin
+
 from .models import (
-    Job,
     Education,
+    Job,
+    Jumbotron,
+    Language,
+    ResumeConfig,
+    SocialAccount,
+    SoftSkill,
     TechSkill,
     TechSkillText,
-    SoftSkill,
-    Language,
-    Jumbotron,
-    SocialAccount,
-    ResumeConfig,
 )
 
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ('title', 'company', 'start', 'end',)
+    list_display = (
+        "title",
+        "company",
+        "start",
+        "end",
+    )
 
 
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ('title', 'level', 'university', 'start', 'end',)
+    list_display = (
+        "title",
+        "level",
+        "university",
+        "start",
+        "end",
+    )
 
 
 class TechSkillAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order')
+    list_display = ("title", "order")
 
 
 class SoftSkillAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order')
+    list_display = ("title", "order")
 
 
 class LanguageSkillAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order')
+    list_display = ("title", "order")
 
 
 admin.site.register(Job, JobAdmin)

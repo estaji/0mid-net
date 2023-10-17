@@ -4,37 +4,88 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0011_menu_submenu'),
+        ("resume", "0011_menu_submenu"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ResumeConfig',
+            name="ResumeConfig",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('site_title', models.CharField(blank=True, max_length=60, verbose_name='Website title')),
-                ('title', models.CharField(blank=True, max_length=160, verbose_name='Title tag')),
-                ('description', models.CharField(blank=True, max_length=160, verbose_name='Meta description tag')),
-                ('robots', models.CharField(blank=True, max_length=160, verbose_name='Meta robots tag')),
-                ('author', models.CharField(blank=True, max_length=160, verbose_name='Meta author tag')),
-                ('keywords', models.CharField(blank=True, max_length=160, verbose_name='Meta keywords tag')),
-                ('og_title', models.CharField(blank=True, max_length=60, verbose_name='Open graph and Twitter card title')),
-                ('twitter_user', models.CharField(blank=True, max_length=50, verbose_name='Twitter username for Twitter site tag')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "site_title",
+                    models.CharField(
+                        blank=True, max_length=60, verbose_name="Website title"
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Title tag"
+                    ),
+                ),
+                (
+                    "description",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Meta description tag"
+                    ),
+                ),
+                (
+                    "robots",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Meta robots tag"
+                    ),
+                ),
+                (
+                    "author",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Meta author tag"
+                    ),
+                ),
+                (
+                    "keywords",
+                    models.CharField(
+                        blank=True, max_length=160, verbose_name="Meta keywords tag"
+                    ),
+                ),
+                (
+                    "og_title",
+                    models.CharField(
+                        blank=True,
+                        max_length=60,
+                        verbose_name="Open graph and Twitter card title",
+                    ),
+                ),
+                (
+                    "twitter_user",
+                    models.CharField(
+                        blank=True,
+                        max_length=50,
+                        verbose_name="Twitter username for Twitter site tag",
+                    ),
+                ),
             ],
         ),
         migrations.DeleteModel(
-            name='Configuration',
+            name="Configuration",
         ),
         migrations.RemoveField(
-            model_name='submenu',
-            name='parent',
+            model_name="submenu",
+            name="parent",
         ),
         migrations.DeleteModel(
-            name='Menu',
+            name="Menu",
         ),
         migrations.DeleteModel(
-            name='SubMenu',
+            name="SubMenu",
         ),
     ]

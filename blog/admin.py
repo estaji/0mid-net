@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Article, Tag, BlogConfig
+
+from .models import Article, BlogConfig, Tag
 
 
 def make_published(modeladmin, request, queryset):
     """Change selected article's status to published"""
-    rows_updated = queryset.update(status='p')
+    rows_updated = queryset.update(status="p")
     if rows_updated == 1:
         message_bit = "Article published."
     else:
@@ -15,7 +16,7 @@ def make_published(modeladmin, request, queryset):
 
 def make_draft(modeladmin, request, queryset):
     """Change selected article's status to drafted"""
-    rows_updated = queryset.update(status='d')
+    rows_updated = queryset.update(status="d")
     if rows_updated == 1:
         message_bit = "Article drafted."
     else:
@@ -26,22 +27,22 @@ def make_draft(modeladmin, request, queryset):
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = (
-        'title',
-        'status',
-        'language',
-        'article_tags',
-        'slug',
-        'published_modified'
+        "title",
+        "status",
+        "language",
+        "article_tags",
+        "slug",
+        "published_modified",
     )
-    list_filter = ('published', 'status', 'language')
+    list_filter = ("published", "status", "language")
     actions = [make_published, make_draft]
-    search_fields = ('title', 'slug')
-    ordering = ['status', '-published']
+    search_fields = ("title", "slug")
+    ordering = ["status", "-published"]
 
 
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('title', 'position', 'posts_count', 'slug')
-    search_fields = ('title', 'slug')
+    list_display = ("title", "position", "posts_count", "slug")
+    search_fields = ("title", "slug")
 
 
 admin.site.register(Article, ArticleAdmin)

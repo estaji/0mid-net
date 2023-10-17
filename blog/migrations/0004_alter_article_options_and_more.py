@@ -4,19 +4,22 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0003_remove_article_thumbnail'),
+        ("blog", "0003_remove_article_thumbnail"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='article',
-            options={'ordering': ['-published'], 'verbose_name': 'Article', 'verbose_name_plural': 'Articles'},
+            name="article",
+            options={
+                "ordering": ["-published"],
+                "verbose_name": "Article",
+                "verbose_name_plural": "Articles",
+            },
         ),
         migrations.RenameField(
-            model_name='article',
-            old_name='publish_date',
-            new_name='published',
+            model_name="article",
+            old_name="publish_date",
+            new_name="published",
         ),
     ]

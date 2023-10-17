@@ -4,20 +4,19 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0003_alter_menu_options_alter_submenu_options'),
+        ("core", "0003_alter_menu_options_alter_submenu_options"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='submenu',
-            name='parent',
+            model_name="submenu",
+            name="parent",
         ),
         migrations.DeleteModel(
-            name='Menu',
+            name="Menu",
         ),
         migrations.DeleteModel(
-            name='SubMenu',
+            name="SubMenu",
         ),
     ]

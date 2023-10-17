@@ -4,15 +4,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='menu',
-            name='icon_type',
-            field=models.CharField(choices=[('DD', 'Has submenu'), ('N', "Don't have submenu"), ('DI', 'Is deactivate')], default='N', max_length=2),
+            model_name="menu",
+            name="icon_type",
+            field=models.CharField(
+                choices=[
+                    ("DD", "Has submenu"),
+                    ("N", "Don't have submenu"),
+                    ("DI", "Is deactivate"),
+                ],
+                default="N",
+                max_length=2,
+            ),
         ),
     ]

@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0008_alter_configuration_google_analytics'),
+        ("resume", "0008_alter_configuration_google_analytics"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='configuration',
-            name='google_analytics',
-            field=models.CharField(blank=True, max_length=50, verbose_name='Google analytics global site tag'),
+            model_name="configuration",
+            name="google_analytics",
+            field=models.CharField(
+                blank=True,
+                max_length=50,
+                verbose_name="Google analytics global site tag",
+            ),
         ),
     ]

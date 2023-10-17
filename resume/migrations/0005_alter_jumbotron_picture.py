@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0004_configuration_twitter_user_and_more'),
+        ("resume", "0004_configuration_twitter_user_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jumbotron',
-            name='picture',
-            field=models.ImageField(blank=True, upload_to='jumbotron_picture/', verbose_name='Picture/Avatar'),
+            model_name="jumbotron",
+            name="picture",
+            field=models.ImageField(
+                blank=True,
+                upload_to="jumbotron_picture/",
+                verbose_name="Picture/Avatar",
+            ),
         ),
     ]

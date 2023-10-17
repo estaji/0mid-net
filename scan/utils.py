@@ -1,7 +1,7 @@
-import subprocess
-import requests
 import logging
+import subprocess
 
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ def rm_suffix_slash(url):
     try:
         # if url.endswith('/'):
         #    url = url[:-1]
-        url = url.removesuffix('/')
+        url = url.removesuffix("/")
     except AttributeError:
         url = url
     return url
@@ -26,7 +26,7 @@ def rm_suffix_slash(url):
 
 def rm_after_slash(url):
     """Remove / and everything after / from url"""
-    url = url.split('/', 1)[0]
+    url = url.split("/", 1)[0]
     return url
 
 
@@ -37,9 +37,9 @@ def pinging(url):
     logger.info("pinging started {{{}}}".format(url))
     output = subprocess.run(["ping", "-c 5", url])
     if output.returncode == 0:
-        result = 'Ping OK'
+        result = "Ping OK"
     else:
-        result = 'Ping Failed'
+        result = "Ping Failed"
     logger.info("pinging finished {{{}}}".format(url))
     return result
 
@@ -52,7 +52,7 @@ def http_check(url):
         r = requests.head(url, timeout=threshold)
         code = r.status_code
         if 300 < code < 400:
-            location = r.headers.get('Location', url)
+            location = r.headers.get("Location", url)
             if len(location) > 50:
                 location = location[:50] + "..."
             result = "{} - OK but redirected to {}".format(str(code), location)
@@ -86,12 +86,12 @@ def ssl_check(url):
 
     try:
         requests.get(url, verify=True, allow_redirects=False)
-        result = 'OK, no ssl certificate issue detected'
+        result = "OK, no ssl certificate issue detected"
         return result
     except Exception as error:
         error_message = str(error)
-        if error_message.find('expired') != -1:
-            result = 'ERROR, the ssl certificate has expired or revoked'
+        if error_message.find("expired") != -1:
+            result = "ERROR, the ssl certificate has expired or revoked"
             # logger.debug("ssl error_message is {}".format(error_message))
             logger.info("ssl_check finished {{{}}}".format(url))
             return result

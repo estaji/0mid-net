@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0002_alter_job_logo'),
+        ("resume", "0002_alter_job_logo"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='configuration',
-            name='og_title',
-            field=models.CharField(blank=True, max_length=60, verbose_name='Open graph title'),
+            model_name="configuration",
+            name="og_title",
+            field=models.CharField(
+                blank=True, max_length=60, verbose_name="Open graph title"
+            ),
         ),
     ]

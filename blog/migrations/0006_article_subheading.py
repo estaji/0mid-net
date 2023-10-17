@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0005_configuration'),
+        ("blog", "0005_configuration"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='article',
-            name='subheading',
-            field=models.CharField(blank=True, max_length=250, verbose_name='Subheading'),
+            model_name="article",
+            name="subheading",
+            field=models.CharField(
+                blank=True, max_length=250, verbose_name="Subheading"
+            ),
         ),
     ]

@@ -1,10 +1,11 @@
+import logging
+from datetime import timedelta
+
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils import timezone
-from datetime import timedelta
-import logging
-from scan.models import Job
 
+from scan.models import Job
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,7 @@ def main():
 
 
 class Command(BaseCommand):
-    help = 'Old jobs remover'
+    help = "Old jobs remover"
 
     def handle(self, *args, **kwargs):
         main()

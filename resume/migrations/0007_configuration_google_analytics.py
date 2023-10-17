@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('resume', '0006_alter_jumbotron_picture'),
+        ("resume", "0006_alter_jumbotron_picture"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='configuration',
-            name='google_analytics',
-            field=models.TextField(blank=True, verbose_name='Google analytics global site tag'),
+            model_name="configuration",
+            name="google_analytics",
+            field=models.TextField(
+                blank=True, verbose_name="Google analytics global site tag"
+            ),
         ),
     ]

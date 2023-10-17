@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0015_configuration_keywords'),
+        ("blog", "0015_configuration_keywords"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='configuration',
-            name='robots',
-            field=models.CharField(blank=True, max_length=60, verbose_name='Meta robots tag'),
+            model_name="configuration",
+            name="robots",
+            field=models.CharField(
+                blank=True, max_length=60, verbose_name="Meta robots tag"
+            ),
         ),
     ]
