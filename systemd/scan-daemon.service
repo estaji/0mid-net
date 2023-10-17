@@ -9,6 +9,7 @@ After=network.target network-online.target
 [Service]
 Type=simple
 Restart=always
+EnvironmentFile=/etc/systemd/system/.env
 ExecStart=/bin/bash ${SITE_PROJECT_PATH}/systemd/scan-start.sh
 ExecStop=/bin/bash ${SITE_PROJECT_PATH}/systemd/scan-stop.sh
 RestartSec=5
