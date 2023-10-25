@@ -34,14 +34,14 @@
 
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'resume' %}">{{ object_list.0.site_title }}</a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsSite" aria-controls="navbarsSite" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
   
-        <div class="navbar-collapse collapse" id="navbarsSite" style="">
+        <div class="navbar-collapse collapse" id="navbarsSite">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             {% for item in menu_single %}
               <li class="nav-item">

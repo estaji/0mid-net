@@ -65,7 +65,7 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="p-5 pt-1 mb-4 mt-1 bg-light rounded-3">
+    <div class="p-5 pt-1 mb-4 mt-1 rounded-3">
         <div class="container-fluid py-5">
             {% if jumbotron.greeting %}
                 <p class="fs-7">{{ jumbotron.greeting }}</p>
@@ -82,7 +82,10 @@
                 <a class="btn btn-outline-info" href="mailto:{{ jumbotron.email }}" role="button"><i class="bi bi-envelope" aria-hidden="true"> Message Me</i></a>
             </div>
             {% if social_account.linkedin != '' %}
-                <a class="float-end" href="{{ social_account.linkedin }}" target="_blank"><i class="bi bi-linkedin theme social-icons"></i></a>
+                <a class="float-end px-1" href="{{ social_account.linkedin }}" target="_blank"><i class="bi bi-linkedin theme social-icons"></i></a>
+            {% endif %}
+            {% if social_account.github != '' %}
+                <a class="float-end px-1" href="{{ social_account.github }}" target="_blank"><i class="bi bi-github theme social-icons"></i></a>
             {% endif %}
         </div>
     </div>
