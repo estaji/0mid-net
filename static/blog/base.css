@@ -1,0 +1,13 @@
+a {
+    text-decoration: none;
+  }
+
+@font-face {
+  font-family: "Vazir-Thin";
+  src:
+      url("/static/fonts/Vazir-Thin.woff2") format("woff2");
+  }
+
+div.vazir-font { 
+    font-family: "Vazir-Thin";
+}

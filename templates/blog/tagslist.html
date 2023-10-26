@@ -47,15 +47,11 @@
 
 {% block header %}
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('{% static 'blog/assets/bg.jpg' %}')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading">
-                        <h1>{{ settings.title }} Tags</h1>
-                        <span class="subheading">All tags and categories</span>
-                    </div>
-                </div>
+    <header>
+        <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+            <div class="px-0">
+                <h1 class="display-4 fst-italic text-center">{{ settings.title }} Tags</h1>
+                <p class="subheading text-center">All tags and categories</p>
             </div>
         </div>
     </header>
@@ -75,17 +71,6 @@
                     <!-- Divider-->
                     <hr class="my-4" />
                 {% endfor %}
-                <!-- Pager-->
-                {% if is_paginated %}
-                    <div class="d-flex justify-content-end mb-4">
-                        {% if page_obj.has_previous %}
-                            <a class="btn btn-primary text-uppercase" href="{% url 'blog:home' page_obj.previous_page_number %}">Newer Posts →</a>
-                        {% endif %}
-                        {% if page_obj.has_next %}
-                            <a class="btn btn-primary text-uppercase ms-3" href="{% url 'blog:home' page_obj.next_page_number %}">Older Posts →</a>
-                        {% endif %}
-                    </div>
-                {% endif %}
             </div>
         </div>
     </div>

@@ -46,28 +46,24 @@
 
 {% block header %}
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('{% static 'blog/assets/bg.jpg' %}')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
+    <header>
+        <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+            <div class="px-0">
                 {% if object.language == 'en' %}
                     <div class="post-heading">
                 {% else %}
-                    <div class="post-heading" dir="rtl">
+                    <div class="post-heading vazir-font" dir="rtl">
                 {% endif %}
-                        <h1>{{ object.title }}</h1>
-                        <h2 class="subheading">{{ object.subheading }}</h2>
-                        <span class="meta" dir="ltr">
+                        <h1 class="text-center">{{ object.title }}</h1>
+                        <h2 class="subheading text-center">{{ object.subheading }}</h2>
+                        <p class="mt-3 text-center" dir="ltr">
                             By {{ object.author.name }}, {{ object.published_modified }}
-                        </span>
-                        <span class="meta" dir="ltr">
                             </br>
                             {% for tag in object.tag.all %}
                                 <a href="{% url 'blog:tag' tag.slug %}">&nbsp#{{tag.title}}</a>
                             {% endfor %}
-                        </span>
+                        </p>
                     </div>
-                </div>
             </div>
         </div>
     </header>
@@ -78,7 +74,11 @@
     <article class="mb-4">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
+                {% if object.language == 'en' %}
                 <div class="col-md-10 col-lg-8 col-xl-7">
+                {% else %}
+                <div class="col-md-10 col-lg-8 col-xl-7 vazir-font">
+                {% endif %}
                     {{object.content|safe}}
                 </div>
             </div>

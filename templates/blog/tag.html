@@ -48,15 +48,11 @@
 
 {% block header %}
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('{% static 'blog/assets/bg.jpg' %}')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading">
-                        <h1>#{{ tag.title }}</h1>
-                        <span class="subheading">Articles about {{ tag.title }}</span>
-                    </div>
-                </div>
+    <header>
+        <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+            <div class="px-0">
+                <h1 class="display-4 fst-italic text-center">#{{ tag.title }}</h1>
+                <p class="subheading text-center">Articles about {{ tag.title }}</p>
             </div>
         </div>
     </header>
@@ -71,33 +67,36 @@
                     {% if item.language == 'en' %}
                         <div class="post-preview">
                     {% else %}
-                        <div class="post-preview" dir="rtl">
+                        <div class="post-preview vazir-font" dir="rtl">
                     {% endif %}
-                            <a href="{% url 'blog:article' item.slug %}">
-                                <h2 class="post-title">{{ item.title }}</h2>
-                                <h3 class="post-subtitle">{{ item.content|striptags|truncatewords:20|nbsp2space }}</h3>
-                            </a>
-                            <p class="post-meta" dir="ltr">
-                                By {{ item.author.name }}, {{ item.published_modified }}
-                                {% for tag in item.tag.all %}
-                                    <a href="{% url 'blog:tag' tag.slug %}">&nbsp#{{tag.title}}</a>
-                                {% endfor %}
-                            </p>
+                            <article class="blog-post">
+                                <a href="{% url 'blog:article' item.slug %}">
+                                    <h2 class="display-5 link-body-emphasis mb-1">{{ item.title }}</h2>
+                                </a>
+                                <p class="blog-post-meta" dir="ltr">
+                                    By {{ item.author.name }}, {{ item.published_modified }}
+                                    {% for tag in item.tag.all %}
+                                        <a href="{% url 'blog:tag' tag.slug %}">&nbsp#{{tag.title}}</a>
+                                    {% endfor %}
+                                </p>
+                                <p>{{ item.content|striptags|truncatewords:20|nbsp2space }}</p>
+                                <hr>
+                            </article>
                         </div>
-                        <!-- Divider-->
-                    <hr class="my-4" />
                 {% endfor %}
-                <!-- Pager-->
+
+                <!-- Pagination -->
                 {% if is_paginated %}
-                    <div class="d-flex justify-content-end mb-4">
-                        {% if page_obj.has_previous %}
-                            <a class="btn btn-primary text-uppercase" href="{% url 'blog:tag' tag.slug page_obj.previous_page_number %}">Newer Posts →</a>
-                        {% endif %}
+                    <nav class="blog-pagination" aria-label="Pagination">
                         {% if page_obj.has_next %}
-                            <a class="btn btn-primary text-uppercase ms-3" href="{% url 'blog:tag' tag.slug page_obj.next_page_number %}">Older Posts →</a>
+                            <a class="btn btn-outline-primary rounded-pill" href="{% url 'blog:tag' tag.slug page_obj.next_page_number %}">Older</a>
                         {% endif %}
-                    </div>
+                        {% if page_obj.has_previous %}
+                            <a class="btn btn-outline-primary rounded-pill" aria-disabled="true" href="{% url 'blog:tag' tag.slug page_obj.previous_page_number %}">Newer</a>
+                        {% endif %}
+                    </nav>
                 {% endif %}
+
             </div>
         </div>
     </div>
