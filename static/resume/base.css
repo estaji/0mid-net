@@ -2,6 +2,16 @@
     color: gray;
 }
 
+@font-face {
+    font-family: "Vazir-Thin";
+    src:
+        url("/static/fonts/Vazir-Thin.woff2") format("woff2");
+    }
+
+a.vazir-font { 
+    font-family: "Vazir-Thin";
+}
+
 .social-icons {
     font-size: 1.7rem;
     margin: 0.07em;
