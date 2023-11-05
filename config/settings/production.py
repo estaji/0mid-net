@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["0mid.net", "www.0mid.net"]
+ALLOWED_HOSTS = ["0mid.net", "www.0mid.net", "127.0.0.1"]
 
 LOGGING = {
     "version": 1,
@@ -16,12 +16,13 @@ LOGGING = {
     },
     "handlers": {
         "console": {"class": "logging.StreamHandler", "formatter": "console"},
-        "file": {
-            "level": "INFO",
-            "class": "logging.FileHandler",
-            "filename": "django.log",
-            "formatter": "file",
-        },
+        #"file": {
+        #    "level": "INFO",
+        #    "class": "logging.FileHandler",
+        #    "filename": "django.log",
+        #    "formatter": "file",
+        #},
     },
-    "loggers": {"": {"level": "INFO", "handlers": ["console", "file"]}},
+    #"loggers": {"": {"level": "INFO", "handlers": ["console", "file"]}},
+    "loggers": {"": {"level": "INFO", "handlers": ["console"]}},
 }
