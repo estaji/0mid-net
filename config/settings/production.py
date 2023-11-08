@@ -4,6 +4,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["0mid.net", "www.0mid.net", "127.0.0.1"]
 
+CSRF_TRUSTED_ORIGINS = ['https://*.0mid.net', 'https://*.127.0.0.1']
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
