@@ -30,6 +30,12 @@
         - docker-buildx-plugin
         - docker-compose-plugin
 
+      programs_to_install:
+        - git
+        - python3.10-venv
+        - libmysqlclient-dev
+        - nginx
+
     tasks:
 
       # Check distribution
@@ -78,7 +84,7 @@
         become: yes
         ansible.builtin.lineinfile:
           dest: "/etc/ssh/sshd_config"
-          regexp: "^#PermitRootLogin"
+          regexp: "^PermitRootLogin"
           line: "PermitRootLogin no"
         register: disable_root_login
 
@@ -116,6 +122,7 @@
         become: yes
         ansible.builtin.apt:
           name: fail2ban
+          state: present
         notify: Restart fail2ban
 
       # Install Docker
@@ -163,6 +170,32 @@
           - name: Install docker SDK for python
             ansible.builtin.pip:
               name: docker
+
+      # Install Programs
+      - name: Install other programs
+        become: yes
+        ansible.builtin.apt:
+          name: "{{ programs_to_install }}"
+          state: present
+
+      # Install Certbot
+      - name: Check Certbot installation
+        become: yes
+        ansible.builtin.shell: "which certbot"
+        ignore_errors: yes
+        register: check_certbot
+      
+      - name: Install Certbot
+        when: check_certbot.rc == 1
+        block:
+
+          - name: Update snap
+            become: yes
+            ansible.builtin.command: sudo snap refresh
+          
+          - name: Install Certbot program
+            become: yes
+            ansible.builtin.command: sudo snap install --classic certbot
 
     handlers:
 
