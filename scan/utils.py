@@ -35,7 +35,7 @@ def pinging(url):
     url = rm_http_https(url)
     url = rm_after_slash(url)
     logger.info("pinging started {{{}}}".format(url))
-    output = subprocess.run(["ping", "-c 5", url])
+    output = subprocess.run(["ping", "-c", "4", url])
     if output.returncode == 0:
         result = "Ping OK"
     else:
