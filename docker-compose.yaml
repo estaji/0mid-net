@@ -11,8 +11,8 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - static_volume:/opt/app/static_root
-      - media_volume:/opt/app/media
+      - /var/www/web_static:/opt/app/static_root
+      - /var/www/web_media:/opt/app/media
     environment:
       - SITE_DB_HOST=db
     env_file: .env
