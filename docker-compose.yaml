@@ -26,12 +26,10 @@ services:
     env_file: .env
 
 volumes:
-  static_volume:
-  media_volume:
   mariadb_data:
 
 # After docker compose up:
 # docker compose exec web python manage.py migrate --settings=config.settings.production
-# sudo chown -R omid:omid /var/lib/docker/volumes/media_volume
-# sudo chown -R omid:omid /var/lib/docker/volumes/static_volume
+# sudo chown -R omid:omid /var/www/web_static
+# sudo chown -R omid:omid /var/www/web_media
 # docker compose exec web python manage.py collectstatic --settings=config.settings.production
