@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app.kubernetes.io/name: web
+    app.kubernetes.io/part-of: 0mid-net
+    app.kubernetes.io/project: 0mid-net
+    app.kubernetes.io/env: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: web
+      app.kubernetes.io/part-of: 0mid-net
+      app.kubernetes.io/project: 0mid-net
+      app.kubernetes.io/env: test
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: web
+        app.kubernetes.io/part-of: 0mid-net
+        app.kubernetes.io/project: 0mid-net
+        app.kubernetes.io/env: test
+    spec:
+      containers:
+        - name: web
+          image: estaji/0mid-net:latest
+          envFrom:
+            - configMapRef:
+                name: web-config
+            - secretRef:
+                name: web-secret
+          ports:
+            - name: http
+              containerPort: 8080
+          livenessProbe:
+            exec:
+              command: ["kill", "-0", "1"]
+          readinessProbe:
+            tcpSocket:
+              port: 8080

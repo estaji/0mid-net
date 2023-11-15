@@ -1,5 +1,6 @@
 .vscode
 ansible
+kubernetes
 Dockerfile
 docker-compose*.yaml
 .dockerignore
