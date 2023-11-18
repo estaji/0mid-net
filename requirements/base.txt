@@ -15,4 +15,5 @@ pyflakes==2.5.0
 pytz==2022.2.1
 requests==2.28.1
 sqlparse==0.4.2
+unittest-xml-reporting==3.2.0
 urllib3==1.26.12
