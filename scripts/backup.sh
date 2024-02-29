@@ -3,7 +3,7 @@ timestamp=$(date +%F-%H%M%S)
 echo --- backup started at $timestamp ---
 
 echo dumping database...
-docker exec mariadb mariadb-dump -uroot -p$MYSQL_ROOT_PASSWORD 0middb > 0middb-$timestamp.sql
+docker exec mariadb bash -c 'mariadb-dump -u$SITE_DB_USER -p$SITE_DB_PASSWORD $SITE_DB_NAME' > $SITE_DB_NAME-$timestamp.sql
 
 echo nginx config backup is creating...
 cp /etc/nginx/sites-available/0mid.net ./0mid.net-nginx-$timestamp
