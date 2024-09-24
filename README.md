@@ -8,7 +8,7 @@ My personal website is here: https://0mid.net
 
 ## How it works
 
-Feel free to clone and build your personal website.
+Feel free to clone and build your personal website based on django directory.
 
 ## Contribute
 
