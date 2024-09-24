@@ -2,6 +2,7 @@ From python:3.10-alpine
 
 LABEL maintainer="Omid Estaji <estaji.work@gmail.com>"
 
+ENV TZ=Asia/Tehran
 ENV SITE_SECRET_KEY=mycomplexstring
 ENV SITE_DB_NAME=mydb
 ENV SITE_DB_USER=myuser
@@ -14,7 +15,7 @@ EXPOSE 8080
 
 WORKDIR /opt/app
 
-COPY requirements/ ./requirements
+COPY ../django/requirements/ ./requirements
 
 RUN apk update && apk add gcc musl-dev mariadb-connector-c-dev
 RUN pip install -U pip
@@ -23,7 +24,7 @@ RUN pip install -r requirements/production.txt
 VOLUME /opt/app/media
 VOLUME /opt/app/static_root
 
-COPY . .
+COPY ../django/ .
 
 RUN adduser -DH -g omid omid
 RUN chown -R omid:omid /opt/app
