@@ -1,0 +1,6 @@
+---
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_distribution }}-vars.yaml"
+
+- name: Include OS-specific tasks
+  include_tasks: "{{ ansible_distribution }}-tasks.yaml"

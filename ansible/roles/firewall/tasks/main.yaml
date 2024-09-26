@@ -1,0 +1,34 @@
+---
+  - name: Stop ufw permanently
+    ansible.builtin.service:
+      name: ufw
+      state: stopped
+      enabled: no
+
+  - name: Start and enable netfilter-persistent service
+    ansible.builtin.service:
+      name: netfilter-persistent
+      state: started
+      enabled: yes
+
+  - name: copy firewall rules
+    ansible.builtin.copy:
+      src: iptables-rules.v4
+      dest: /etc/iptables/rules.v4
+      owner: root
+      group: root
+      mode: '0700'
+
+  - name: Check firewall rules syntax
+    ansible.builtin.shell: iptables-restore -t /etc/iptables/rules.v4
+    register: iptable_rules_check
+
+  - name: Fail for bad iptable rules syntax
+    ansible.builtin.fail:
+      msg: Iptable rules have bad syntax
+    when: iptable_rules_check.rc == 1
+
+  - name: Reload iptable rules
+    ansible.builtin.shell: service netfilter-persistent reload
+    notify: 
+      - restart docker

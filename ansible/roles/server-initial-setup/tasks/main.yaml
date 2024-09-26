@@ -1,0 +1,46 @@
+---
+  - name: Set hostname
+    ansible.builtin.shell: hostnamectl set-hostname {{ new_hostname }}
+
+  - name: Add colors to terminal
+    ansible.builtin.lineinfile:
+      dest: /root/.bashrc
+      line: "{{ terminal_colors }}"
+      owner: root
+
+  - name: Check current swap
+    ansible.builtin.shell: swapon --show
+    register: swap_status
+
+  - name: Setup swap memory if needed
+    when: swap_status.stdout == ""
+    block:
+      - name: Check whether "/swapfile" exists
+        register: idCheckSwap
+        ansible.builtin.stat:
+          path: /swapfile
+
+      - name: Fail it if "/swapfile" exists
+        ansible.builtin.fail:
+          msg: Swap file already exists
+        when: idCheckSwap.stat.exists == true
+
+      - name: Allocate the swap file
+        ansible.builtin.shell: fallocate -l {{ swap_size }} /swapfile
+
+      - name: Change permission of the swap file
+        ansible.builtin.file:
+          path: /swapfile
+          mode: 600
+
+      - name: Create a swap area on the swap file
+        ansible.builtin.shell: mkswap /swapfile
+
+      - name: Activate the swap file as a swap memory
+        ansible.builtin.shell: swapon /swapfile
+
+      - name: Append swap to /etc/fstab
+        ansible.builtin.lineinfile:
+          dest: /etc/fstab
+          line: "\n/swapfile swap swap defaults 0 0\n"
+          owner: root

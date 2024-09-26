@@ -1,0 +1,27 @@
+---
+required_apt_packages:
+  - chrony
+  - iptables-persistent
+  - fail2ban
+  - net-tools
+  - nginx
+  - certbot
+
+required_packages_for_docker:
+  - ca-certificates
+  - curl
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+enabled_started_services:
+  - chrony
+  - iptables-persistent
+  - fail2ban
+  - nginx
+  - certbot
+  - docker

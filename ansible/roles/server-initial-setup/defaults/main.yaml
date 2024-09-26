@@ -1,0 +1,3 @@
+NEW_HOSTNAME: "srv"
+TERMINAL_COLORS: 'export PS1="\[\e[1;37m\]\u\[\e[m\]@\[\e[1;32m\]\h\[\e[m\] \[\e[1;31m\]\w\[\e[m\]\[\e[1;33m\]#\[\e[m\] "'
+SWAP_SIZE: "4G"
