@@ -12,8 +12,8 @@
       enabled: yes
 
   - name: copy firewall rules
-    ansible.builtin.copy:
-      src: iptables-rules.v4
+    ansible.builtin.template:
+      src: iptables-rules.v4.j2
       dest: /etc/iptables/rules.v4
       owner: root
       group: root
