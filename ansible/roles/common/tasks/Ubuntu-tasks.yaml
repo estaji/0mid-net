@@ -11,6 +11,16 @@
     state: present
   with_items: "{{ required_apt_packages }}"
 
+- name: Refresh Snap
+  ansible.builtin.shell: |
+    snap refresh
+  
+- name: Install Snap packages
+  community.general.snap:
+    name: "{{ item }}"
+    classic: true
+  with_items: "{{ required_snap_packages }}"
+
 - name: Install docker requirements
   ansible.builtin.package:
     name: "{{ item }}"
