@@ -1,8 +1,10 @@
 From python:3.10-alpine
 
 LABEL maintainer="Omid Estaji <estaji.work@gmail.com>"
+LABEL project="0mid-net-website"
 
 ENV TZ=Asia/Tehran
+ENV APP_USER=website
 ENV SITE_SECRET_KEY=mycomplexstring
 ENV SITE_DB_NAME=mydb
 ENV SITE_DB_USER=myuser
@@ -26,10 +28,12 @@ VOLUME /opt/app/static_root
 
 COPY ../django/ .
 
-RUN adduser -DH -g omid omid
-RUN chown -R omid:omid /opt/app
+RUN addgroup --system --gid 1010 $APP_USER
+RUN adduser --system --uid 1010 $APP_USER
 
-USER 1000
+RUN chown -R $APP_USER:$APP_USER /opt/app
+
+USER $APP_USER
 
 ENTRYPOINT ["gunicorn"]
 
