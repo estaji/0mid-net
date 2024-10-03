@@ -4,7 +4,7 @@ services:
   web:
     build: .
     image: 0mid.net:latest
-    container_name: web
+    container_name: 0mid-net-web
     restart: unless-stopped
     expose:
       - 8080
@@ -19,11 +19,22 @@ services:
 
   db:
     image: mariadb:11
-    container_name: mariadb
+    container_name: 0mid-net-mariadb
     restart: unless-stopped
     volumes:
       - mariadb_data:/var/lib/mysql
     env_file: .env
+
+  scan:
+    build: .
+    image: 0mid.net:latest
+    container_name: 0mid-net-scan
+    restart: unless-stopped
+    environment:
+      - SITE_DB_HOST=db
+    env_file: .env
+    entrypoint: python
+    command: manage.py daemon --settings=config.settings.production
 
 volumes:
   mariadb_data:
