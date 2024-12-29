@@ -66,6 +66,8 @@ venv.bak/
 
 # Ansible
 inventory.ini
+inventory.yaml
+playbook.yaml
 
 # Visual Studio Code
 .vscode/* 
