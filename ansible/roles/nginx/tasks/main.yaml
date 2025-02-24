@@ -21,7 +21,7 @@
     msg: "Nginx service is not active!"
   when: ansible_facts['services']['nginx.service']['status'] != 'enabled'
 
-- name: copy firewall rules
+- name: copy nginx config file
   ansible.builtin.template:
     src: nginx-config.j2
     dest: /etc/nginx/conf.d/0mid.net.conf
