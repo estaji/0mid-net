@@ -8,6 +8,9 @@
       line: "{{ terminal_colors }}"
       owner: root
 
+  - name: Setup timezone
+    ansible.builtin.shell: timedatectl set-timezone Asia/Tehran
+
   - name: Check current swap
     ansible.builtin.shell: swapon --show
     register: swap_status
