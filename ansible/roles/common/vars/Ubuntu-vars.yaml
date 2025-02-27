@@ -22,8 +22,7 @@ docker_packages:
 
 enabled_started_services:
   - chrony
-  - iptables-persistent
+  - netfilter-persistent
   - fail2ban
   - nginx
-  - certbot
   - docker
