@@ -2,11 +2,15 @@
   - name: Set hostname
     ansible.builtin.shell: hostnamectl set-hostname {{ new_hostname }}
 
-  - name: Add colors to terminal
-    ansible.builtin.lineinfile:
+  - name: Modify the bashrc file
+    ansible.builtin.blockinfile:
+      state: present
+      insertafter: EOF
       dest: /root/.bashrc
-      line: "{{ terminal_colors }}"
-      owner: root
+      marker: "# ANSIBLE MANAGED BLOCK"
+      content: |
+        {{ terminal_colors }}
+        export EDITOR=/usr/bin/vim
 
   - name: Setup timezone
     ansible.builtin.shell: timedatectl set-timezone Asia/Tehran
