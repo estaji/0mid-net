@@ -6,7 +6,7 @@
         register: docker_status
       - ansible.builtin.fail:
           msg: Docker service is not running or installed.
-        when: docker_status != "active"
+        when: docker_status.stdout != "active"
   
   - name: Ensure the project directory exists
     ansible.builtin.file: 
@@ -16,12 +16,12 @@
 
   - name: Docker compose down
     ansible.builtin.shell: |
-      cd {{ PROJECT_DIR }}/0mid-net/docker; docker compose down
+      cd {{ PROJECT_DIR }}/docker; docker compose down
     ignore_errors: True
 
   - name: Remove old project
     ansible.builtin.file:
-      path: "{{ PROJECT_DIR }}/0mid-net"
+      path: "{{ PROJECT_DIR }}/"
       state: absent
     ignore_errors: True
 
@@ -30,9 +30,19 @@
       repo: https://github.com/estaji/0mid-net.git
       dest: "{{ PROJECT_DIR }}"
 
+  - name: Template conf file
+    ansible.builtin.template:
+      src: .env-file.j2
+      dest: "{{ PROJECT_DIR }}/docker/.env"
+      owner: root
+      group: root
+      mode: '0644'
+
+  # Need to pull the new image and remove the old one
+
   - name: Docker compose up
     ansible.builtin.shell: |
-      cd {{ PROJECT_DIR }}/0mid-net/docker; docker compose up -d
+      cd {{ PROJECT_DIR }}/docker; docker compose up -d
 
   - name: Migrate database if needed
     ansible.builtin.shell: |
@@ -56,16 +66,20 @@
 
   - name: Run django collectstatic command
     ansible.builtin.shell: |
+      cd {{ PROJECT_DIR }}/docker ;
       docker compose exec web python manage.py collectstatic --settings=config.settings.{{ SETTINGS_PROFILE }}
+    when: DO_DJANGO_COLLECTSTATIC == "yes"
 
   - name: Ensure nginx is running
     block:
-      - ansible.builtin.shell: |
+      - name: Get nginx service status
+        ansible.builtin.shell: |
           systemctl is-active nginx
         register: nginx_status
-      - ansible.builtin.fail:
+      - name: Ensure nginx service is running
+        ansible.builtin.fail:
           msg: Nginx service is not running or installed.
-        when: nginx_status != "active"
+        when: nginx_status.stdout != "active"
 
   - name: Configure Nginx
     when: TEMPLATE_NGINX_CONF == "yes"
@@ -73,7 +87,7 @@
       - name: Template conf file
         ansible.builtin.template:
           src: 0mid.net-nginx-conf.j2
-          dest: /etc/nginx/sites-available/0mid.net
+          dest: /etc/nginx/conf.d/0mid.net.conf
           owner: root
           group: root
           mode: '0644'
@@ -81,23 +95,18 @@
         ansible.builtin.shell: |
           nginx -t
         ignore_errors: false
-      - name: Create symbolic link in sites-enabled
-        ansible.builtin.file:
-          src: /etc/nginx/sites-available/0mid.net
-          dest: /etc/nginx/sites-enabled/0mid.net
-          state: link
-      - name: reload Nginx
+      - name: Reload Nginx
         ansible.builtin.shell: |
           nginx -s reload
 
-  - name: Obtaining SSL certificate
-    when: GET_CERTBOT_SSL == "yes"
-    block:
-      - name: Generate dhparam.pem file
-        ansible.builtin.shell: |
-          openssl dhparam -out /etc/ssl/dhparam.pem 2048
-      - name: Run Certbot command
-        ansible.builtin.shell: |
-          certbot certonly --non-interactive --agree-tos -m estaji.work@gmail.com --cert-name 0mid.net -d 0mid.net -d www.0mid.net
-        notify:
-          - restart nginx
+      - name: Obtaining SSL certificate
+        when: GET_CERTBOT_SSL == "yes"
+        block:
+          - name: Generate dhparam.pem file
+            ansible.builtin.shell: |
+              openssl dhparam -out /etc/ssl/dhparam.pem 2048
+          - name: Run Certbot command
+            ansible.builtin.shell: |
+              certbot certonly --non-interactive --agree-tos --nginx -m estaji.work@gmail.com --cert-name 0mid.net -d 0mid.net -d www.0mid.net
+            notify:
+              - restart nginx

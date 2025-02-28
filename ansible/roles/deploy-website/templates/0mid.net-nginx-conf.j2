@@ -2,35 +2,31 @@ upstream gunicorn {
     server 127.0.0.1:8080;
 }
 
+{% if GET_CERTBOT_SSL == "yes" %}
 server {
-    listen 443 ssl;
+    listen 80;
     server_name 0mid.net;
     
-    access_log /var/log/nginx/access-0mid.net.log;
-    error_log /var/log/nginx/error-0mid.net.log;
-
     client_max_body_size 50M; 
 
     location /static/ {
         alias /var/www/web_static/;
-	    expires 14d;
-	    add_header Cache-Control "public";
+        expires 14d;
+        add_header Cache-Control "public";
     }
 
     location /media/ {
-    	alias /var/www/web_media/;
+        alias /var/www/web_media/;
         expires 1M;
         add_header Cache-Control "public";
     }
 
     location /admin {
         auth_basic "Who are you?";
-	    auth_basic_user_file /etc/nginx/.htpasswd;
+        auth_basic_user_file /etc/nginx/.htpasswd;
         proxy_pass http://gunicorn;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-Proto "https";
         proxy_redirect off;
     }
 
@@ -38,71 +34,8 @@ server {
         proxy_pass http://gunicorn;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-Proto "https";
         proxy_redirect off;
     }
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
-    ssl_prefer_server_ciphers on;
-    ssl_certificate /etc/letsencrypt/live/0mid.net/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/0mid.net/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/ssl/dhparam.pem;
-    ssl_session_cache shared:TLS:2m;
-    ssl_buffer_size 4k;
-
-    # OCSP stapling
-    ssl_stapling on;
-    ssl_stapling_verify on;
-
-    # Set HSTS to 365 days
-    add_header Strict-Transport-Security 'max-age=31536000; preload' always;
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-    add_header X-XSS-Protection "1; mode=block";
-
-}
-
-server {
-    listen 443 ssl;
-    server_name www.0mid.net;
-
-    return 301 http://0mid.net$request_uri;
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
-    ssl_prefer_server_ciphers on;
-    ssl_certificate /etc/letsencrypt/live/0mid.net/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/0mid.net/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/ssl/dhparam.pem;
-    ssl_session_cache shared:TLS:2m;
-    ssl_buffer_size 4k;
-
-    # OCSP stapling
-    ssl_stapling on;
-    ssl_stapling_verify on;
-
-    # Set HSTS to 365 days
-    add_header Strict-Transport-Security 'max-age=31536000; preload' always;
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-    add_header X-XSS-Protection "1; mode=block";
-
-}
-
-
-server {
-    listen 80;
-    server_name 0mid.net;
-
-    if ($host = 0mid.net) {
-        return 301 https://$host$request_uri;
-    }
-
-    return 404;
 
 }
 
@@ -115,5 +48,87 @@ server {
     }
 
     return 404;
+}
+
+{% else %}
+server {
+    server_name 0mid.net;
+    
+    client_max_body_size 50M; 
+
+    location /static/ {
+        alias /var/www/web_static/;
+        expires 14d;
+        add_header Cache-Control "public";
+    }
+
+    location /media/ {
+        alias /var/www/web_media/;
+        expires 1M;
+        add_header Cache-Control "public";
+    }
+
+    location /admin {
+        auth_basic "Who are you?";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        proxy_pass http://gunicorn;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+    }
+
+    location / {
+        proxy_pass http://gunicorn;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/0mid.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/0mid.net/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
 }
+
+server {
+    server_name www.0mid.net;
+    return 301 http://0mid.net$request_uri;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/0mid.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/0mid.net/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+server {
+    if ($host = 0mid.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name 0mid.net;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = www.0mid.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name www.0mid.net;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+
+{% endif %}
