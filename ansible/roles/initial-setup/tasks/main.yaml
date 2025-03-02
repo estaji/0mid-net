@@ -11,6 +11,7 @@
       content: |
         {{ terminal_colors }}
         export EDITOR=/usr/bin/vim
+        source /etc/bash_completion
 
   - name: Setup timezone
     ansible.builtin.shell: timedatectl set-timezone Asia/Tehran
