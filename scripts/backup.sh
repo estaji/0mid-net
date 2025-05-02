@@ -9,6 +9,8 @@ DATE_AND_TIME=$(date --iso)
 SYSLOG_FACILITY_NAME=local0.info
 LOGGER_TAG=backup-script
 WEBSITE_DB_CONTAINER=0mid-net-mariadb
+GITEA_CONTAINER=gitea
+GITEA_DIR=/opt/gitea/gitea_data
 DOCKER_COMPOSE_ENV_FILE_PATH=opt/0mid-net-website/docker/.env
 ARCHIVER_SCRIPT=/opt/backups/backup-archiver.sh
 BACKUPS_DIR=/opt/backups/
@@ -66,6 +68,11 @@ backup_envs() {
     logger -p $SYSLOG_FACILITY_NAME -t "$LOGGER_TAG" "environment-variables file backuped successfully."
 
 }
+backup_gitea() {
+    docker exec -u git -it -w /data gitea bash -c '/usr/local/bin/gitea dump -c /data/gitea/conf/app.ini'
+    cp $GITEA_DIR/gitea-dump-*.zip $BACKUPS_DIR/gitea-dump-$DATE_AND_TIME.zip
+    rm -f $GITEA_DIR/gitea-dump-*.zip
+}
 compress_all() {
     tar --remove-files -czf backup-$DATE_AND_TIME.tar.gz *$DATE_AND_TIME*
     if [ $? -ne 0 ]; then
@@ -91,6 +98,7 @@ backup_monitoring
 backup_envs
 backup_3xui
 backup_firewall
+backup_gitea
 compress_all
 archive_backup
 logger -p $SYSLOG_FACILITY_NAME -t "$LOGGER_TAG" "######## Backup script finished ########"
