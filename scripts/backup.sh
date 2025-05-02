@@ -11,6 +11,7 @@ LOGGER_TAG=backup-script
 WEBSITE_DB_CONTAINER=0mid-net-mariadb
 DOCKER_COMPOSE_ENV_FILE_PATH=opt/0mid-net-website/docker/.env
 ARCHIVER_SCRIPT=/opt/backups/backup-archiver.sh
+BACKUPS_DIR=/opt/backups/
 
 # functions
 dump_dockerized_mariadb() {
@@ -73,6 +74,7 @@ compress_all() {
     logger -p $SYSLOG_FACILITY_NAME -t "$LOGGER_TAG" "Files are compressed in one file successfully."
 }
 archive_backup() {
+    cd $BACKUPS_DIR
     bash $ARCHIVER_SCRIPT backup-$DATE_AND_TIME.tar.gz
     if [ $? -ne 0 ]; then
         logger -p $SYSLOG_FACILITY_NAME -t "$LOGGER_TAG" "Error: Archiving backup failed!"
