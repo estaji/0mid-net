@@ -1,0 +1,7 @@
+export SITE_SECRET_KEY='Secret'
+export SITE_DB_NAME=mydb
+export SITE_DB_USER=user
+export SITE_DB_PASSWORD='databasePassword'
+export SITE_DB_HOST='192.168.100.10'
+export SITE_DB_PORT=5432
+export SITE_ENV=dev
