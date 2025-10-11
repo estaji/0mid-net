@@ -1,7 +1,0 @@
----
-all:
-  hosts:
-    myserver:
-      ansible_user: root
-      ansible_port: 22
-      ansible_host: 1.1.1.1

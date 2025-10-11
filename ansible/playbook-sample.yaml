@@ -1,7 +1,0 @@
----
-- hosts: myserver
-  become: true
-  roles:
-    - ./roles/initial-setup
-    - ./roles/common
-    - ./roles/deploy-website

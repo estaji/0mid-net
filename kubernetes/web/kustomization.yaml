@@ -1,6 +1,0 @@
-resources:
-  - secret.yaml
-  - configmap.yaml
-  - service.yaml
-  - deployment.yaml
-  - ingress.yaml
