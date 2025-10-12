@@ -1,0 +1,77 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block meta_tags %}
+    <meta name="description" content="All categories and tags on {{ blog_settings.blog_title }}" />
+    <meta name="author" content="{{ configurations.author }}" />
+    <meta name="keywords" content="{% for item in object_list %}{{ item.title }}, {% endfor %}">
+    <meta name="robots" content="{{ configurations.robots }}">
+    <meta property="og:title" content="{{ blog_settings.blog_title }} Tags" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="All categories and tags on {{ blog_settings.blog_title }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ blog_settings.blog_title }} Tags"/>
+    <meta name="twitter:description" content="All categories and tags on {{ blog_settings.blog_title }}"/>
+    <meta name="twitter:site" content="@{{ configurations.xcom_user }}"/>
+    <meta name="twitter:creator" content="@{{ configurations.xcom_user }}"/>
+    <!-- still no meta twitter:image, og:image, schema:image -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "WebPage",
+            "name": "{{ blog_settings.blog_title }} Tags",
+            "description": "All categories and tags on {{ blog_settings.blog_title }}",
+            "author": {
+                "@id": "{{ configurations.author }}"
+            },
+            "copyrightHolder": {
+                "@id": "{{ configurations.author }}"
+            },
+            "copyrightYear": "{% now "Y-m-d" %}",
+            "creator": {
+                "@id": "{{ configurations.author }}"
+            },
+            "publisher": {
+                "@id": "{{ configurations.author }}"
+            },
+            "headline": "{{ blog_settings.blog_title }} Tags",
+            "name": "{{ blog_settings.blog_title }} Tags",
+            "mainEntityOfPage": "{{ request.build_absolute_uri }}",
+            "url": "{{ request.build_absolute_uri }}"
+        }
+    </script>
+{% endblock meta_tags %}
+
+{% block title %} | Tags{% endblock title %}
+
+{% block header %}
+    <!-- Page Header-->
+    <header>
+        <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+            <div class="px-0">
+                <h1 class="display-4 fst-italic text-center">{{ blog_settings.blog_title }} Tags</h1>
+                <p class="subheading text-center">All tags and categories</p>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+{% block main %}
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                {% for item in object_list %}
+                    <!-- Item preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'blog:tag' item.slug %}">
+                            <h2 class="post-title">#{{ item.title }} ({{ item.posts_count }})</h2>
+                        </a>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock main %}

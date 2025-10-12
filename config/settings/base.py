@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "resume.apps.ResumeConfig",
+    "blog.apps.BlogConfig",
 ]
 
 MIDDLEWARE = [

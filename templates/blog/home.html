@@ -1,0 +1,99 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block meta_tags %}
+    <meta name="description" content="{{ configurations.description }}" />
+    <meta name="author" content="{{ configurations.author }}" />
+    <meta name="keywords" content="{{ configurations.keywords }}">
+    <meta name="robots" content="{{ configurations.robots }}">
+    <meta property="og:title" content="{{ blog_settings.blog_title }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ configurations.description }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ blog_settings.blog_title }}"/>
+    <meta name="twitter:description" content="{{ configurations.description }}"/>
+    <meta name="twitter:site" content="@{{ configurations.xcom_user }}"/>
+    <meta name="twitter:creator" content="@{{ configurations.xcom_user }}"/>
+    <!-- still no meta twitter:image, og:image, schema:image -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "WebPage",
+            "name": "{{ blog_settings.blog_title }}",
+            "description": "{{ configurations.description }}",
+            "author": {
+                "@id": "{{ configurations.author }}"
+            },
+            "copyrightHolder": {
+                "@id": "{{ configurations.author }}"
+            },
+            "copyrightYear": "{% now "Y-m-d" %}",
+            "creator": {
+                "@id": "{{ configurations.author }}"
+            },
+            "publisher": {
+                "@id": "{{ configurations.author }}"
+            },
+            "headline": "{{ blog_settings.blog_title }}",
+            "mainEntityOfPage": "{{ request.build_absolute_uri }}",
+            "url": "{{ request.build_absolute_uri }}"
+        }
+    </script>
+{% endblock meta_tags %}
+
+{% block header %}
+    <!-- Page Header-->
+    <header>
+        <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+            <div class="px-0">
+                <h1 class="display-4 fst-italic text-center">{{ blog_settings.blog_title }}</h1>
+                <p class="lead my-3 text-center">{{ blog_settings.blog_subtitle }}</p>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block main %}
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                {% for item in object_list %}
+                    <!-- Post preview-->
+                    {% if item.language == 'en' %}
+                        <div class="post-preview">
+                    {% else %}
+                        <div class="post-preview vazir-font" dir="rtl">
+                    {% endif %}
+                            <article class="blog-post">
+                                <a href="{% url 'blog:article' item.slug %}">
+                                    <h2 class="display-5 link-body-emphasis mb-1">{{ item.title }}</h2>
+                                </a>
+                                <p class="blog-post-meta" dir="ltr">
+                                    By {{ item.author.name }}, {{ item.published_modified }}
+                                    {% for tag in item.tag.all %}
+                                        <a href="{% url 'blog:tag' tag.slug %}">&nbsp#{{tag.title}}</a>
+                                    {% endfor %}
+                                </p>
+                                <p>{{ item.content|striptags|truncatewords:20 }}</p>
+                                <hr>
+                            </article>
+                        </div>
+                {% endfor %}
+
+                <!-- Pagination -->
+                {% if is_paginated %}
+                    <nav class="blog-pagination" aria-label="Pagination">
+                        {% if page_obj.has_next %}
+                            <a class="btn btn-outline-primary rounded-pill" href="{% url 'blog:home' page_obj.next_page_number %}">Older</a>
+                        {% endif %}
+                        {% if page_obj.has_previous %}
+                            <a class="btn btn-outline-primary rounded-pill" aria-disabled="true" href="{% url 'blog:home' page_obj.previous_page_number %}">Newer</a>
+                        {% endif %}
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock main %}
