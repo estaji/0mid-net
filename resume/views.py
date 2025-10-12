@@ -13,7 +13,7 @@ from resume.models import (
 
 class ResumeView(ListView):
     
-    model = Configuration
+    queryset = Configuration.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -22,7 +22,7 @@ class ResumeView(ListView):
         context["educations"] = Education.objects.all()
         context["languages"] = Language.objects.all()
         context["social_accounts"] = SocialAccount.objects.first()
-        context["configurations"] = Configuration.objects.first()
+        context["configurations"] = Configuration.objects.all()
         context["parent_menu"] = Menu.objects.filter(icon_type="DD")
         context["single_menu"] = Menu.objects.filter(icon_type="N")
         context["disabled_menu"] = Menu.objects.filter(icon_type="DI")

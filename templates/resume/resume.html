@@ -1,0 +1,178 @@
+{% extends 'resume/base.html' %}
+{% load static %}
+
+{% block meta_tags %}
+    <meta name="description" content="{{ configurations.0.description }}">
+    <meta name="author" content="{{ configurations.0.author }}">
+    <meta name="keywords" content="{{ configurations.0.keywords }}">
+    <meta name="robots" content="{{ configurations.0.robots }}">
+    <meta property="og:title" content="{{ configurations.0.og_title }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    {% if jumbotron.picture %}
+        <meta property="og:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}" />
+    {% endif %}
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ configurations.0.description }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ configurations.0.og_title }}"/>
+    <meta name="twitter:description" content="{{ configurations.0.description }}"/>
+    <meta name="twitter:site" content="@{{ configurations.0.twitter_user }}"/>
+    {% if jumbotron.picture %}
+        <meta name="twitter:image" content="http://{{ request.get_host }}{{ jumbotron.picture.url }}"/>
+    {% endif %}
+    <meta name="twitter:creator" content="@{{ configurations.0.twitter_user }}"/>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Person",
+            "name": "{{ configurations.0.author }}",
+            {% if jumbotron.picture %}
+                "image": "http://{{ request.get_host }}{{ jumbotron.picture.url }}",
+            {% endif %}
+            "jobTitle": "{{ job.0.title }}", 
+            "url": "{{ request.build_absolute_uri }}",
+            "email": "{{ jumbotron.email }}",
+            "sameAs": [
+                {% if social_accounts.linkedin != '' %}
+                    {% if social_accounts.github != '' or social_accounts.twitter != '' %}
+                        "{{ social_accounts.linkedin }}",
+                    {% else %}
+                        "{{ social_accounts.linkedin }}"
+                    {% endif %}
+                {% endif %}
+                {% if social_accounts.github != '' %}
+                    {% if social_accounts.twitter != '' %}
+                        "{{ social_accounts.github }}",
+                    {% else %}
+                        "{{ social_accounts.github }}"
+                    {% endif %}
+                {% endif %}
+                {% if social_accounts.twitter != '' %}
+                    "{{ social_accounts.twitter }}"
+                {% endif %}
+            ],
+            "worksFor": {
+                "@type": "Organization",
+                "name": "{{ job.0.company }}"
+            },
+            "alumniOf": "{{ education.0.university }}"
+        }
+    </script>
+{% endblock meta_tags %}
+
+{% block title %}
+    {{ configurations.0.site_title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="p-5 pt-1 mb-4 mt-1 rounded-3">
+        <div class="container-fluid py-5">
+            {% if jumbotron.greeting %}
+                <p class="fs-7">{{ jumbotron.greeting }}</p>
+            {% endif %}
+            <h1 class="display-5">{{ jumbotron.title }}</h1>
+            <p class="fs-4">{{ jumbotron.occupation }}</p>
+            <div class="lead text-center">
+                <img src="{{ jumbotron.picture.url }}" class="img-fluid img-thumbnail rounded-circle" alt="{{ jumbotron.title }} Picture" width="200" height="200">
+            </div>
+            <div class="lead">
+                <p class="col-md-8 fs-4">{{ jumbotron.description|linebreaks }}</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-info" href="mailto:{{ jumbotron.email }}" role="button"><i class="bi bi-envelope" aria-hidden="true"> Message Me</i></a>
+            </div>
+            {% if social_accounts.linkedin != '' %}
+                <a class="float-end px-1" href="{{ social_accounts.linkedin }}" target="_blank"><i class="bi bi-linkedin theme social-icons"></i></a>
+            {% endif %}
+            {% if social_accounts.github != '' %}
+                <a class="float-end px-1" href="{{ social_accounts.github }}" target="_blank"><i class="bi bi-github theme social-icons"></i></a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- <div class="card">
+        <h2 class="card-header">Technical Skills</h2>
+        <div class="card-body">
+            {{ tech_skill_text.content|safe }}
+        </div>
+    </div> -->
+    </br>
+    <div class="card">
+        <h2 class="card-header">Experiences</h2>
+        {% for job in jobs %}
+            <div class="card-body">
+                <h4 class="card-title">{{ job.title }}</h4>
+                <div class="card-subtitle mb-2 mt-1 text-muted">
+                    <div style="float:right;">{{ job.short_start }} - {{ job.modified_end }}<br/><small style="float:right;">{{ job.location }}</small></div>
+                    <div data-bs-toggle="modal" data-bs-target="#Modal{{ forloop.counter }}" style="cursor:pointer; float:left;">
+                        {% if job.logo %}
+                            <img src="{{ job.logo.url }}" class="card-img-left" alt="{{ job.company }} logo" width="65" height="65">
+                        {% endif %}
+                        <span class="card-link">&nbsp;{{ job.company }}</span>
+                    </div>
+                </div>
+                <br style="clear: both;">
+                <div>
+                    <p class="card-text">{{ job.summary|linebreaks }}</p>
+                </div>
+            </div>
+            <!--Company Modal -->
+            <div class="modal fade" id="Modal{{ forloop.counter }}" tabindex="-1" aria-labelledby="companyModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="companyModalLabel">{{ job.company }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ job.company_details|linebreaks }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <a class="btn btn-outline-info" rel="nofollow" href="{{ job.url }}" target="_blank">{{ job.company }} Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </br>
+    <!-- <div class="card">
+        <h2 class="card-header">Recommendations</h2>
+        <div class="card-body">
+            {% for skill in soft_skill %}
+                <h5 class="card-title">{{ skill.title }}</h5>
+            {% endfor %}
+        </div>
+    </div> -->
+    </br>
+    <div class="card">
+        <h2 class="card-header">Educations</h2>
+        {% for item in educations %}
+            <div class="card-body">
+                <h4 class="card-title">{{ item.level }}&nbsp;{{ item.title }}</h4>
+                <div class="card-subtitle mb-2 text-muted">
+                    <div style="float:right;">{{ item.short_start }} - {{ item.modified_end }}</div>
+                    <h6 class="mt-1" style="float:left;">{{ item.university }}</h6>
+                </div>
+                <br style="clear: both;">
+                <div>
+                    <p class="card-text">{{ item.description|linebreaks }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </br>
+    <div class="card">
+        <h2 class="card-header">Languages</h2>
+        <div class="card-body">
+            {% for item in languages %}
+                <h4 class="card-title">{{ item.title }}</h4>
+                <div class="card-subtitle mb-2 text-muted">
+                    <p>{{ item.level }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    </br>
+{% endblock content %}
