@@ -3,3 +3,4 @@ Django==5.2.7
 psycopg2-binary==2.9.11
 sqlparse==0.5.3
 wheel==0.45.1
+pillow==11.3.0
