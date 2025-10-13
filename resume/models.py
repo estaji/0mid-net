@@ -11,7 +11,6 @@ class Jumbotron(models.Model):
     title = models.CharField(max_length=70, verbose_name="Title/Name")
     occupation = models.CharField(max_length=120, blank=True, verbose_name="Job Titles")
     description = models.TextField(verbose_name="Description")
-    email = models.EmailField(max_length=254, verbose_name="Email")
     picture = models.ImageField(
         upload_to="jumbotron_picture/",
         verbose_name="Picture/Avatar",
@@ -140,6 +139,7 @@ class SocialAccount(models.Model):
 
 
 class Configuration(models.Model):
+    email = models.EmailField(max_length=254, verbose_name="Email")
     site_title = models.CharField(
         max_length=60,
         blank=True,

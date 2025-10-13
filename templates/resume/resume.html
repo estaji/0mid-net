@@ -31,7 +31,7 @@
             {% endif %}
             "jobTitle": "{{ job.0.title }}", 
             "url": "{{ request.build_absolute_uri }}",
-            "email": "{{ jumbotron.email }}",
+            "email": "{{ configurations.0.email }}",
             "sameAs": [
                 {% if social_accounts.linkedin != '' %}
                     {% if social_accounts.github != '' or social_accounts.twitter != '' %}
@@ -79,7 +79,7 @@
                 <p class="col-md-8 fs-4">{{ jumbotron.description|linebreaks }}</p>
             </div>
             <div class="d-flex justify-content-center">
-                <a class="btn btn-outline-info" href="mailto:{{ jumbotron.email }}" role="button"><i class="bi bi-envelope" aria-hidden="true"> Message Me</i></a>
+                <a class="btn btn-outline-info" href="mailto:{{ configurations.0.email }}" role="button"><i class="bi bi-envelope" aria-hidden="true"> Message Me</i></a>
             </div>
             {% if social_accounts.linkedin != '' %}
                 <a class="float-end px-1" href="{{ social_accounts.linkedin }}" target="_blank"><i class="bi bi-linkedin theme social-icons"></i></a>

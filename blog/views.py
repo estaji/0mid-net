@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 
-from resume.models import Configuration, SocialAccount, Jumbotron
+from resume.models import Configuration, SocialAccount
 
 from blog.models import Article, BlogConfig, Tag
 
@@ -18,7 +18,6 @@ class BlogView(ListView):
         context["blog_settings"] = BlogConfig.objects.first()
         context["configurations"] = Configuration.objects.first()
         context["social_accounts"] = SocialAccount.objects.first()
-        context["jumbotron"] = Jumbotron.objects.first()
         return context
 
 
@@ -36,7 +35,6 @@ class ArticleView(DetailView):
         context["blog_settings"] = BlogConfig.objects.first()
         context["configurations"] = Configuration.objects.first()
         context["social_accounts"] = SocialAccount.objects.first()
-        context["jumbotron"] = Jumbotron.objects.first()
         return context
 
 
@@ -57,7 +55,6 @@ class TagView(ListView):
         context["blog_settings"] = BlogConfig.objects.first()
         context["configurations"] = Configuration.objects.first()
         context["social_accounts"] = SocialAccount.objects.first()
-        context["jumbotron"] = Jumbotron.objects.first()
         return context
 
 
@@ -71,7 +68,6 @@ class TagsListView(ListView):
         context["blog_settings"] = BlogConfig.objects.first()
         context["configurations"] = Configuration.objects.first()
         context["social_accounts"] = SocialAccount.objects.first()
-        context["jumbotron"] = Jumbotron.objects.first()
         return context
 
 
@@ -88,5 +84,4 @@ class ArticlePreview(LoginRequiredMixin, DetailView):
         context["blog_settings"] = BlogConfig.objects.first()
         context["configurations"] = Configuration.objects.first()
         context["social_accounts"] = SocialAccount.objects.first()
-        context["jumbotron"] = Jumbotron.objects.first()
         return context
