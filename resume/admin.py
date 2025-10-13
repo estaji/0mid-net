@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from resume.models import (
     Jumbotron,
+    TechSkill,
     Job,
     Education,
     Language,
@@ -52,8 +53,9 @@ class SubMenuAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Job, JobAdmin)
 admin.site.register(Jumbotron)
+admin.site.register(TechSkill)
+admin.site.register(Job, JobAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(SocialAccount)

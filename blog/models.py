@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from tinymce.models import HTMLField
 
 from blog.utils import date_ymd, published_date
 
@@ -84,7 +85,7 @@ class Article(models.Model):
         blank=True,
         verbose_name="Subheading",
     )
-    # content = RichTextField(verbose_name="Content")
+    content = HTMLField(verbose_name="Content")
     published = models.DateField(
         default=timezone.now,
         verbose_name="Published on",

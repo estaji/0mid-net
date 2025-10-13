@@ -1,7 +1,8 @@
 from django.db import models
 from django.db.models import F
+from tinymce.models import HTMLField
 
-from .utils import month_year_end, month_year_start, year_end, year_start
+from resume.utils import month_year_end, month_year_start, year_end, year_start
 
 
 class Jumbotron(models.Model):
@@ -20,7 +21,8 @@ class Jumbotron(models.Model):
         return self.title
 
 
-# class TechSkill(models.Model):
+class TechSkill(models.Model):
+    content = HTMLField(verbose_name="Content")
 
 
 class Job(models.Model):

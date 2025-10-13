@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django.contrib.sitemaps",
+    "tinymce",
     "resume.apps.ResumeConfig",
     "blog.apps.BlogConfig",
 ]
@@ -134,4 +135,26 @@ LOGGING = {
         "console": {"class": "logging.StreamHandler", "formatter": "console"},
     },
     "loggers": {"": {"level": "INFO", "handlers": ["console"]}},
+}
+
+# TinyMCE editor 
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "height": 500,
+    "menubar": True,
+    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
+               "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,"
+               "table,contextmenu,paste,wordcount,help,codesample",
+    "toolbar": "undo redo | formatselect | bold italic backcolor | alignleft aligncenter "
+               "alignright alignjustify | bullist numlist outdent indent | removeformat | "
+               "link image media codesample | fullscreen | preview",
+    "codesample_languages": [
+        {'text': 'HTML/XML', 'value': 'markup'},
+        {'text': 'JavaScript', 'value': 'javascript'},
+        {'text': 'CSS', 'value': 'css'},
+        {'text': 'Python', 'value': 'python'},
+        {'text': 'Bash', 'value': 'bash'},
+        {'text': 'Golang (Go)', 'value': 'go'},
+    ],
+    "custom_undo_redo_levels": 25,
 }
