@@ -2,12 +2,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 
-from resume.models import Configuration, SocialAccount
+from resume.mixins import GlobalContextMixin
 
 from blog.models import Article, BlogConfig, Tag
 
 
-class BlogView(ListView):
+class BlogView(GlobalContextMixin, ListView):
     """View for blog main page, list of all articles"""
 
     queryset = Article.objects.published()
@@ -15,13 +15,13 @@ class BlogView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context["blog_settings"] = BlogConfig.objects.first()
-        context["configurations"] = Configuration.objects.first()
-        context["social_accounts"] = SocialAccount.objects.first()
+
         return context
 
 
-class ArticleView(DetailView):
+class ArticleView(GlobalContextMixin, DetailView):
     """View for an article"""
 
     def get_object(self):
@@ -32,13 +32,13 @@ class ArticleView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context["blog_settings"] = BlogConfig.objects.first()
-        context["configurations"] = Configuration.objects.first()
-        context["social_accounts"] = SocialAccount.objects.first()
+
         return context
 
 
-class TagView(ListView):
+class TagView(GlobalContextMixin, ListView):
     """View for tag page, list of articles for a tag"""
 
     paginate_by = 5
@@ -47,31 +47,32 @@ class TagView(ListView):
         global tag
         slug = self.kwargs.get("slug")
         tag = get_object_or_404(Tag.objects.all(), slug=slug)
+
         return tag.articles.published()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context["tag"] = tag
         context["blog_settings"] = BlogConfig.objects.first()
-        context["configurations"] = Configuration.objects.first()
-        context["social_accounts"] = SocialAccount.objects.first()
+
         return context
 
 
-class TagsListView(ListView):
+class TagsListView(GlobalContextMixin, ListView):
     """View for all tags list"""
 
     model = Tag
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context["blog_settings"] = BlogConfig.objects.first()
-        context["configurations"] = Configuration.objects.first()
-        context["social_accounts"] = SocialAccount.objects.first()
+
         return context
 
 
-class ArticlePreview(LoginRequiredMixin, DetailView):
+class ArticlePreview(LoginRequiredMixin, GlobalContextMixin, DetailView):
     """Preview an article before publishing just for admins"""
 
     def get_object(self):
@@ -81,7 +82,7 @@ class ArticlePreview(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context["blog_settings"] = BlogConfig.objects.first()
-        context["configurations"] = Configuration.objects.first()
-        context["social_accounts"] = SocialAccount.objects.first()
+
         return context
