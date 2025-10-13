@@ -1,0 +1,31 @@
+services:
+  website:
+    image: 0mid.net:<TAG>
+    container_name: 0mid.net-website
+    restart: unless-stopped
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/www/web_static:/opt/app/static_root
+      - /var/www/web_media:/opt/app/media
+    env_file: .env
+    networks:
+      custom-net-1:
+        ipv4_address: 192.168.100.20
+
+networks:
+ custom-net-1:
+   name: custom-net-1
+   driver: bridge
+   ipam:
+     config:
+       - subnet: 192.168.100.0/24
+
+# After docker compose up:
+# docker compose exec website python manage.py migrate --settings=config.settings.production
+# sudo chown -R 1010:1010 /var/www/web_static
+# sudo chown -R 1010:1010 /var/www/web_media
+# docker compose exec website python manage.py collectstatic --settings=config.settings.production
+# docker compose exec website python manage.py createsuperuser --settings=config.settings.production
