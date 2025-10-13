@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 
 from resume.views import ResumeView
 from blog.sitemaps import ArticleSitemap, StaticSitemap, TagSitemap
@@ -27,6 +28,13 @@ urlpatterns = [
         sitemap,
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
+    ),
+    path(
+        "robots.txt",
+        TemplateView.as_view(
+            template_name="robots.txt",
+            content_type="text/plain"
+        ),
     ),
     path('tinymce/', include('tinymce.urls')),
 ]
