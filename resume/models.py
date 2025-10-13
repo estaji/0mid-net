@@ -92,7 +92,34 @@ class Education(models.Model):
         return new_end
 
 
-# class Recommendation(models.Model):
+class Recommendation(models.Model):
+    author_name = models.CharField(
+        max_length=150, 
+        verbose_name="Recommender's Name"
+    )
+    author_title = models.CharField(
+        max_length=250, 
+        verbose_name="Recommender's Title/Company",
+    )
+    date_received = models.DateField(
+        verbose_name="Date Received"
+    )
+    content = models.TextField(
+        verbose_name="Recommendation Content",
+        help_text="The full text of the recommendation."
+    )
+    order = models.IntegerField(
+        unique=True,
+        verbose_name="Order Number"
+    )
+    
+    class Meta:
+        verbose_name = "Recommendation"
+        verbose_name_plural = "Recommendations"
+        ordering = ["order"]
+
+    def __str__(self):
+        return f"Recommendation from {self.author_name}"
 
 
 class Language(models.Model):

@@ -137,15 +137,6 @@
         {% endfor %}
     </div>
     </br>
-    <!-- <div class="card">
-        <h2 class="card-header">Recommendations</h2>
-        <div class="card-body">
-            {% for skill in soft_skill %}
-                <h5 class="card-title">{{ skill.title }}</h5>
-            {% endfor %}
-        </div>
-    </div> -->
-    </br>
     <div class="card">
         <h2 class="card-header">Educations</h2>
         {% for item in educations %}
@@ -172,6 +163,30 @@
                     <p>{{ item.level }}</p>
                 </div>
             {% endfor %}
+        </div>
+    </div>
+    </br>
+    <div class="card">
+        <h2 class="card-header">Recommendations</h2>
+        <div class="card-body">
+            <div class="accordion accordion-flush" id="accordionFlushRecommendations">
+                {% for recommendation in recommendations %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-heading{{ forloop.counter }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse{{ forloop.counter }}">
+                        Recommendation from {{ recommendation.author_name }}, {{ recommendation.author_title }}
+                    </button>
+                    </h2>
+                    <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlushRecommendations">
+                    <div class="accordion-body">
+                        Date: {{ recommendation.date_received }}
+                        </br>
+                        {{ recommendation.content }}
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     </br>

@@ -5,6 +5,7 @@ from resume.models import (
     TechSkill,
     Job,
     Education,
+    Recommendation,
     Language,
     SocialAccount,
     Configuration,
@@ -32,6 +33,10 @@ class EducationAdmin(admin.ModelAdmin):
     )
 
 
+class RecommendationAdmin(admin.ModelAdmin):
+    list_display = ("author_name", "date_received", "order")
+
+
 class LanguageAdmin(admin.ModelAdmin):
     list_display = ("title", "order")
 
@@ -57,6 +62,7 @@ admin.site.register(Jumbotron)
 admin.site.register(TechSkill)
 admin.site.register(Job, JobAdmin)
 admin.site.register(Education, EducationAdmin)
+admin.site.register(Recommendation, RecommendationAdmin)
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(SocialAccount)
 admin.site.register(Configuration)

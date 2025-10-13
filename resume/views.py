@@ -4,6 +4,7 @@ from resume.models import (
     TechSkill,
     Job,
     Education,
+    Recommendation,
     Language,
     SocialAccount,
     Configuration,
@@ -22,6 +23,7 @@ class ResumeView(ListView):
         context["tech_skills"] = TechSkill.objects.first()
         context["jobs"] = Job.objects.all()
         context["educations"] = Education.objects.all()
+        context["recommendations"] = Recommendation.objects.all()
         context["languages"] = Language.objects.all()
         context["social_accounts"] = SocialAccount.objects.first()
         context["configurations"] = Configuration.objects.all()
