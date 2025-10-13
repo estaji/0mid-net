@@ -7,4 +7,4 @@ class EnvConfig:
     DB_PASSWORD = environ.get("SITE_DB_PASSWORD")
     DB_HOST = environ.get("SITE_DB_HOST")
     DB_PORT = environ.get("SITE_DB_PORT")
-    SITE_ENV = environ.get("SITE_ENV")
+    DJANGO_SETTINGS_MODULE = environ.get("DJANGO_SETTINGS_MODULE")
