@@ -73,7 +73,7 @@
                                     <h2 class="display-5 link-body-emphasis mb-1">{{ item.title }}</h2>
                                 </a>
                                 <p class="blog-post-meta" dir="ltr">
-                                    By {{ item.author.name }}, {{ item.published_modified }}
+                                    By {{ item.author.first_name }} {{ item.author.last_name }}, {{ item.published_modified }}
                                     {% for tag in item.tag.all %}
                                         <a href="{% url 'blog:tag' tag.slug %}">&nbsp#{{tag.title}}</a>
                                     {% endfor %}
