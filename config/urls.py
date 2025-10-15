@@ -37,6 +37,7 @@ urlpatterns = [
         ),
     ),
     path('tinymce/', include('tinymce.urls')),
+    path('', include('django_prometheus.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

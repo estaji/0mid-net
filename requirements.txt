@@ -1,9 +1,11 @@
 asgiref==3.10.0
 Django==5.2.7
+django-prometheus==2.4.1
 django-tinymce==4.1.0
 gunicorn==23.0.0
 packaging==25.0
 pillow==11.3.0
+prometheus_client==0.23.1
 psycopg2-binary==2.9.11
 sqlparse==0.5.3
 wheel==0.45.1
